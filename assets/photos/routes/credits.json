@@ -1,0 +1,532 @@
+{
+  "day:au0:hero": {
+    "label": "夜间从成都出发",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:au0:highlight:0": {
+    "label": "出发资料包",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:au1:hero": {
+    "label": "抵达悉尼：只走海港核心",
+    "source": "Downloaded cache",
+    "title": "抵达悉尼：只走海港核心"
+  },
+  "day:au1:highlight:0": {
+    "label": "Sydney Opera House",
+    "source": "Downloaded cache",
+    "title": "Sydney Opera House"
+  },
+  "day:au1:highlight:1": {
+    "label": "Harbour Bridge与Circular Quay",
+    "source": "Downloaded cache",
+    "title": "Harbour Bridge与Circular Quay"
+  },
+  "day:au1:highlight:2": {
+    "label": "The Rocks小巷",
+    "source": "Downloaded cache",
+    "title": "The Rocks小巷"
+  },
+  "day:au2:hero": {
+    "label": "海港核心、植物园与亲友晚餐",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:au2:highlight:0": {
+    "label": "Mrs Macquarie's Chair",
+    "source": "Downloaded cache",
+    "title": "Mrs Macquarie's Chair"
+  },
+  "day:au2:highlight:1": {
+    "label": "Royal Botanic Garden",
+    "source": "Downloaded cache",
+    "title": "Royal Botanic Garden"
+  },
+  "day:au2:highlight:2": {
+    "label": "Barangaroo Reserve",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:au3:hero": {
+    "label": "海岸线日：天气好走Bondi，天气一般走Manly",
+    "source": "Downloaded cache",
+    "title": "海岸线日：天气好走Bondi，天气一般走Manly"
+  },
+  "day:au3:highlight:0": {
+    "label": "天气决策点",
+    "source": "Downloaded cache",
+    "title": "天气决策点"
+  },
+  "day:au3:choice:0:hero": {
+    "label": "海岸线日：天气好走Bondi，天气一般走Manly",
+    "source": "Downloaded cache",
+    "title": "海岸线日：天气好走Bondi，天气一般走Manly"
+  },
+  "day:au3:choice:0:highlight:0": {
+    "label": "Bondi Icebergs外观",
+    "source": "Downloaded cache",
+    "title": "Bondi Icebergs外观"
+  },
+  "day:au3:choice:0:highlight:1": {
+    "label": "Tamarama–Bronte悬崖段",
+    "source": "Downloaded cache",
+    "title": "Tamarama–Bronte悬崖段"
+  },
+  "day:au3:choice:0:highlight:2": {
+    "label": "Coogee Beach",
+    "source": "Downloaded cache",
+    "title": "Coogee Beach"
+  },
+  "day:au3:choice:1:hero": {
+    "label": "海岸线日：天气好走Bondi，天气一般走Manly",
+    "source": "Downloaded cache",
+    "title": "海岸线日：天气好走Bondi，天气一般走Manly"
+  },
+  "day:au3:choice:1:highlight:0": {
+    "label": "悉尼海港渡轮视角",
+    "source": "Downloaded cache",
+    "title": "悉尼海港渡轮视角"
+  },
+  "day:au3:choice:1:highlight:1": {
+    "label": "Manly Beach",
+    "source": "Downloaded cache",
+    "title": "Manly Beach"
+  },
+  "day:au3:choice:1:highlight:2": {
+    "label": "Shelly Beach",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:au4:hero": {
+    "label": "悉尼飞墨尔本：从海港切换到巷弄",
+    "source": "Downloaded cache",
+    "title": "悉尼飞墨尔本：从海港切换到巷弄"
+  },
+  "day:au4:highlight:0": {
+    "label": "Flinders Street Station",
+    "source": "Downloaded cache",
+    "title": "Flinders Street Station"
+  },
+  "day:au4:highlight:1": {
+    "label": "Federation Square",
+    "source": "Downloaded cache",
+    "title": "Federation Square"
+  },
+  "day:au4:highlight:2": {
+    "label": "Yarra River Southbank",
+    "source": "Downloaded cache",
+    "title": "Yarra River Southbank"
+  },
+  "day:au5:hero": {
+    "label": "墨尔本城市核心：市场、巷弄与艺术",
+    "source": "Downloaded cache",
+    "title": "墨尔本城市核心：市场、巷弄与艺术"
+  },
+  "day:au5:highlight:0": {
+    "label": "State Library La Trobe Reading Room",
+    "source": "Downloaded cache",
+    "title": "State Library La Trobe Reading Room"
+  },
+  "day:au5:highlight:1": {
+    "label": "Hosier Lane",
+    "source": "Downloaded cache",
+    "title": "Hosier Lane"
+  },
+  "day:au5:highlight:2": {
+    "label": "NGV International",
+    "source": "Downloaded cache",
+    "title": "NGV International"
+  },
+  "day:au5:highlight:3": {
+    "label": "Southbank Promenade",
+    "source": "Downloaded cache",
+    "title": "Southbank Promenade"
+  },
+  "day:au6:hero": {
+    "label": "墨尔本近郊二选一：企鹅岛或酒乡",
+    "source": "Downloaded cache",
+    "title": "墨尔本近郊二选一：企鹅岛或酒乡"
+  },
+  "day:au6:highlight:0": {
+    "label": "不选大洋路的理由",
+    "source": "Downloaded cache",
+    "title": "不选大洋路的理由"
+  },
+  "day:au6:choice:0:hero": {
+    "label": "墨尔本近郊二选一：企鹅岛或酒乡",
+    "source": "Downloaded cache",
+    "title": "墨尔本近郊二选一：企鹅岛或酒乡"
+  },
+  "day:au6:choice:0:highlight:0": {
+    "label": "Penguin Parade观景台",
+    "source": "Downloaded cache",
+    "title": "Penguin Parade观景台"
+  },
+  "day:au6:choice:0:highlight:1": {
+    "label": "The Nobbies",
+    "source": "Downloaded cache",
+    "title": "The Nobbies"
+  },
+  "day:au6:choice:1:hero": {
+    "label": "墨尔本近郊二选一：企鹅岛或酒乡",
+    "source": "Downloaded cache",
+    "title": "墨尔本近郊二选一：企鹅岛或酒乡"
+  },
+  "day:au6:choice:1:highlight:0": {
+    "label": "葡萄园山谷视角",
+    "source": "Downloaded cache",
+    "title": "葡萄园山谷视角"
+  },
+  "day:au6:choice:1:highlight:1": {
+    "label": "酒庄午餐",
+    "source": "Downloaded cache",
+    "title": "酒庄午餐"
+  },
+  "day:d01:hero": {
+    "label": "落地基督城，只做三件事",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:d01:highlight:0": {
+    "label": "租车验车照片",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:d01:highlight:1": {
+    "label": "超市补给",
+    "source": "Downloaded cache",
+    "title": "超市补给"
+  },
+  "day:d02:hero": {
+    "label": "穿过坎特伯雷平原，抵达星空湖",
+    "source": "Downloaded cache",
+    "title": "穿过坎特伯雷平原，抵达星空湖"
+  },
+  "day:d02:highlight:0": {
+    "label": "好牧羊人教堂",
+    "source": "Downloaded cache",
+    "title": "好牧羊人教堂"
+  },
+  "day:d02:highlight:1": {
+    "label": "Mount John全景",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:d02:highlight:2": {
+    "label": "Aoraki Mackenzie星空",
+    "source": "Downloaded cache",
+    "title": "Aoraki Mackenzie星空"
+  },
+  "day:d03:hero": {
+    "label": "普卡基蓝与Aoraki雪山正面",
+    "source": "Downloaded cache",
+    "title": "普卡基蓝与Aoraki雪山正面"
+  },
+  "day:d03:highlight:0": {
+    "label": "Peter's Lookout",
+    "source": "Downloaded cache",
+    "title": "Peter's Lookout"
+  },
+  "day:d03:highlight:1": {
+    "label": "Hooker Valley Track",
+    "source": "Downloaded cache",
+    "title": "Hooker Valley Track"
+  },
+  "day:d03:highlight:2": {
+    "label": "Hooker Lake终点",
+    "source": "Downloaded cache",
+    "title": "Hooker Lake终点"
+  },
+  "day:d04:hero": {
+    "label": "穿过黏土尖塔和Lindis Pass",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:d04:highlight:0": {
+    "label": "Omarama Clay Cliffs",
+    "source": "Downloaded cache",
+    "title": "Omarama Clay Cliffs"
+  },
+  "day:d04:highlight:1": {
+    "label": "Lindis Pass",
+    "source": "Downloaded cache",
+    "title": "Lindis Pass"
+  },
+  "day:d04:highlight:2": {
+    "label": "That Wānaka Tree",
+    "source": "Downloaded cache",
+    "title": "That Wānaka Tree"
+  },
+  "day:d05:hero": {
+    "label": "把Wānaka留给湖、山和慢早餐",
+    "source": "Downloaded cache",
+    "title": "把Wānaka留给湖、山和慢早餐"
+  },
+  "day:d05:highlight:0": {
+    "label": "Diamond Lake",
+    "source": "Downloaded cache",
+    "title": "Diamond Lake"
+  },
+  "day:d05:highlight:1": {
+    "label": "Wānaka湖滨",
+    "source": "Downloaded cache",
+    "title": "Wānaka湖滨"
+  },
+  "day:d05:highlight:2": {
+    "label": "Rippon高地视野",
+    "source": "Downloaded cache",
+    "title": "Rippon高地视野"
+  },
+  "day:d06:hero": {
+    "label": "Cardrona与Arrowtown，把路开进皇后镇",
+    "source": "Downloaded cache",
+    "title": "Cardrona与Arrowtown，把路开进皇后镇"
+  },
+  "day:d06:highlight:0": {
+    "label": "Cardrona Hotel",
+    "source": "Downloaded cache",
+    "title": "Cardrona Hotel"
+  },
+  "day:d06:highlight:1": {
+    "label": "Arrowtown华人定居点",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:d06:highlight:2": {
+    "label": "Lake Hayes",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:d07:hero": {
+    "label": "Glenorchy公路与皇后镇夜景",
+    "source": "Downloaded cache",
+    "title": "Glenorchy公路与皇后镇夜景"
+  },
+  "day:d07:highlight:0": {
+    "label": "Bennett's Bluff",
+    "source": "Downloaded cache",
+    "title": "Bennett's Bluff"
+  },
+  "day:d07:highlight:1": {
+    "label": "Glenorchy红棚",
+    "source": "Downloaded cache",
+    "title": "Glenorchy红棚"
+  },
+  "day:d07:highlight:2": {
+    "label": "Skyline Bob's Peak",
+    "source": "Downloaded cache",
+    "title": "Skyline Bob's Peak"
+  },
+  "day:d08:hero": {
+    "label": "从冒险之都转入峡湾前厅",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:d08:highlight:0": {
+    "label": "Lake Te Anau湖滨",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:d08:highlight:1": {
+    "label": "Te Anau Bird Sanctuary",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:d08:highlight:2": {
+    "label": "Glowworm Caves",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:d09:hero": {
+    "label": "Milford Sound：路本身就是景点",
+    "source": "Downloaded cache",
+    "title": "Milford Sound：路本身就是景点"
+  },
+  "day:d09:highlight:0": {
+    "label": "Mirror Lakes",
+    "source": "Downloaded cache",
+    "title": "Mirror Lakes"
+  },
+  "day:d09:highlight:1": {
+    "label": "Homer Tunnel前高山",
+    "source": "Downloaded cache",
+    "title": "Homer Tunnel前高山"
+  },
+  "day:d09:highlight:2": {
+    "label": "Milford Sound Cruise",
+    "source": "Downloaded cache",
+    "title": "Milford Sound Cruise"
+  },
+  "day:d10:hero": {
+    "label": "全程最长转场：蒂阿瑙到哈斯特",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:d10:highlight:0": {
+    "label": "Blue Pools Track",
+    "source": "Downloaded cache",
+    "title": "Blue Pools Track"
+  },
+  "day:d10:highlight:1": {
+    "label": "Thunder Creek Falls",
+    "source": "Downloaded cache",
+    "title": "Thunder Creek Falls"
+  },
+  "day:d10:highlight:2": {
+    "label": "Haast海岸",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:d11:hero": {
+    "label": "西海岸雨林、镜湖与双冰川",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:d11:highlight:0": {
+    "label": "Ship Creek",
+    "source": "Downloaded cache",
+    "title": "Ship Creek"
+  },
+  "day:d11:highlight:1": {
+    "label": "Lake Matheson",
+    "source": "Downloaded cache",
+    "title": "Lake Matheson"
+  },
+  "day:d11:highlight:2": {
+    "label": "Franz Josef小镇",
+    "source": "Downloaded cache",
+    "title": "Franz Josef小镇"
+  },
+  "day:d12:hero": {
+    "label": "冰川晨光之后，追一抹峡谷蓝",
+    "source": "Downloaded cache",
+    "title": "冰川晨光之后，追一抹峡谷蓝"
+  },
+  "day:d12:highlight:0": {
+    "label": "Hokitika Gorge",
+    "source": "Downloaded cache",
+    "title": "Hokitika Gorge"
+  },
+  "day:d12:highlight:1": {
+    "label": "Hokitika Beach Sign",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:d12:highlight:2": {
+    "label": "Glow Worm Dell",
+    "source": "Downloaded cache",
+    "title": "Glow Worm Dell"
+  },
+  "day:d13:hero": {
+    "label": "沿SH73翻越Arthur's Pass，住进Castle Hill",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:d13:highlight:0": {
+    "label": "Otira Viaduct Lookout",
+    "source": "Downloaded cache",
+    "title": "Otira Viaduct Lookout"
+  },
+  "day:d13:highlight:1": {
+    "label": "Arthur's Pass Village",
+    "source": "Downloaded cache",
+    "title": "Arthur's Pass Village"
+  },
+  "day:d13:highlight:2": {
+    "label": "Kura Tāwhiti晚光",
+    "source": "https://commons.wikimedia.org/wiki/File%3ACastle_Hill_Canterbury_NZ.jpg",
+    "title": "File:Castle Hill Canterbury NZ.jpg"
+  },
+  "day:d14:hero": {
+    "label": "Castle Hill晨光，回到基督城入住第6套",
+    "source": "Downloaded cache",
+    "title": "Castle Hill晨光，回到基督城入住第6套"
+  },
+  "day:d14:highlight:0": {
+    "label": "Kura Tāwhiti / Castle Hill",
+    "source": "Downloaded cache",
+    "title": "Kura Tāwhiti / Castle Hill"
+  },
+  "day:d14:highlight:1": {
+    "label": "Springfield小镇",
+    "source": "Downloaded cache",
+    "title": "Springfield小镇"
+  },
+  "day:d14:highlight:2": {
+    "label": "New Regent Street",
+    "source": "Downloaded cache",
+    "title": "New Regent Street"
+  },
+  "day:d15:hero": {
+    "label": "基督城市区慢游：花园、艺术与河畔",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:d15:highlight:0": {
+    "label": "Christchurch Botanic Gardens",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:d15:highlight:1": {
+    "label": "Arts Centre / Art Gallery",
+    "source": "Downloaded cache",
+    "title": "Arts Centre / Art Gallery"
+  },
+  "day:d15:highlight:2": {
+    "label": "Riverside Market与New Regent Street",
+    "source": "Downloaded cache",
+    "title": "Riverside Market与New Regent Street"
+  },
+  "day:d16:hero": {
+    "label": "退房、加油还车，飞回悉尼转成都",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:d16:highlight:0": {
+    "label": "还车前车况",
+    "source": "OpenAI generated local travel image"
+  },
+  "day:d16:highlight:1": {
+    "label": "机场最后合影",
+    "source": "OpenAI generated local travel image"
+  },
+  "hotel:sydney-ibis": {
+    "label": "ibis Styles Sydney Central",
+    "source": "Downloaded cache",
+    "title": "ibis Styles Sydney Central"
+  },
+  "hotel:melbourne-hie": {
+    "label": "Holiday Inn Express Melbourne Little Collins",
+    "source": "Downloaded cache",
+    "title": "Holiday Inn Express Melbourne Little Collins"
+  },
+  "hotel:chc-airport": {
+    "label": "Airport Gateway Motor Lodge",
+    "source": "OpenAI generated local travel image"
+  },
+  "hotel:tekapo": {
+    "label": "New peaceful / warm / family friendly Unit B",
+    "source": "Downloaded cache",
+    "title": "New peaceful / warm / family friendly Unit B"
+  },
+  "hotel:twizel": {
+    "label": "A True Family House",
+    "source": "Downloaded cache",
+    "title": "A True Family House"
+  },
+  "hotel:wanaka": {
+    "label": "Cosy home with indoor fireplace / outdoor patio",
+    "source": "Downloaded cache",
+    "title": "Cosy home with indoor fireplace / outdoor patio"
+  },
+  "hotel:queenstown": {
+    "label": "Queenstown Mountain View Retreat",
+    "source": "User booking screenshot"
+  },
+  "hotel:teanau": {
+    "label": "Relaxing Te Anau Retreat",
+    "source": "Downloaded cache",
+    "title": "Relaxing Te Anau Retreat"
+  },
+  "hotel:haast": {
+    "label": "Beachfront Paradise: The Black Moth",
+    "source": "OpenAI generated local travel image"
+  },
+  "hotel:franz": {
+    "label": "TWO FOUR CRON · Downtown 2 Bedroom Premium Stay",
+    "source": "OpenAI generated local travel image"
+  },
+  "hotel:hokitika": {
+    "label": "Hoki Boatshed Accommodation",
+    "source": "Downloaded cache",
+    "title": "Hoki Boatshed Accommodation"
+  },
+  "hotel:castlehill": {
+    "label": "Castle Hill现代宽敞度假屋",
+    "source": "Downloaded cache",
+    "title": "Castle Hill现代宽敞度假屋"
+  },
+  "hotel:chc-final": {
+    "label": "第6套：漫步到体育场 · 2卧2卫 · 预留停车位",
+    "source": "OpenAI generated local travel image"
+  }
+}
