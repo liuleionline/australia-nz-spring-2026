@@ -3,7 +3,7 @@
   const API_BASE = String(window.ROUTEBOOK_API_BASE || "").replace(/\/$/, "");
   const apiUrl = (path) => `${API_BASE}${path}`;
   const data = window.TRIP_DATA;
-  const baseExpenses = [];
+  const baseExpenses = (data.accounting?.expenses || []).map((item) => ({ ...item, participants: [...(item.participants || [])] }));
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const money = (value) => {
