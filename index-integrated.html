@@ -6,18 +6,14 @@
   <meta name="theme-color" content="#123a32">
   <meta name="description" content="2026 澳新之春：悉尼、墨尔本与新西兰南岛自驾互动路书">
   <title>澳新之春 · 完整路书预览版</title>
-  <link rel="stylesheet" href="integrated-styles.css">
+  <link rel="stylesheet" href="integrated-styles.css?v=20260821-4">
 </head>
 <body>
   <header class="hero" id="top">
     <div class="hero-shade"></div>
-    <nav class="topbar" aria-label="页面导航">
+    <nav class="topbar" aria-label="网站工具">
       <a class="brand" href="#top"><span class="brand-mark">AU/NZ</span><span>澳新之春</span></a>
-      <button id="menuBtn" class="menu-btn" aria-expanded="false" aria-controls="topnav">目录</button>
       <div id="authBar" class="auth-bar" aria-live="polite"></div>
-      <div class="topnav" id="topnav">
-        <a href="#overview">总览</a><a href="#flights">航班</a><a href="#route">路线</a><a href="#days">每日</a><a href="#lodging">住宿</a><a href="#journal">游记</a>
-      </div>
     </nav>
     <div class="hero-content">
       <p class="eyebrow">PREVIEW · 资料整合日期 2026.08.16</p>
@@ -31,18 +27,18 @@
 
   <nav class="page-nav" id="pageNav" aria-label="路书分页导航">
     <div class="page-nav-inner">
-      <button class="page-nav-btn is-active" type="button" data-page-target="overview">01 · 总览</button>
-      <button class="page-nav-btn" type="button" data-page-target="flights">02 · 航班</button>
-      <button class="page-nav-btn" type="button" data-page-target="route">03 · 路线</button>
-      <button class="page-nav-btn" type="button" data-page-target="days">04 · 每日</button>
-      <button class="page-nav-btn" type="button" data-page-target="lodging">05 · 住宿</button>
-      <button class="page-nav-btn" type="button" data-page-target="booking">06 · 核对</button>
-      <button class="page-nav-btn" type="button" data-page-target="budget">07 · 账本</button>
-      <button class="page-nav-btn" type="button" data-page-target="prep">08 · 准备</button>
-      <button class="page-nav-btn" type="button" data-page-target="journal">09 · 游记</button>
-      <button class="page-nav-btn" type="button" data-page-target="sources">10 · 来源</button>
+      <button class="page-nav-btn is-active" type="button" data-page-target="overview">总览</button>
+      <button class="page-nav-btn" type="button" data-page-target="flights">航班</button>
+      <button class="page-nav-btn" type="button" data-page-target="route">路线</button>
+      <button class="page-nav-btn" type="button" data-page-target="days">每日</button>
+      <button class="page-nav-btn" type="button" data-page-target="lodging" data-auth-only hidden>住宿</button>
+      <button class="page-nav-btn" type="button" data-page-target="booking">核对</button>
+      <button class="page-nav-btn" type="button" data-page-target="budget" data-auth-only hidden>账本</button>
+      <button class="page-nav-btn" type="button" data-page-target="prep">准备</button>
+      <button class="page-nav-btn" type="button" data-page-target="journal">游记</button>
+      <button class="page-nav-btn" type="button" data-page-target="sources">来源</button>
     </div>
-    <div class="page-nav-status" id="pageProgress" aria-live="polite">1 / 10 · 总览</div>
+    <div class="page-nav-status" id="pageProgress" aria-live="polite">总览</div>
   </nav>
 
   <main>
@@ -70,7 +66,7 @@
       <article id="dayDetail" class="day-detail" aria-live="polite"></article>
     </section>
 
-    <section class="section page-panel" id="lodging" data-page="lodging" data-page-label="住宿">
+    <section class="section page-panel" id="lodging" data-page="lodging" data-page-label="住宿" data-auth-only hidden>
       <div class="section-heading section-heading-split"><div><p class="eyebrow">21 NIGHTS</p><h2>最终住宿汇总</h2></div><p>金额按你提供的最终账本截图录入；悉尼机场与悉尼市区两项不AA，其余住宿按两家AA。</p></div>
       <div id="lodgingGrid" class="lodging-grid"></div>
     </section>
@@ -80,7 +76,7 @@
       <div id="bookingList" class="booking-list"></div>
     </section>
 
-    <section class="section page-panel" id="budget" data-page="budget" data-page-label="旅行账本">
+    <section class="section page-panel" id="budget" data-page="budget" data-page-label="旅行账本" data-auth-only hidden>
       <div class="section-heading"><p class="eyebrow">BUDGET</p><h2>旅行账本</h2><p>交通、住宿等消费按类型着色；四位旅行者登录后可继续补记账目。</p></div>
       <div id="budgetSummary" class="budget-summary"></div>
       <div id="ledgerToolbar" class="ledger-toolbar"></div>
@@ -111,11 +107,12 @@
   <button class="backtop" id="backTop" aria-label="回到顶部">↑</button>
   <div id="loginModal" class="modal is-hidden" aria-hidden="true"></div>
   <div id="expenseModal" class="modal is-hidden" aria-hidden="true"></div>
-  <script src="trip-data.js"></script>
-  <script src="integrated-data.js"></script>
-  <script src="route-image-map.js"></script>
+  <script src="trip-data.js?v=20260821-3"></script>
+  <script src="integrated-data.js?v=20260821-4"></script>
+    <script src="lodging-image-overrides.js?v=20260821-4"></script>
+  <script src="route-image-map.js?v=20260821-3"></script>
   <script>window.ROUTEBOOK_API_BASE = "https://g2-struc.ixx.men";</script>
-  <script src="integrated-app.js"></script>
-  <script src="page-navigation.js"></script>
+  <script src="integrated-app.js?v=20260821-4"></script>
+  <script src="page-navigation.js?v=20260821-4"></script>
 </body>
 </html>
