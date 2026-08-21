@@ -479,7 +479,7 @@
     $("#exportJsonBtn").addEventListener("click", exportJson);
     $("#loadMapBtn").addEventListener("click", loadMap);
     $("#menuBtn")?.addEventListener("click", () => { const nav = $("#topnav"); if (!nav) return; const on = nav.classList.toggle("is-open"); $("#menuBtn")?.setAttribute("aria-expanded", String(on)); });
-    $("#topnav a").forEach((link) => link.addEventListener("click", () => $("#topnav")?.classList.remove("is-open")));
+    $$("#topnav a").forEach((link) => link.addEventListener("click", () => $("#topnav")?.classList.remove("is-open")));
     $("#backTop").addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
     window.addEventListener("scroll", () => $("#backTop").classList.toggle("is-visible", window.scrollY > 900), { passive: true });
     $("#saveJournalBtn").addEventListener("click", saveJournal);
