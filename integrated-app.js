@@ -3,7 +3,7 @@
   const API_BASE = String(window.ROUTEBOOK_API_BASE || "").replace(/\/$/, "");
   const apiUrl = (path) => `${API_BASE}${path}`;
   const data = window.TRIP_DATA;
-  const baseExpenses = (data.accounting?.expenses || []).map((item) => ({ ...item, participants: [...(item.participants || [])] }));
+  const baseExpenses = [];
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const money = (value) => {
@@ -26,6 +26,16 @@
   let mapLoaded = false;
   let currentUser = null;
   let canEdit = false;
+
+  function syncAuthState() {
+    const authenticated = Boolean(currentUser && canEdit);
+    document.body.classList.toggle("is-authenticated", authenticated);
+    document.body.classList.toggle("is-guest", !authenticated);
+    document.dispatchEvent(new CustomEvent("routebook:auth-changed", {
+      detail: { authenticated, canEdit }
+    }));
+  }
+
   let taskState = {};
   let ledgerFilter = "all";
   let expenseSubmitting = false;
@@ -61,6 +71,7 @@
       if (response.ok) { const payload = await response.json(); currentUser = payload.user || null; }
     } catch { currentUser = null; }
     canEdit = !!currentUser && !currentUser.mustChange;
+    syncAuthState();
     await refreshTaskState();
     await refreshExpenseState();
   }
@@ -99,20 +110,18 @@
     $("#authForm").addEventListener("submit", async (event) => {
       event.preventDefault(); const form = new FormData(event.currentTarget); const isChange = forceChange || !!currentUser;
       const body = isChange ? { action: "change-password", currentPassword: form.get("currentPassword"), newPassword: form.get("newPassword") } : { action: "login", username: form.get("username"), password: form.get("password") };
-      try { const response = await fetch(apiUrl("/api/routebook/auth"), { method: "POST", credentials: "include", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }); const payload = await response.json(); if (!response.ok) throw new Error(payload.error || "操作失败"); if (body.action === "login") { currentUser = payload.user; if (payload.user.mustChange) { closeLoginModal(); openLoginModal(true); return; } } else { currentUser = { ...currentUser, mustChange: false }; } canEdit = true; closeLoginModal(); await refreshTaskState(); renderAuthBar(); renderBookings(); renderBudget(); loadJournalForm(activeJournalId); } catch (error) { $("#authError").textContent = error.message || "操作失败，请稍后重试"; }
+      try { const response = await fetch(apiUrl("/api/routebook/auth"), { method: "POST", credentials: "include", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }); const payload = await response.json(); if (!response.ok) throw new Error(payload.error || "操作失败"); if (body.action === "login") { currentUser = payload.user; if (payload.user.mustChange) { closeLoginModal(); openLoginModal(true); return; } } else { currentUser = { ...currentUser, mustChange: false }; } canEdit = true; syncAuthState(); closeLoginModal(); await refreshTaskState(); await refreshExpenseState(); renderAuthBar(); renderBookings(); renderBudget(); loadJournalForm(activeJournalId); } catch (error) { $("#authError").textContent = error.message || "操作失败，请稍后重试"; }
     });
   }
 
   function closeLoginModal() { const modal = $("#loginModal"); modal.classList.add("is-hidden"); modal.setAttribute("aria-hidden", "true"); modal.innerHTML = ""; }
-  async function logout() { try { await fetch(apiUrl("/api/routebook/auth"), { method: "POST", credentials: "include", headers: { "content-type": "application/json" }, body: JSON.stringify({ action: "logout" }) }); } catch { /* ignore */ } currentUser = null; canEdit = false; renderAuthBar(); renderBookings(); renderBudget(); loadJournalForm(activeJournalId); }
+  async function logout() { try { await fetch(apiUrl("/api/routebook/auth"), { method: "POST", credentials: "include", headers: { "content-type": "application/json" }, body: JSON.stringify({ action: "logout" }) }); } catch { /* ignore */ } currentUser = null; canEdit = false; syncAuthState(); renderAuthBar(); renderBookings(); renderBudget(); loadJournalForm(activeJournalId); }
 
   function renderHero() {
-    const total = data.accounting?.lodgingTotal || data.hotels.reduce((sum, hotel) => sum + Number(hotel.price || 0), 0);
     $("#heroStats").innerHTML = [
       `<span class="stat-pill"><strong>${data.meta.nights}</strong> 晚住宿</span>`,
       `<span class="stat-pill"><strong>${data.days.length}</strong> 日卡片</span>`,
-      `<span class="stat-pill">南岛自驾 <strong>${Number(data.meta.distanceKm).toLocaleString()}</strong> km</span>`,
-      `<span class="stat-pill">住宿 <strong>${money(total)}</strong></span>`
+      `<span class="stat-pill">南岛自驾 <strong>${Number(data.meta.distanceKm).toLocaleString()}</strong> km</span>`
     ].join("");
   }
 
@@ -203,7 +212,7 @@
   }
 
   function renderLodging() {
-    $("#lodgingGrid").innerHTML = data.hotels.map((hotel) => `<article class="stay-card"><img class="stay-image" src="${hotel.image || fallbackImage}" alt="${esc(hotel.city)}住宿" loading="lazy" decoding="async"><div class="stay-body"><div class="stay-date">${esc(hotel.date)} · ${hotel.nights}晚 · ${esc(hotel.city)}</div><h3>${esc(hotel.name)}</h3><div class="stay-address">${esc(hotel.address)}</div><div class="stay-facts">${hotel.facts.map((fact) => `<span>${esc(fact)}</span>`).join("")}</div><p class="micro">${esc(hotel.note || "")}</p><div class="day-actions"><a class="link-btn link-btn-primary" href="${hotel.map}" target="_blank" rel="noreferrer">Google导航</a>${hotel.link ? `<a class="link-btn" href="${hotel.link}" target="_blank" rel="noreferrer">住宿页面</a>` : ""}</div><div class="stay-price"><strong>${money(hotel.price)}</strong><span>两家合计<br>你家 ${money(hotel.user)}<br>沈家 ${money(hotel.shen)}</span></div></div></article>`).join("");
+    $("#lodgingGrid").innerHTML = data.hotels.map((hotel) => `<article class="stay-card"><img class="stay-image" src="${hotel.image || fallbackImage}" alt="${esc(hotel.city)}住宿实景" loading="lazy" decoding="async" style="object-position:${esc(hotel.imagePosition || "center center")}" onerror="this.onerror=null;this.src='${fallbackImage}'"><div class="stay-body"><div class="stay-date">${esc(hotel.date)} · ${hotel.nights}晚 · ${esc(hotel.city)}</div><h3>${esc(hotel.name)}</h3><div class="stay-address">${esc(hotel.address)}</div><div class="stay-facts">${hotel.facts.map((fact) => `<span>${esc(fact)}</span>`).join("")}</div><p class="micro">${esc(hotel.note || "")}</p><div class="day-actions"><a class="link-btn link-btn-primary" href="${hotel.map}" target="_blank" rel="noreferrer">Google导航</a>${hotel.link ? `<a class="link-btn" href="${hotel.link}" target="_blank" rel="noreferrer">住宿页面</a>` : ""}</div>${hotel.price != null ? `<div class="stay-price"><strong>${money(hotel.price)}</strong><span>两家合计<br>你家 ${money(hotel.user)}<br>沈家 ${money(hotel.shen)}</span></div>` : ""}</div></article>`).join("");
   }
 
   async function refreshTaskState() {
@@ -270,7 +279,7 @@
       ["交通合计", money(byType["交通"] || 0), "机票 / 租车"],
       ["住宿合计", money(byType["住宿"] || 0), "16笔住宿记录"],
       ["LL已付款", money(paid.LL), "付款人汇总"],
-      ["住宿明细", money(total), "下方保留逐晚拆分"]
+      ["参与成员", "4人", "登录后由VPS实时同步"]
     ].map((item) => `<article class="budget-card"><span>${item[0]}</span><strong>${item[1]}</strong><small>${item[2]}</small></article>`).join("");
     $("#ledgerToolbar").innerHTML = `<div class="ledger-toolbar-inner"><strong>账单明细</strong><label>筛选 <select id="ledgerTypeFilter"><option value="all">全部类型</option><option value="交通" ${ledgerFilter === "交通" ? "selected" : ""}>交通</option><option value="住宿" ${ledgerFilter === "住宿" ? "selected" : ""}>住宿</option><option value="餐饮" ${ledgerFilter === "餐饮" ? "selected" : ""}>餐饮</option><option value="门票" ${ledgerFilter === "门票" ? "selected" : ""}>门票</option><option value="购物" ${ledgerFilter === "购物" ? "selected" : ""}>购物</option><option value="娱乐" ${ledgerFilter === "娱乐" ? "selected" : ""}>娱乐</option><option value="旅行用品" ${ledgerFilter === "旅行用品" ? "selected" : ""}>旅行用品</option><option value="其他" ${ledgerFilter === "其他" ? "selected" : ""}>其他</option></select></label><span class="ledger-legend"><span class="ledger-legend-item ledger-type-transport">交通</span><span class="ledger-legend-item ledger-type-lodging">住宿</span><span class="ledger-legend-item ledger-type-dining">餐饮</span><span class="ledger-legend-item ledger-type-tickets">门票</span><span class="ledger-legend-item ledger-type-other">其他</span></span>${canEdit ? `<button class="btn btn-accent ledger-add-btn" id="addExpenseBtn" type="button">＋ 新增记账</button>` : `<span class="ledger-readonly-note">登录后可新增记账</span>`}</div>`;
     $("#ledgerTypeFilter").onchange = (event) => { ledgerFilter = event.target.value; renderBudget(); };
@@ -280,7 +289,8 @@
     $("#ledgerRows").innerHTML = filtered.map((item) => `<tr class="ledger-row ledger-type-${typeClass(item.type)}"><td>${esc(item.date)}</td><td><span class="ledger-type-chip">${esc(item.type)}</span></td><td>${esc(item.note)}</td><td><strong>${money(item.amount)}</strong></td><td>${esc(labels[item.payer] || item.payer)}</td><td>${esc((item.participants || []).join("、"))}</td><td class="ledger-actions">${canEdit ? `<button class="ledger-icon-btn" data-edit-expense="${esc(item.id)}" type="button">编辑</button><button class="ledger-icon-btn ledger-icon-btn-danger" data-delete-expense="${esc(item.id)}" type="button">删除</button>` : "—"}</td></tr>`).join("");
     $$("[data-edit-expense]", $("#ledgerRows")).forEach((button) => button.addEventListener("click", () => openExpenseModal((data.accounting.expenses || []).find((item) => item.id === button.dataset.editExpense))));
     $$("[data-delete-expense]", $("#ledgerRows")).forEach((button) => button.addEventListener("click", () => deleteExpense(button.dataset.deleteExpense)));
-    $("#costRows").innerHTML = data.hotels.map((hotel) => `<tr><td>${esc(hotel.date)} · ${esc(hotel.city)}</td><td>${hotel.nights}</td><td>${money(hotel.price)}</td><td>${money(hotel.user)}</td><td>${money(hotel.shen)}</td></tr>`).join("") + `<tr><td><strong>合计</strong></td><td>${data.meta.nights}</td><td><strong>${money(total)}</strong></td><td><strong>${money(user)}</strong></td><td><strong>${money(shen)}</strong></td></tr>`;
+    const lodgingRows = expenses.filter((item) => item.type === "住宿");
+    $("#costRows").innerHTML = lodgingRows.length ? lodgingRows.map((item) => `<tr><td>${esc(item.date)} · ${esc(item.note)}</td><td>—</td><td>${money(item.amount)}</td><td colspan="2">${esc(labels[item.payer] || item.payer)} 付款</td></tr>`).join("") + `<tr><td><strong>住宿账目合计</strong></td><td>—</td><td><strong>${money(lodgingRows.reduce((sum, item) => sum + Number(item.amount || 0), 0))}</strong></td><td colspan="2">VPS实时数据</td></tr>` : `<tr><td colspan="5">登录后从VPS加载住宿账目。</td></tr>`;
   }
 
   function openExpenseModal(expense = null) {
@@ -468,8 +478,8 @@
     $("#exportMdBtn").addEventListener("click", exportMarkdown);
     $("#exportJsonBtn").addEventListener("click", exportJson);
     $("#loadMapBtn").addEventListener("click", loadMap);
-    $("#menuBtn").addEventListener("click", () => { const nav = $("#topnav"); const on = nav.classList.toggle("is-open"); $("#menuBtn").setAttribute("aria-expanded", String(on)); });
-    $$("#topnav a").forEach((link) => link.addEventListener("click", () => $("#topnav").classList.remove("is-open")));
+    $("#menuBtn")?.addEventListener("click", () => { const nav = $("#topnav"); if (!nav) return; const on = nav.classList.toggle("is-open"); $("#menuBtn")?.setAttribute("aria-expanded", String(on)); });
+    $("#topnav a").forEach((link) => link.addEventListener("click", () => $("#topnav")?.classList.remove("is-open")));
     $("#backTop").addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
     window.addEventListener("scroll", () => $("#backTop").classList.toggle("is-visible", window.scrollY > 900), { passive: true });
     $("#saveJournalBtn").addEventListener("click", saveJournal);
