@@ -306,3 +306,15 @@ body:not(.page-is-overview) .hero .hero-caption {
     animation: none !important;
   }
 }
+
+
+/* 2026-08-21: authenticated pagination and lodging imagery */
+[hidden] { display: none !important; }
+body.is-guest [data-auth-only] { display: none !important; }
+.topbar .auth-bar { margin-left: auto; }
+.stay-image { object-position: center center; }
+@media (max-width: 760px) {
+  .topbar { grid-template-columns: minmax(0, 1fr) auto; }
+  .auth-welcome { display: none; }
+  .auth-button { min-height: 44px; white-space: nowrap; }
+}
