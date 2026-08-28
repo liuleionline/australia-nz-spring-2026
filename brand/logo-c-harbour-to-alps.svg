@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="t d">
+<title id="t">方案 C：海港到雪山</title><desc id="d">海港拱桥与南岛雪山连接成一条旅行路线</desc>
+<rect x="13" y="13" width="230" height="230" rx="58" fill="#123f38"/>
+<path d="M37 151h182" stroke="#f3e3bf" stroke-width="11" stroke-linecap="round"/>
+<path d="M44 151c18-67 70-67 88 0M47 124h82" fill="none" stroke="#d67550" stroke-width="12" stroke-linecap="round"/>
+<path d="M121 151l43-69 24 37 17-24 28 56z" fill="#f3e3bf"/>
+<path d="M148 108l16-26 11 17-10-4-7 10zM178 133l10-14 8 12-8-3z" fill="#fff"/>
+<path d="M38 184c30-12 51-12 78 0s49 12 102-1" fill="none" stroke="#287b6d" stroke-width="12" stroke-linecap="round"/>
+<circle cx="54" cy="184" r="8" fill="#fff"/><circle cx="213" cy="183" r="8" fill="#fff"/>
+</svg>

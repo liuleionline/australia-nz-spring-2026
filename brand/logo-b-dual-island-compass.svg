@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="t d">
+<title id="t">方案 B：双岛罗盘</title><desc id="d">以双岛轮廓、罗盘和路线点组成的旅行图标</desc>
+<rect x="14" y="14" width="228" height="228" rx="64" fill="#f4ead2"/>
+<circle cx="128" cy="128" r="84" fill="none" stroke="#123f38" stroke-width="12"/>
+<path d="M128 35v24M128 197v24M35 128h24M197 128h24" stroke="#123f38" stroke-width="9" stroke-linecap="round"/>
+<path d="M89 79c28 2 43 18 45 43-23-6-43-1-57 18-15-25-11-47 12-61z" fill="#287b6d"/>
+<path d="M166 174c-28-2-43-18-45-43 23 6 43 1 57-18 15 25 11 47-12 61z" fill="#d67550"/>
+<path d="M97 163c19 12 39 9 62-11" fill="none" stroke="#123f38" stroke-width="9" stroke-linecap="round" stroke-dasharray="2 17"/>
+<circle cx="94" cy="161" r="8" fill="#123f38"/><circle cx="162" cy="150" r="8" fill="#123f38"/>
+</svg>

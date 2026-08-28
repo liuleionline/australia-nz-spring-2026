@@ -1,0 +1,22 @@
+{
+  "name": "australia-nz-routebook-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Secure interactive backend for the Australia & New Zealand routebook",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.mjs",
+    "check": "node --check server.mjs && node --check smoke-test.mjs",
+    "test": "node smoke-test.mjs"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "node-cron": "^3.0.3"
+  }
+}

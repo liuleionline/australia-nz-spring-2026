@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="t d">
+<title id="t">澳新之春：路线罗盘</title><desc id="d">以罗盘和跨海路线表达澳新旅行</desc>
+<rect width="512" height="512" rx="116" fill="#f3eadb"/>
+<circle cx="256" cy="256" r="158" fill="#123f38"/>
+<circle cx="256" cy="256" r="116" fill="none" stroke="#f3eadb" stroke-width="17" opacity=".82"/>
+<path d="m298 151-25 99-99 25 65 18 18 65 25-99 99-25-65-18z" fill="#e06f49"/>
+<circle cx="256" cy="256" r="22" fill="#f3eadb"/>
+<path d="M256 74v35M256 403v35M74 256h35M403 256h35" stroke="#123f38" stroke-width="18" stroke-linecap="round"/>
+<circle cx="101" cy="371" r="18" fill="#e99459"/>
+<path d="M101 371c48-4 59-61 96-69" fill="none" stroke="#e99459" stroke-width="14" stroke-linecap="round" stroke-dasharray="3 25"/>
+</svg>

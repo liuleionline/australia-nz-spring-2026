@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="t d">
+<title id="t">方案 A：南十字星路线章</title><desc id="d">以南十字星和跨海路线组成的圆形旅行徽章</desc>
+<circle cx="128" cy="128" r="116" fill="#123f38"/>
+<path d="M43 161C74 121 102 184 137 132C164 91 187 112 214 76" fill="none" stroke="#d67550" stroke-width="17" stroke-linecap="round"/>
+<circle cx="43" cy="161" r="11" fill="#f3e3bf"/><circle cx="214" cy="76" r="11" fill="#f3e3bf"/>
+<g fill="#fff7e9">
+<path d="M67 55l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z"/>
+<path d="M118 40l4 9 10 1-8 7 3 10-9-5-9 5 3-10-8-7 10-1z"/>
+<path d="M162 59l4 9 10 1-8 7 3 10-9-5-9 5 3-10-8-7 10-1z"/>
+<path d="M137 93l3 7 8 1-6 5 2 8-7-4-7 4 2-8-6-5 8-1z"/>
+</g>
+<text x="128" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="2" fill="#fff7e9">AU/NZ</text>
+</svg>

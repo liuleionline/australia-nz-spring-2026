@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="t d">
+<title id="t">澳新之春：AU/NZ字标</title><desc id="d">以AU与NZ字母和跨海弧线组成的现代旅行标志</desc>
+<rect width="512" height="512" rx="116" fill="#123f38"/>
+<path d="M96 358c79-65 240-63 320 0" fill="none" stroke="#e99459" stroke-width="21" stroke-linecap="round"/>
+<circle cx="107" cy="357" r="18" fill="#f5efe3"/><circle cx="405" cy="357" r="18" fill="#f5efe3"/>
+<text x="256" y="280" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="126" font-weight="800" letter-spacing="-8" fill="#f5efe3">AU</text>
+<path d="M233 309h47" stroke="#e99459" stroke-width="14" stroke-linecap="round"/>
+<text x="256" y="421" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="54" font-weight="700" letter-spacing="12" fill="#f5efe3">NZ</text>
+<circle cx="386" cy="115" r="40" fill="#e99459"/>
+</svg>

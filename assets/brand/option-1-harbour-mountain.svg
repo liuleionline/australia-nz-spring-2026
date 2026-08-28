@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="t d">
+<title id="t">澳新之春：海港与雪山</title><desc id="d">悉尼海港拱桥与南岛雪山结合的旅行标志</desc>
+<rect width="512" height="512" rx="116" fill="#123f38"/>
+<circle cx="382" cy="123" r="45" fill="#e99459"/>
+<path d="M88 286 181 164l64 82 50-65 126 145H86z" fill="#f5efe3"/>
+<path d="m145 212 36-48 26 34-25-6-17 21zM267 218l28-37 34 39-34-12z" fill="#cfe0d8"/>
+<path d="M76 335c69-68 291-68 360 0" fill="none" stroke="#f5efe3" stroke-width="24" stroke-linecap="round"/>
+<path d="M103 337v60m306-60v60M161 300v95m190-95v95" stroke="#f5efe3" stroke-width="18" stroke-linecap="round"/>
+<path d="M82 405c45-24 91-24 137 0s92 24 138 0 75-24 93-16" fill="none" stroke="#e99459" stroke-width="19" stroke-linecap="round"/>
+</svg>

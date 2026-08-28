@@ -1,0 +1,19 @@
+{
+  "name": "澳新之春 · 2026澳新路书",
+  "short_name": "澳新之春",
+  "description": "悉尼、墨尔本与新西兰南岛自驾互动路书",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f2f5ef",
+  "theme_color": "#123a32",
+  "icons": [
+    {
+      "src": "brand/logo-a-southern-cross-route.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

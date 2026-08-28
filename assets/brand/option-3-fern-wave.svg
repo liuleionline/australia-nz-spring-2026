@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="t d">
+<title id="t">澳新之春：银蕨海浪</title><desc id="d">银蕨叶片与塔斯曼海浪融合的旅行标志</desc>
+<rect width="512" height="512" rx="116" fill="#123f38"/>
+<path d="M125 376c87-9 178-84 241-243" fill="none" stroke="#f5efe3" stroke-width="20" stroke-linecap="round"/>
+<g fill="#f5efe3">
+<path d="M177 337c-55 1-78-17-83-54 45-4 77 10 94 37z"/>
+<path d="M221 300c-57-8-76-31-72-68 46 3 75 22 88 53z"/>
+<path d="M260 254c-51-16-66-40-56-73 43 10 67 32 75 62z"/>
+<path d="M293 206c-43-20-52-44-38-73 37 14 56 36 59 65z"/>
+<path d="M335 283c46-32 78-31 101-2-36 30-70 36-99 17z"/>
+<path d="M310 328c42-25 72-20 90 11-35 24-66 24-91 2z"/>
+<path d="M273 363c35-17 61-9 74 20-30 17-56 13-75-8z"/>
+</g>
+<path d="M77 407c52-28 104-28 156 0s104 28 156 0c19-10 36-15 50-16" fill="none" stroke="#e99459" stroke-width="22" stroke-linecap="round"/>
+<circle cx="383" cy="112" r="38" fill="#e99459"/>
+</svg>

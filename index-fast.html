@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#123a32">
+  <title>新西兰南岛自驾路书 · 轻量预览版</title>
+  <link rel="stylesheet" href="fast-styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__inner">
+      <p class="eyebrow">2026.09.25—10.10 · 4人 · 15晚</p>
+      <h1>新西兰南岛自驾路书</h1>
+      <p class="hero__sub">轻量预览版 · 无地图瓦片 · 手机优先</p>
+      <div class="hero__actions">
+        <a class="button button--primary" href="#days">查看每日行程</a>
+        <a class="button" href="#route">查看总路线</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="nav" aria-label="页面导航">
+    <a href="#route">路线</a><a href="#days">每日</a><a href="#hotels">住宿</a><a href="#booking">预约</a><a href="#budget">费用</a>
+  </nav>
+
+  <main>
+    <section id="route" class="section">
+      <div class="section__head">
+        <div><p class="kicker">ROUTE OVERVIEW</p><h2>总线路</h2></div>
+        <span class="fast-badge">0 地图瓦片</span>
+      </div>
+      <p class="lead">路线图改为紧凑示意，打开网页时不再下载整幅互动地图。需要导航时，再点击 Google Maps。</p>
+      <div id="route-strip" class="route-strip" aria-label="全程路线示意"></div>
+      <div class="map-actions">
+        <a class="button button--primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Christchurch+Airport&destination=Queenstown&waypoints=Lake+Tekapo%7CAoraki+Mount+Cook%7CTwizel%7CWanaka%7CArrowtown&travelmode=driving">Google Maps：前半程</a>
+        <a class="button button--primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Queenstown&destination=Christchurch&waypoints=Te+Anau%7CMilford+Sound%7CHaast%7CFranz+Josef%7CHokitika%7CArthurs+Pass%7CCastle+Hill&travelmode=driving">Google Maps：后半程</a>
+        <a class="button" href="index.html">打开原互动地图版</a>
+      </div>
+      <p class="micro">Google Maps 对手机端中途点数量有限制，因此总线路拆成前、后两段；每日页面另有当天导航。</p>
+    </section>
+
+    <section id="days" class="section section--tint">
+      <div class="section__head"><div><p class="kicker">DAY BY DAY</p><h2>每日路书</h2></div></div>
+      <div id="day-tabs" class="day-tabs" aria-label="选择日期"></div>
+      <article id="day-detail" class="day-detail" aria-live="polite"></article>
+    </section>
+
+    <section id="hotels" class="section">
+      <div class="section__head"><div><p class="kicker">15 NIGHTS</p><h2>住宿汇总</h2></div></div>
+      <div id="hotel-grid" class="hotel-grid"></div>
+    </section>
+
+    <section id="booking" class="section section--tint">
+      <div class="section__head"><div><p class="kicker">BOOK AHEAD</p><h2>提前预约</h2></div></div>
+      <div id="booking-list" class="check-grid"></div>
+    </section>
+
+    <section id="budget" class="section">
+      <div class="section__head"><div><p class="kicker">BUDGET</p><h2>住宿费用</h2></div></div>
+      <div class="budget-cards">
+        <div><span>已录入住宿金额</span><strong>¥30,395.72+</strong></div>
+        <div><span>10.8–9 第6套</span><strong>待补订单金额</strong></div>
+        <div><span>分摊规则</span><strong>9.25除外，其余AA</strong></div>
+      </div>
+      <p class="micro">已移除Punakaiki和原10.9基督城旧房；10.7改住Castle Hill，10.8–9使用第6套房源。第6套总价待从订单补录。</p>
+    </section>
+  </main>
+
+  <footer>新西兰南岛自驾路书 · Preview V2 · 2026-08-16</footer>
+  <script src="trip-data.js"></script>
+  <script src="fast-app.js"></script>
+</body>
+</html>

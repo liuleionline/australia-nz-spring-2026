@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#123a32">
+  <meta name="description" content="2026 澳新之春：悉尼、墨尔本与新西兰南岛自驾互动路书">
+  <meta name="application-name" content="澳新之春">
+  <meta name="apple-mobile-web-app-title" content="澳新之春">
+  <link rel="icon" href="brand/logo-a-southern-cross-route.svg" type="image/svg+xml">
+  <link rel="mask-icon" href="brand/logo-a-southern-cross-route.svg" color="#123a32">
+  <link rel="manifest" href="site.webmanifest">
+  <title>澳新之春 · 完整路书预览版</title>
+  <link rel="stylesheet" href="integrated-styles.css?v=20260825-3">
+</head>
+<body>
+  <header class="hero" id="top">
+    <div class="hero-shade"></div>
+    <nav class="topbar" aria-label="网站工具">
+      <a class="brand" href="#top" aria-label="澳新之春首页"><span class="brand-mark"><img src="brand/logo-a-southern-cross-route.svg" alt="" width="40" height="40"></span><span>澳新之春</span></a>
+      <div id="authBar" class="auth-bar" aria-live="polite"></div>
+    </nav>
+    <div class="hero-content">
+      <p class="eyebrow">PREVIEW · 资料整合日期 2026.08.16</p>
+      <h1>从悉尼海港<br>到南岛雪山与峡湾</h1>
+      <p class="hero-lede">2026.09.18—10.11 · 4人 / 2对夫妻 · 城市慢游 + 南岛自驾</p>
+      <div class="hero-stats" id="heroStats"></div>
+      <div class="hero-actions"><a class="btn btn-accent" href="#days">开始看每日行程</a><button class="btn btn-ghost" id="printBtn">打印 / 存 PDF</button></div>
+    </div>
+    <div class="hero-caption">Sydney → Melbourne → Christchurch → South Island loop</div>
+  </header>
+
+  <nav class="page-nav" id="pageNav" aria-label="路书分页导航">
+    <div class="page-nav-inner">
+      <button class="page-nav-btn is-active" type="button" data-page-target="overview">总览</button>
+      <button class="page-nav-btn" type="button" data-page-target="flights">航班</button>
+      <button class="page-nav-btn" type="button" data-page-target="route">路线</button>
+      <button class="page-nav-btn" type="button" data-page-target="days">每日</button>
+      <button class="page-nav-btn" type="button" data-page-target="lodging" data-auth-only hidden>住宿</button>
+      <button class="page-nav-btn" type="button" data-page-target="booking">核对</button>
+      <button class="page-nav-btn" type="button" data-page-target="budget" data-auth-only hidden>账本</button>
+      <button class="page-nav-btn" type="button" data-page-target="prep">准备</button>
+      <button class="page-nav-btn" type="button" data-page-target="journal">游记</button>
+      <button class="page-nav-btn" type="button" data-page-target="sources">来源</button>
+    </div>
+    <div class="page-nav-status" id="pageProgress" aria-live="polite">总览</div>
+  </nav>
+
+  <main>
+    <section class="section intro page-panel is-active" id="overview" data-page="overview" data-page-label="总览">
+      <div class="section-heading"><p class="eyebrow">TRIP AT A GLANCE</p><h2>一条不赶路的澳新环线</h2><p>澳洲段以海港、海岸、城市巷弄和一日近郊为主；9月25日抵达基督城后取车，进入山湖—峡湾—西海岸—Arthur’s Pass环线。地图默认不加载，避免手机打开时下载整幅图。</p></div>
+      <div class="overview-grid" id="overviewCards"></div>
+      <div class="notice notice-warm"><strong>使用提示</strong><span>每天的 Google 地址、餐饮地图和当日导航都可直接点击。天气和营业时间是临行变量，页面里的“核对”项目请出发前再看一次。</span></div>
+    </section>
+
+    <section class="section page-panel" id="flights" data-page="flights" data-page-label="航班">
+      <div class="section-heading section-heading-split"><div><p class="eyebrow">FLIGHT BOARD</p><h2>航班信息与转场提醒</h2></div><span class="tag">均为当地时间</span></div>
+      <div class="flight-table-wrap"><table class="flight-table"><thead><tr><th>日期</th><th>航班</th><th>航段</th><th>时间</th><th>提醒</th></tr></thead><tbody id="flightRows"></tbody></table></div>
+    </section>
+
+    <section class="section route-section page-panel" id="route" data-page="route" data-page-label="路线">
+      <div class="section-heading section-heading-split"><div><p class="eyebrow">ROUTE LOGIC</p><h2>总路线与分段地图</h2></div><span class="tag">轻量加载</span></div>
+      <div id="routeCards" class="route-cards"></div>
+      <div class="map-toolbar"><button class="btn btn-accent" id="loadMapBtn">加载交互地图</button><select id="mapDaySelect" aria-label="选择地图路线"><option value="all">全程方向</option></select><span class="micro">地图仅在点击后加载；若网络不稳定，下面的Google导航仍可用。</span></div>
+      <div id="mapWrap" class="map-wrap is-hidden"><div id="map" class="map"></div><div id="mapSide" class="map-side"></div></div>
+    </section>
+
+    <section class="section section-tint page-panel" id="days" data-page="days" data-page-label="每日路书">
+      <div class="section-heading section-heading-split"><div><p class="eyebrow">DAY BY DAY</p><h2>每日路书</h2></div><p>横向滑动选择日期；手机端每次只展开一天，适合路上查看。</p></div>
+      <div id="dayPicker" class="day-picker" role="tablist" aria-label="选择日期"></div>
+      <article id="dayDetail" class="day-detail" aria-live="polite"></article>
+    </section>
+
+    <section class="section page-panel" id="lodging" data-page="lodging" data-page-label="住宿" data-auth-only hidden>
+      <div class="section-heading section-heading-split"><div><p class="eyebrow">21 NIGHTS</p><h2>最终住宿汇总</h2></div><p>金额按你提供的最终账本截图录入；悉尼机场与悉尼市区两项不AA，其余住宿按两家AA。</p></div>
+      <div id="lodgingGrid" class="lodging-grid"></div>
+    </section>
+
+    <section class="section section-warm page-panel" id="booking" data-page="booking" data-page-label="临行核对">
+      <div class="section-heading"><p class="eyebrow">BOOK AHEAD</p><h2>需要提前订 / 临行核对</h2><p>游客可以查看；四位旅行者登录后可勾选待办，完成状态会同步保留。</p></div>
+      <div id="bookingList" class="booking-list"></div>
+    </section>
+
+    <section class="section page-panel" id="budget" data-page="budget" data-page-label="旅行账本" data-auth-only hidden>
+      <div class="section-heading"><p class="eyebrow">BUDGET</p><h2>旅行账本</h2><p>交通、住宿等消费按类型着色；四位旅行者登录后可继续补记账目。</p></div>
+      <div id="budgetSummary" class="budget-summary"></div>
+      <div id="ledgerToolbar" class="ledger-toolbar"></div>
+      <div id="ledgerAnalysis" class="ledger-analysis"></div>
+      <div id="ledgerSettlement" class="ledger-settlement"></div>
+      <div class="ledger-table-wrap"><table class="ledger-table"><thead><tr><th>日期</th><th>类型</th><th>备注</th><th>金额</th><th>付款人</th><th>参与人</th><th class="ledger-action-head">操作</th></tr></thead><tbody id="ledgerRows"></tbody></table></div>
+      <div class="cost-table-wrap"><table class="cost-table"><thead><tr><th>日期 / 地点</th><th>晚数</th><th>合计</th><th>你家</th><th>沈家</th></tr></thead><tbody id="costRows"></tbody></table></div>
+      <p class="micro">金额按你提供的截图导入；分类、付款人与参与人可在后续记账时继续补充。住宿明细仍保留在下方。</p>
+    </section>
+
+    <section class="section section-tint page-panel" id="prep" data-page="prep" data-page-label="准备">
+      <div class="section-heading"><p class="eyebrow">READY CHECK</p><h2>出发前与自驾底线</h2></div>
+      <div id="prepGrid" class="prep-grid"></div>
+    </section>
+
+    <section class="section journal-section page-panel" id="journal" data-page="journal" data-page-label="游记">
+      <div class="section-heading section-heading-split"><div><p class="eyebrow">TRAVEL JOURNAL</p><h2>每日游记 · 旅途中填写</h2></div><div class="journal-actions"><button class="btn btn-accent" id="exportMdBtn">导出 Markdown</button><button class="btn btn-outline" id="exportJsonBtn">导出 JSON</button><button class="btn btn-outline" id="journalPrintBtn">打印游记 / PDF</button></div></div>
+      <div class="journal-layout"><aside><p class="micro">选择日期</p><div id="journalPicker" class="journal-picker"></div></aside><div class="journal-editor"><div id="journalPrompt" class="journal-prompt"></div><label>今天的纪要<textarea id="journalSummary" rows="5" placeholder="今天去了哪里？最想记住的一个细节是什么？"></textarea></label><div class="journal-two"><label>好吃的 / 餐厅<textarea id="journalFood" rows="4" placeholder="记录菜名、价格、是否值得预约……"></textarea></label><label>好玩的 / 感受<textarea id="journalFeeling" rows="4" placeholder="记录开心、意外、遗憾或下一次想怎么走……"></textarea></label></div><label>照片（可多选，浏览器本地保存）<input id="journalPhotos" type="file" accept="image/*" multiple></label><div id="journalPhotoPreview" class="photo-preview"></div><div class="journal-save"><span id="journalSaved">尚未填写</span><button class="btn btn-accent" id="saveJournalBtn">保存当天游记</button></div></div></div>
+    </section>
+
+    <section class="section section-sources page-panel" id="sources" data-page="sources" data-page-label="来源"><div class="section-heading"><p class="eyebrow">SOURCES</p><h2>官方来源与版本说明</h2></div><div id="sourceList" class="source-list"></div><div class="version-note"><strong>这是整合预览版。</strong> 后续还可以继续补餐厅具体预约号、门票价格、租车合同、实时路况和旅行照片；最终版可直接打印为PDF或部署为手机网页。</div></section>
+    <div class="page-controls" id="pageControls" aria-label="分页控制">
+      <button class="page-control-btn" type="button" data-page-prev>‹ 上一页</button>
+      <div class="page-control-current"><span class="micro">当前章节</span><strong id="pageCurrentLabel">总览</strong></div>
+      <button class="page-control-btn page-control-next" type="button" data-page-next>下一页 ›</button>
+    </div>
+  </main>
+  <button class="backtop" id="backTop" aria-label="回到顶部">↑</button>
+  <div id="loginModal" class="modal is-hidden" aria-hidden="true"></div>
+  <div id="expenseModal" class="modal is-hidden" aria-hidden="true"></div>
+  <div id="accountModal" class="modal is-hidden" aria-hidden="true"></div>
+  <script src="trip-data.js?v=20260826-1"></script>
+  <script src="integrated-data.js?v=20260821-6"></script>
+    <script src="lodging-image-overrides.js?v=20260821-6"></script>
+  <script src="route-image-map.js?v=20260821-3"></script>
+  <script>window.ROUTEBOOK_API_BASE = "https://g2-struc.ixx.men";</script>
+  <script src="integrated-app.js?v=20260826-1"></script>
+  <script src="page-navigation.js?v=20260821-6"></script>
+</body>
+</html>
