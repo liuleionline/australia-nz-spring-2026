@@ -37,36 +37,36 @@
 
   const auHotels = [
     {
-      id: "sydney-stay",
+      id: "sydney-ibis",
       date: "9.19–21",
       nights: 3,
       city: "Sydney",
-      name: "Sydney CBD accommodation",
-      address: "Sydney CBD（详细订单信息仅参与者登录后查看）",
-      price: null,
-      user: null,
-      shen: null,
-      facts: ["2间房", "中央车站 / Surry Hills", "订单与分摊仅登录可见"],
+      name: "ibis Styles Sydney Central",
+      address: "27–33 Wentworth Avenue, Sydney NSW 2010",
+      price: 5036.44,
+      user: 2357.74,
+      shen: 2678.70,
+      facts: ["2间房", "中央车站 / Surry Hills", "沈家与刘家价格不同"],
       image: cityImage,
-      map: q("Sydney CBD accommodation Sydney"),
-      link: null,
-      note: "公开页面不展示订单金额、房间分配与私人联系信息。"
+      map: q("ibis Styles Sydney Central 27-33 Wentworth Avenue Sydney"),
+      link: "https://www.ibisstylessydneycentral.com.au/accommodation-sydney-cbd/",
+      note: "沈家 ¥2,678.70；刘家 ¥2,357.74；这项不AA。"
     },
     {
-      id: "melbourne-stay",
+      id: "melbourne-hie",
       date: "9.22–24",
       nights: 3,
       city: "Melbourne",
-      name: "Melbourne CBD accommodation",
-      address: "Melbourne CBD（详细订单信息仅参与者登录后查看）",
-      price: null,
-      user: null,
-      shen: null,
-      facts: ["3晚", "CBD / Southern Cross", "订单与分摊仅登录可见"],
-      image: cityImage,
-      map: q("Melbourne CBD accommodation"),
-      link: null,
-      note: "公开页面不展示订单金额、房间分配与私人联系信息。"
+      name: "Holiday Inn Express Melbourne Little Collins",
+      address: "589–599 Little Collins Street, Melbourne VIC 3000",
+      price: 6312.94,
+      user: 3156.47,
+      shen: 3156.47,
+      facts: ["2间房", "含早餐", "Southern Cross附近", "两家AA"],
+      image: melbourneImage,
+      map: q("Holiday Inn Express Melbourne Little Collins 589 Little Collins Street"),
+      link: "https://www.ihg.com/holidayinnexpress/hotels/gb/en/melbourne/mellc/hoteldetail?fromRedirect=true&glat=sear&qDest=melbourne",
+      note: "付款记录 ¥3,152.97 + ¥3,159.97；按两家AA，每家 ¥3,156.47。"
     }
   ];
 
@@ -109,15 +109,15 @@
       base: "悉尼",
       distanceKm: 0,
       driveTime: "公共交通 / 打车",
-      stayId: "sydney-stay",
+      stayId: "sydney-ibis",
       flightIds: ["3u3891"],
-      summary: "14:15抵达后入住Sydney CBD accommodation。首日不安排远距离移动，傍晚只看Circular Quay、歌剧院和The Rocks。",
+      summary: "14:15抵达后入住ibis Styles Sydney Central。首日不安排远距离移动，傍晚只看Circular Quay、歌剧院和The Rocks。",
       image: cityImage,
       credit: "Unsplash / Sydney harbour",
-      routeUrl: transitDir(["Sydney Airport", "Sydney CBD accommodation", "Circular Quay", "Sydney Opera House", "The Rocks Sydney"]),
+      routeUrl: transitDir(["Sydney Airport", "ibis Styles Sydney Central", "Circular Quay", "Sydney Opera House", "The Rocks Sydney"]),
       schedule: [
         { time: "14:15", title: "抵达悉尼机场", notes: "入境、取行李、购买交通卡或确认手机支付；四人带行李可比较机场火车与打车。", query: "Sydney Airport" },
-        { time: "16:30", title: "入住Sydney CBD accommodation", notes: "先洗漱、补水，确认第二天早餐和交通。", query: "Sydney CBD accommodation" },
+        { time: "16:30", title: "入住ibis Styles Sydney Central", notes: "先洗漱、补水，确认第二天早餐和交通。", query: "ibis Styles Sydney Central" },
         { time: "17:30", title: "Circular Quay→歌剧院→The Rocks", notes: "沿海港边慢走，不买正式歌剧院演出票也能完成外观和海港打卡。", query: "Circular Quay Sydney" },
         { time: "19:30", title: "The Rocks晚餐", notes: "以能看到海港的轻松餐厅为主，避免第一晚排队太久。", query: "The Rocks Sydney restaurants" }
       ],
@@ -135,7 +135,7 @@
       caution: "不要把第一晚排得太满；若入境排队超过1小时，直接入住后在酒店附近吃饭。",
       booking: "歌剧院内部参观不是必需；若想进场，尽早查看官方场次。",
       planB: "下雨：改为The Rocks室内餐厅、Museum of Contemporary Art或早休息。",
-      stops: [stop("Sydney Airport", -33.9399, 151.1753, "Sydney Airport", "航班"), stop("Sydney CBD accommodation", -33.8808, 151.2045, "Sydney CBD accommodation", "住宿"), stop("Circular Quay", -33.8610, 151.2110, "Circular Quay Sydney"), stop("Sydney Opera House", -33.8568, 151.2153, "Sydney Opera House", "拍照"), stop("The Rocks", -33.8599, 151.2090, "The Rocks Sydney", "餐饮")],
+      stops: [stop("Sydney Airport", -33.9399, 151.1753, "Sydney Airport", "航班"), stop("ibis Styles Sydney Central", -33.8808, 151.2045, "ibis Styles Sydney Central", "住宿"), stop("Circular Quay", -33.8610, 151.2110, "Circular Quay Sydney"), stop("Sydney Opera House", -33.8568, 151.2153, "Sydney Opera House", "拍照"), stop("The Rocks", -33.8599, 151.2090, "The Rocks Sydney", "餐饮")],
       journalPrompts: ["落地后的第一印象是什么？", "第一张真正想留在相册里的照片是哪一张？"]
     },
     {
@@ -146,11 +146,11 @@
       base: "悉尼",
       distanceKm: 0,
       driveTime: "步行 / 公共交通",
-      stayId: "sydney-stay",
+      stayId: "sydney-ibis",
       summary: "把悉尼最经典的城市景观集中在一条步行线上，晚上预留与大姐、三姐见面吃饭。",
       image: cityImage,
       credit: "Unsplash / Sydney harbour",
-      routeUrl: transitDir(["Sydney CBD accommodation", "Royal Botanic Garden Sydney", "Art Gallery of New South Wales", "Barangaroo Reserve", "Sydney CBD restaurant"]),
+      routeUrl: transitDir(["ibis Styles Sydney Central", "Royal Botanic Garden Sydney", "Art Gallery of New South Wales", "Barangaroo Reserve", "Sydney CBD restaurant"]),
       schedule: [
         { time: "08:30", title: "酒店早餐 / 前往海港", notes: "周日不要过早排太多室内项目；先沿Hyde Park和Macquarie Street走向海港。", query: "Hyde Park Sydney" },
         { time: "09:30", title: "皇家植物园与Mrs Macquarie's Chair", notes: "拍歌剧院、大桥和海港同框；园内慢走约1.5–2小时。", query: "Mrs Macquarie's Chair Sydney" },
@@ -172,7 +172,7 @@
       caution: "Art Gallery NSW部分展览有时间或收费要求，临近日期再确认；植物园日落后部分区域照明较弱。",
       booking: "如果想看特展或参加歌剧院导览，提前买票；亲友晚餐提前锁定餐厅。",
       planB: "雨天顺序：Art Gallery NSW→Museum of Sydney→The Rocks餐厅，删掉Barangaroo长距离步行。",
-      stops: [stop("Sydney CBD accommodation", -33.8808, 151.2045, "Sydney CBD accommodation", "住宿"), stop("Mrs Macquarie's Chair", -33.8599, 151.2250, "Mrs Macquarie's Chair Sydney", "拍照"), stop("Art Gallery NSW", -33.8688, 151.2170, "Art Gallery of New South Wales", "艺术"), stop("Barangaroo Reserve", -33.8643, 151.2018, "Barangaroo Reserve Sydney", "拍照"), stop("Sydney CBD restaurants", -33.8688, 151.2069, "Sydney CBD restaurants", "餐饮")],
+      stops: [stop("ibis Styles Sydney Central", -33.8808, 151.2045, "ibis Styles Sydney Central", "住宿"), stop("Mrs Macquarie's Chair", -33.8599, 151.2250, "Mrs Macquarie's Chair Sydney", "拍照"), stop("Art Gallery NSW", -33.8688, 151.2170, "Art Gallery of New South Wales", "艺术"), stop("Barangaroo Reserve", -33.8643, 151.2018, "Barangaroo Reserve Sydney", "拍照"), stop("Sydney CBD restaurants", -33.8688, 151.2069, "Sydney CBD restaurants", "餐饮")],
       journalPrompts: ["亲友见面最开心的瞬间？", "今天哪一处景色最像你想象中的悉尼？"]
     },
     {
@@ -183,21 +183,21 @@
       base: "悉尼",
       distanceKm: 0,
       driveTime: "公交 / 渡轮",
-      stayId: "sydney-stay",
+      stayId: "sydney-ibis",
       summary: "保留两个完整选项。A更适合晴天和拍海岸线；B更轻松，适合风大、阴天或不想连续爬坡。",
       image: beachImage,
       credit: "Unsplash / coastal walk",
-      routeUrl: transitDir(["Sydney CBD accommodation", "Bondi Beach", "Coogee Beach"]),
+      routeUrl: transitDir(["ibis Styles Sydney Central", "Bondi Beach", "Coogee Beach"]),
       schedule: [
         { time: "08:30", title: "看天气决定A/B", notes: "出发前查看降雨、风力和海浪；海岸线湿滑时不要硬走全程。", query: "Sydney weather" },
         { time: "09:30", title: "选项A或选项B", notes: "见下方两套行程卡；二者不要叠加。", query: "Sydney CBD" },
-        { time: "18:00", title: "回酒店整理行李", notes: "次日14:30飞墨尔本，提前把证件和小件行李归拢。", query: "Sydney CBD accommodation" }
+        { time: "18:00", title: "回酒店整理行李", notes: "次日14:30飞墨尔本，提前把证件和小件行李归拢。", query: "ibis Styles Sydney Central" }
       ],
       choices: [
         {
           label: "A · Bondi → Coogee海岸步道（晴天优先）",
           summary: "约6公里，按舒适速度约2–3小时；Bondi、Tamarama、Bronte、Clovelly、Coogee依次展开。",
-          routeUrl: transitDir(["Sydney CBD accommodation", "Bondi Beach", "Tamarama Beach", "Bronte Beach", "Coogee Beach"]),
+          routeUrl: transitDir(["ibis Styles Sydney Central", "Bondi Beach", "Tamarama Beach", "Bronte Beach", "Coogee Beach"]),
           schedule: [
             { time: "09:30", title: "Bondi Beach开走", notes: "从Bondi南端开始，避开正午暴晒。", query: "Bondi Beach" },
             { time: "10:30", title: "Tamarama / Bronte", notes: "海湾、泳池和悬崖步道是主要拍照段。", query: "Bronte Beach Sydney" },
@@ -214,7 +214,7 @@
         {
           label: "B · Manly Ferry + 海滩（阴天或想轻松时）",
           summary: "从Circular Quay搭F1渡轮看海港，再在Manly Beach、The Corso和North Steyne慢走。",
-          routeUrl: transitDir(["Sydney CBD accommodation", "Circular Quay Wharf 3", "Manly Wharf", "Manly Beach"]),
+          routeUrl: transitDir(["ibis Styles Sydney Central", "Circular Quay Wharf 3", "Manly Wharf", "Manly Beach"]),
           schedule: [
             { time: "09:30", title: "Circular Quay搭F1渡轮", notes: "提前查看Transport for NSW班次，坐船外侧位置看歌剧院和大桥。", query: "Circular Quay Wharf 3" },
             { time: "10:15", title: "Manly Wharf与The Corso", notes: "沿主街走到海滩，咖啡和小店都集中。", query: "Manly Wharf" },
@@ -254,12 +254,12 @@
       summary: "上午在悉尼轻松收尾，14:30搭JQ609去墨尔本。到达后入住Holiday Inn Express Little Collins，晚上只安排Flinders Street和Yarra河畔。",
       image: melbourneImage,
       credit: "Unsplash / Melbourne city image",
-      routeUrl: transitDir(["Sydney CBD accommodation", "Sydney Airport", "Melbourne Airport", "Melbourne CBD accommodation", "Flinders Street Station"]),
+      routeUrl: transitDir(["ibis Styles Sydney Central", "Sydney Airport", "Melbourne Airport", "Holiday Inn Express Melbourne Little Collins", "Flinders Street Station"]),
       schedule: [
-        { time: "08:30", title: "悉尼酒店退房 / 咖啡", notes: "不要安排远郊；把行李和护照分开收好。", query: "Sydney CBD accommodation" },
+        { time: "08:30", title: "悉尼酒店退房 / 咖啡", notes: "不要安排远郊；把行李和护照分开收好。", query: "ibis Styles Sydney Central" },
         { time: "12:00前", title: "前往悉尼机场", notes: "国内航班建议至少提前2小时到机场；Jetstar托运行李规则临行复核。", query: "Sydney Airport domestic terminal" },
         { time: "14:30–16:05", title: "JQ609 悉尼→墨尔本", notes: "当地时间；到达后取行李，前往酒店。", query: "Melbourne Airport" },
-        { time: "17:30", title: "入住Holiday Inn Express", notes: "确认早餐时间和9月25日退房、去机场的路线。", query: "Melbourne CBD accommodation" },
+        { time: "17:30", title: "入住Holiday Inn Express", notes: "确认早餐时间和9月25日退房、去机场的路线。", query: "Holiday Inn Express Melbourne Little Collins" },
         { time: "18:30", title: "Flinders Street Station + Yarra夜景", notes: "第一晚不安排远距离，沿河散步到Federation Square。", query: "Flinders Street Station" }
       ],
       highlights: [
@@ -273,7 +273,7 @@
       caution: "悉尼国内航站楼与国际航站楼不同；确认JQ609航站楼和行李政策。",
       booking: "确认Holiday Inn Express早餐包含在订单内；临行复核Jetstar航班状态。",
       planB: "航班延误：到酒店后只保留Flinders Street Station外观和附近晚餐。",
-      stops: [stop("Sydney Airport Domestic", -33.9330, 151.1817, "Sydney Airport Domestic Terminal", "航班"), stop("Melbourne Airport", -37.6690, 144.8410, "Melbourne Airport", "航班"), stop("Melbourne CBD accommodation", -37.8150, 144.9558, "Melbourne CBD accommodation", "住宿"), stop("Flinders Street Station", -37.8183, 144.9671, "Flinders Street Station", "拍照"), stop("Southbank Promenade", -37.8205, 144.9650, "Southbank Promenade Melbourne", "拍照")],
+      stops: [stop("Sydney Airport Domestic", -33.9330, 151.1817, "Sydney Airport Domestic Terminal", "航班"), stop("Melbourne Airport", -37.6690, 144.8410, "Melbourne Airport", "航班"), stop("Holiday Inn Express Melbourne Little Collins", -37.8150, 144.9558, "Holiday Inn Express Melbourne Little Collins", "住宿"), stop("Flinders Street Station", -37.8183, 144.9671, "Flinders Street Station", "拍照"), stop("Southbank Promenade", -37.8205, 144.9650, "Southbank Promenade Melbourne", "拍照")],
       journalPrompts: ["悉尼与墨尔本的第一印象差异？", "今天最值得记录的一次转场细节？"]
     },
     {
@@ -288,9 +288,9 @@
       summary: "把墨尔本最有代表性的城市气质排在同一天：Queen Victoria Market、State Library、巷弄咖啡、NGV与Southbank。",
       image: marketImage,
       credit: "Unsplash / market image",
-      routeUrl: transitDir(["Melbourne CBD accommodation", "Queen Victoria Market", "State Library Victoria", "Hosier Lane", "NGV International", "Southbank Promenade"]),
+      routeUrl: transitDir(["Holiday Inn Express Melbourne Little Collins", "Queen Victoria Market", "State Library Victoria", "Hosier Lane", "NGV International", "Southbank Promenade"]),
       schedule: [
-        { time: "08:30", title: "酒店早餐", notes: "利用含早餐优势，早一点出发。", query: "Melbourne CBD accommodation" },
+        { time: "08:30", title: "酒店早餐", notes: "利用含早餐优势，早一点出发。", query: "Holiday Inn Express Melbourne Little Collins" },
         { time: "09:30", title: "Queen Victoria Market", notes: "周三通常关闭；若2026日期有特别活动，以官方What's On为准，常规市场可改9.24早上或下午外观。", query: "Queen Victoria Market Melbourne" },
         { time: "10:30", title: "State Library Victoria", notes: "La Trobe Reading Room是室内拍照重点，注意安静。", query: "State Library Victoria" },
         { time: "12:30", title: "Hardware Lane / Chinatown午餐", notes: "先吃再逛巷弄，避免把午餐拖到下午。", query: "Hardware Lane Melbourne" },
@@ -313,7 +313,7 @@
       caution: "Queen Victoria Market常规周三关闭，不能把它当成固定营业日；请在出发前复核官方日历。",
       booking: "NGV特展与Tipo 00如有明确目标，提前订；普通常设展可灵活安排。",
       planB: "若QVM关闭：改为Melbourne Museum或Royal Exhibition Building，下午保留NGV和Southbank。",
-      stops: [stop("Melbourne CBD accommodation", -37.8150, 144.9558, "Melbourne CBD accommodation", "住宿"), stop("Queen Victoria Market", -37.8076, 144.9568, "Queen Victoria Market Melbourne", "市场"), stop("State Library Victoria", -37.8097, 144.9652, "State Library Victoria", "拍照"), stop("Hosier Lane", -37.8176, 144.9691, "Hosier Lane Melbourne", "拍照"), stop("NGV International", -37.8226, 144.9689, "NGV International Melbourne", "艺术"), stop("Southbank Promenade", -37.8205, 144.9650, "Southbank Promenade Melbourne", "拍照")],
+      stops: [stop("Holiday Inn Express Melbourne Little Collins", -37.8150, 144.9558, "Holiday Inn Express Melbourne Little Collins", "住宿"), stop("Queen Victoria Market", -37.8076, 144.9568, "Queen Victoria Market Melbourne", "市场"), stop("State Library Victoria", -37.8097, 144.9652, "State Library Victoria", "拍照"), stop("Hosier Lane", -37.8176, 144.9691, "Hosier Lane Melbourne", "拍照"), stop("NGV International", -37.8226, 144.9689, "NGV International Melbourne", "艺术"), stop("Southbank Promenade", -37.8205, 144.9650, "Southbank Promenade Melbourne", "拍照")],
       journalPrompts: ["今天最喜欢的巷弄或咖啡是哪一个？", "哪件艺术作品或建筑细节让你停留最久？"]
     },
     {
@@ -328,9 +328,9 @@
       summary: "A适合想看澳洲野生动物，B适合想轻松吃喝。大洋路不放在这天，避免长途赶路影响次日飞行。",
       image: beachImage,
       credit: "Unsplash / coastal landscape",
-      routeUrl: transitDir(["Melbourne CBD accommodation", "Phillip Island Penguin Parade"]),
+      routeUrl: transitDir(["Holiday Inn Express Melbourne Little Collins", "Phillip Island Penguin Parade"]),
       schedule: [
-        { time: "07:30", title: "早餐后决定A/B", notes: "A要预留返程交通和企鹅入场等待；B更适合睡到自然醒。", query: "Melbourne CBD accommodation" },
+        { time: "07:30", title: "早餐后决定A/B", notes: "A要预留返程交通和企鹅入场等待；B更适合睡到自然醒。", query: "Holiday Inn Express Melbourne Little Collins" },
         { time: "全天", title: "选择一套近郊方案", notes: "见下方两套行程卡，晚上回酒店整理次日飞行行李。", query: "Melbourne CBD" },
         { time: "20:30前", title: "回酒店确认JQ171", notes: "确认11:05起飞、行李额度和前往机场的交通。", query: "Melbourne Airport" }
       ],
@@ -375,7 +375,7 @@
       caution: "企鹅归巢不是演出，时间随日落变化；必须预留等待时间并遵守禁拍和安静规定。",
       booking: "Penguin Parade必须提前购票；Yarra Valley酒庄和一日团也建议提前锁定。",
       planB: "近郊团售罄或天气恶劣：改为Melbourne Museum + Carlton + Fitzroy咖啡街区。",
-      stops: [stop("Phillip Island Penguin Parade", -38.0504, 145.2400, "Penguin Parade Phillip Island", "选项A"), stop("The Nobbies", -38.5104, 145.1124, "The Nobbies Phillip Island", "选项A"), stop("Yarra Valley", -37.6900, 145.5600, "Yarra Valley Victoria", "选项B"), stop("Melbourne CBD accommodation", -37.8150, 144.9558, "Melbourne CBD accommodation", "住宿")],
+      stops: [stop("Phillip Island Penguin Parade", -38.0504, 145.2400, "Penguin Parade Phillip Island", "选项A"), stop("The Nobbies", -38.5104, 145.1124, "The Nobbies Phillip Island", "选项A"), stop("Yarra Valley", -37.6900, 145.5600, "Yarra Valley Victoria", "选项B"), stop("Holiday Inn Express Melbourne Little Collins", -37.8150, 144.9558, "Holiday Inn Express Melbourne Little Collins", "住宿")],
       journalPrompts: ["企鹅岛还是Yarra Valley？这次取舍满意吗？", "今天最值得提前预订的体验是什么？"]
     }
   ];
@@ -466,7 +466,7 @@
     { label: "Phillip Island Nature Parks · Penguin Parade", url: "https://www.penguins.org.au/public/attractions/penguin-parade/", note: "必须提前购票、到场时间、禁闪光灯与地址" },
     { label: "Queen Victoria Market · Official hours", url: "https://qvm.com.au/about/", note: "常规营业日与市场说明；周三通常关闭" },
     { label: "NGV", url: "https://www.ngv.vic.gov.au/", note: "展览、门票与开放时间；查询2026.08.16" },
-    { label: "Melbourne CBD accommodation", url: "https://www.ihg.com/holidayinnexpress/hotels/gb/en/melbourne/mellc/hoteldetail?fromRedirect=true&glat=sear&qDest=melbourne", note: "酒店位置、含早餐、停车和房型信息" },
+    { label: "Holiday Inn Express Melbourne Little Collins", url: "https://www.ihg.com/holidayinnexpress/hotels/gb/en/melbourne/mellc/hoteldetail?fromRedirect=true&glat=sear&qDest=melbourne", note: "酒店位置、含早餐、停车和房型信息" },
     { label: "Dorsett Melbourne", url: "https://www.dorsetthotels.com/dorsett-melbourne/", note: "用于住宿比较：位置、Southern Cross步行、泳池和设施" },
     { label: "PTV · Free Tram Zone", url: "https://www.ptv.vic.gov.au/more/travelling-on-the-network/travel-tips-and-tools/free-tram-zone/", note: "墨尔本市区电车范围；临行复核线路" },
     { label: "Jetstar · Flight status", url: "https://www.jetstar.com/au/en/help/articles/flight-status", note: "JQ609、JQ171临行查看；航班号以订单为准" },
@@ -531,7 +531,7 @@
       });
     });
   });
-  const hotelPhotos = { "sydney-stay": asset("sydney-arrival"), "melbourne-hie": asset("melbourne-city"), "christchurch": asset("christchurch-city") };
+  const hotelPhotos = { "sydney-ibis": asset("sydney-arrival"), "melbourne-hie": asset("melbourne-city"), "christchurch": asset("christchurch-city") };
   data.hotels.forEach((hotel) => { if (hotelPhotos[hotel.id]) hotel.image = hotelPhotos[hotel.id]; });
   data.meta.tripLedger = data.accounting.tripLedger;
   data.meta.lodgingTotal = data.accounting.lodgingTotal;

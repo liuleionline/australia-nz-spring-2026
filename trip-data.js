@@ -18,215 +18,29 @@
   const stop = (name, lat, lng, query, kind = "景点", note = "") => ({ name, lat, lng, query, kind, note, map: q(query) });
 
   const hotels = [
-    {
-      id: "christchurch-airport-stay",
-      date: "9.25",
-      nights: 1,
-      city: "基督城机场",
-      name: "Christchurch Airport accommodation",
-      address: "Christchurch Airport 区域（详细订单信息仅登录可见）",
-      price: null,
-      user: null,
-      shen: null,
-      facts: ["1晚", "已确认", "订单与分摊仅登录可见"],
-      image: commons("Christchurch Cathedral in the Square 02.jpg", 1200),
-      map: q("Christchurch Airport, New Zealand"),
-      link: "",
-      note: "公开仓库不包含私人门牌、房东联系信息、订单金额或分摊。",
-      lat: -43.4894,
-      lng: 172.5322
-    },
-    {
-      id: "tekapo",
-      date: "9.26",
-      nights: 1,
-      city: "Lake Tekapo / Takapō",
-      name: "Lake Tekapo 已订住宿",
-      address: "Lake Tekapo 镇区（详细门牌仅登录可见）",
-      price: null,
-      user: null,
-      shen: null,
-      facts: ["1晚", "已确认", "订单与分摊仅登录可见"],
-      image: commons("Lake Tekapo, New Zealand, 22 July 2005.jpg", 1200),
-      map: q("Lake Tekapo, New Zealand"),
-      link: "",
-      note: "公开仓库不包含私人门牌、房东联系信息、订单金额或分摊。",
-      lat: -44.0047,
-      lng: 170.4771
-    },
-    {
-      id: "twizel",
-      date: "9.27",
-      nights: 1,
-      city: "Twizel",
-      name: "Twizel 已订住宿",
-      address: "Twizel 镇区（详细门牌仅登录可见）",
-      price: null,
-      user: null,
-      shen: null,
-      facts: ["1晚", "已确认", "订单与分摊仅登录可见"],
-      image: commons("Twizel New Zealand.jpg", 1200),
-      map: q("Twizel, New Zealand"),
-      link: "",
-      note: "公开仓库不包含私人门牌、房东联系信息、订单金额或分摊。",
-      lat: -44.259,
-      lng: 170.097
-    },
-    {
-      id: "wanaka",
-      date: "9.28–29",
-      nights: 2,
-      city: "Wānaka",
-      name: "Wānaka 已订住宿",
-      address: "Wānaka 镇区（详细门牌仅登录可见）",
-      price: null,
-      user: null,
-      shen: null,
-      facts: ["2晚", "已确认", "订单与分摊仅登录可见"],
-      image: commons("Lake Wanaka from Roys Peak.jpg", 1200),
-      map: q("Wanaka, New Zealand"),
-      link: "",
-      note: "公开仓库不包含私人门牌、房东联系信息、订单金额或分摊。",
-      lat: -44.6967,
-      lng: 169.1367
-    },
-    {
-      id: "queenstown",
-      date: "9.30–10.1",
-      nights: 2,
-      city: "Queenstown",
-      name: "Queenstown 已订住宿",
-      address: "Queenstown 镇区（详细门牌仅登录可见）",
-      price: null,
-      user: null,
-      shen: null,
-      facts: ["2晚", "已确认", "订单与分摊仅登录可见"],
-      image: commons("Queenstown 1.jpg", 1200),
-      map: q("Queenstown, New Zealand"),
-      link: "",
-      note: "公开仓库不包含私人门牌、房东联系信息、订单金额或分摊。",
-      lat: -45.0312,
-      lng: 168.6626
-    },
-    {
-      id: "teanau",
-      date: "10.2–3",
-      nights: 2,
-      city: "Te Anau",
-      name: "Te Anau 已订住宿",
-      address: "Te Anau 镇区（详细门牌仅登录可见）",
-      price: null,
-      user: null,
-      shen: null,
-      facts: ["2晚", "已确认", "订单与分摊仅登录可见"],
-      image: commons("Lake Te Anau and Luxmore Mountains.jpg", 1200),
-      map: q("Te Anau, New Zealand"),
-      link: "",
-      note: "公开仓库不包含私人门牌、房东联系信息、订单金额或分摊。",
-      lat: -45.4145,
-      lng: 167.718
-    },
-    {
-      id: "haast",
-      date: "10.4",
-      nights: 1,
-      city: "Haast",
-      name: "Haast 已订住宿",
-      address: "Haast 区域（详细门牌仅登录可见）",
-      price: null,
-      user: null,
-      shen: null,
-      facts: ["1晚", "已确认", "订单与分摊仅登录可见"],
-      image: commons("Haast River.jpg", 1200),
-      map: q("Haast, New Zealand"),
-      link: "",
-      note: "公开仓库不包含私人门牌、房东联系信息、订单金额或分摊。",
-      lat: -43.8815,
-      lng: 169.0413
-    },
-    {
-      id: "franz",
-      date: "10.5",
-      nights: 1,
-      city: "Franz Josef / Waiau",
-      name: "Franz Josef 已订住宿",
-      address: "Franz Josef 镇区（详细门牌仅登录可见）",
-      price: null,
-      user: null,
-      shen: null,
-      facts: ["1晚", "已确认", "订单与分摊仅登录可见"],
-      image: commons("Franz Josef Glacier NZ 2.jpg", 1200),
-      map: q("Franz Josef, New Zealand"),
-      link: "",
-      note: "公开仓库不包含私人门牌、房东联系信息、订单金额或分摊。",
-      lat: -43.3896,
-      lng: 170.1813
-    },
-    {
-      id: "hokitika",
-      date: "10.6",
-      nights: 1,
-      city: "Hokitika",
-      name: "Hokitika 已订住宿",
-      address: "Hokitika 镇区（详细门牌仅登录可见）",
-      price: null,
-      user: null,
-      shen: null,
-      facts: ["1晚", "已确认", "订单与分摊仅登录可见"],
-      image: commons("Hokitika Gorge, New Zealand.jpg", 1200),
-      map: q("Hokitika, New Zealand"),
-      link: "",
-      note: "公开仓库不包含私人门牌、房东联系信息、订单金额或分摊。",
-      lat: -42.7167,
-      lng: 170.9667
-    },
-    {
-      id: "castlehill",
-      date: "10.7",
-      nights: 1,
-      city: "Castle Hill",
-      name: "Castle Hill 已订住宿",
-      address: "Castle Hill Village（详细门牌仅登录可见）",
-      price: null,
-      user: null,
-      shen: null,
-      facts: ["1晚", "已确认", "订单与分摊仅登录可见"],
-      image: commons("Castle Hill New Zealand.jpg", 1200),
-      map: q("Castle Hill Village, New Zealand"),
-      link: "",
-      note: "公开仓库不包含私人门牌、房东联系信息、订单金额或分摊。",
-      lat: -43.2294,
-      lng: 171.7136
-    },
-    {
-      id: "chc-final",
-      date: "10.8–9",
-      nights: 2,
-      city: "基督城市中心",
-      name: "Christchurch 已订住宿",
-      address: "Christchurch Central（详细门牌仅登录可见）",
-      price: null,
-      user: null,
-      shen: null,
-      facts: ["2晚", "已确认", "订单与分摊仅登录可见"],
-      image: commons("Christchurch Cathedral in the Square 02.jpg", 1200),
-      map: q("Christchurch Central City, New Zealand"),
-      link: "",
-      note: "公开仓库不包含私人门牌、房东联系信息、订单金额或分摊。",
-      lat: -43.5321,
-      lng: 172.6362
-    }
+    { id:"chc-airport", date:"9.25", nights:1, city:"基督城机场", name:"Airport Gateway Motor Lodge", address:"45 Roydvale Avenue, Burnside, Christchurch 8053", price:1216, user:489, shen:727, facts:["两家不同房型","免费停车","机场区"], image:commons("The Botanic Gardens in Christchurch New Zealand.jpg"), map:q("Airport Gateway Motor Lodge Christchurch"), link:"https://www.airportgateway.co.nz/accommodation", note:"贵房为沈家，便宜房为你家；不参与AA。", lat:-43.4897, lng:172.5570 },
+    { id:"tekapo", date:"9.26", nights:1, city:"Lake Tekapo / Takapō", name:"New peaceful / warm / family friendly Unit B", address:"35 Andrew Don Drive, Lake Tekapo 7999", price:3892.76, facts:["2卧优先","停车方便","整套房"], image:commons("Church of the Good Shepherd at Lake Tekapo.jpg"), map:q("35 Andrew Don Drive Lake Tekapo"), note:"入住15:00，退房10:00。", lat:-44.0010, lng:170.4748 },
+    { id:"twizel", date:"9.27", nights:1, city:"Twizel", name:"A True Family House", address:"206 Mackenzie Drive, Twizel 7901", price:2142.40, facts:["4卧","2卫","免费停车"], image:commons("NZ Hooker Valley track.jpg"), map:q("206 Mackenzie Drive Twizel"), link:"https://www.airbnb.com/rooms/26610263", note:"空间充足；页面提示个人洗护用品可能需自备。", lat:-44.2595, lng:170.0983 },
+    { id:"wanaka", date:"9.28–29", nights:2, city:"Wānaka", name:"Cosy home with indoor fireplace / outdoor patio", address:"70B Matai Road, Wānaka 9305", price:5817, facts:["2晚","壁炉","庭院停车"], image:commons("Lake wanaka.jpg"), map:q("70B Matai Road Wanaka"), link:"https://www.airbnb.com/rooms/48686136", note:"入住9.28，退房9.30。", lat:-44.6827, lng:169.1368 },
+    { id:"queenstown", date:"9.30–10.1", nights:2, city:"Queenstown", name:"Queenstown Mountain View Retreat", address:"44 Goldfield Heights, Queenstown 9300", price:5165.73, facts:["2晚","山景","停车方便"], image:commons("Queenstown - Wakatipu Lake & Remarkables Mountains View from Skyline Gondola Observation Deck.jpg"), map:q("44 Goldfield Heights Queenstown"), link:"https://www.airbnb.com/rooms/1644535952191581825", note:"离CBD约10分钟车程；进城优先公共停车场。", lat:-45.0257, lng:168.6901 },
+    { id:"teanau", date:"10.2–3", nights:2, city:"Te Anau", name:"Relaxing Te Anau Retreat", address:"8 Lawson Burrows Crescent, Te Anau 9600", price:3342.08, facts:["2晚","整套房","车位"], image:commons("00 1373 Milford Sound -New Zealand.jpg"), map:q("8 Lawson Burrows Crescent Te Anau"), link:"https://www.airbnb.com/rooms/48750684", note:"米尔福德出发基地；10.3出发前务必加满油。", lat:-45.4044, lng:167.7237 },
+    { id:"haast", date:"10.4", nights:1, city:"Haast", name:"Beachfront Paradise: The Black Moth", address:"35 Fox Moth Drive, Haast 7886", price:2682.72, facts:["海边","免费停车","整套房"], image:commons("NZ - Knights Point - Haast Pass - Obelisk.jpg"), map:q("35 Fox Moth Drive Haast"), link:"https://www.airbnb.com/rooms/1148248503776849185", note:"长途转场后的休息站；提前在Wānaka/Makarora补给。", lat:-43.8518, lng:169.0135 },
+    { id:"franz", date:"10.5", nights:1, city:"Franz Josef / Waiau", name:"TWO FOUR CRON · Downtown 2 Bedroom Premium Stay", address:"24 Cron Street, Franz Josef / Waiau 7886（请以订单页最终门牌为准）", price:1824.80, facts:["2卧","2卫","免费停车 / EV"], image:commons("Franz Josef Glacier, New Zealand (5).JPG"), map:q("24 Cron Street Franz Josef"), link:"https://www.airbnb.com/rooms/1192646002050539125", note:"市中心，餐厅步行方便；保留现有订单。", lat:-43.3887, lng:170.1843 },
+    { id:"hokitika", date:"10.6", nights:1, city:"Hokitika", name:"Hoki Boatshed Accommodation", address:"2 Revell Street, Hokitika 7810", price:1891.17, facts:["海边位置","4人","停车"], image:commons("Hokitika Gorge (3).jpg"), map:q("2 Revell Street Hokitika"), link:"https://www.airbnb.com/rooms/1095911928830221258", note:"入住15:00，退房11:00；适合日落后去Glow Worm Dell。", lat:-42.7151, lng:170.9651 },
+    { id:"castlehill", date:"10.7", nights:1, city:"Castle Hill", name:"Castle Hill现代宽敞度假屋", address:"3 Bevel Court, Castle Hill Village 7580", price:2421.06, facts:["3卧","2卫","免费停车"], image:commons("Kura Tāwhiti, Castle Hill, Canterbury, New Zealand.jpg"), map:q("3 Bevel Court Castle Hill New Zealand"), link:"https://www.airbnb.com/rooms/22409971", note:"已调整为10月7日入住；山区别墅，附近餐饮很少，抵达前买好晚餐和早餐。", lat:-43.2270, lng:171.7118 },
+    { id:"chc-final", date:"10.8–9", nights:2, city:"基督城市中心", name:"第6套：漫步到体育场 · 2卧2卫 · 预留停车位", address:"Christchurch Central City（以订单页最终门牌为准）", price:"", facts:["2卧","2卫","King + 2张单人床","预留车位"], image:commons("Christchurch Botanic Gardens in autumn.jpg"), map:q("Christchurch Central City New Zealand"), link:"https://www.airbnb.com/rooms/1241368912811080729", note:"已确认预订；10月8–10日入住。第6套房源总价待从订单补录。", lat:-43.5230, lng:172.6260 }
   ];
+  hotels.forEach(h => { if (h.user == null) { h.user = h.price / 2; h.shen = h.price / 2; } });
 
   const days = [
     {
-      id:"d01", date:"09.25", weekday:"周五", title:"落地基督城，只做三件事", base:"基督城机场", distanceKm:6, driveTime:"约15分钟", stayId:"christchurch-airport-stay",
+      id:"d01", date:"09.25", weekday:"周五", title:"落地基督城，只做三件事", base:"基督城机场", distanceKm:6, driveTime:"约15分钟", stayId:"chc-airport",
       summary:"16:25落地后取车、验车、采购。第一晚不赶路，把左侧驾驶和车辆功能适应好。",
       image:commons("The Botanic Gardens in Christchurch New Zealand.jpg"), credit:"HeatherJoyMilne / Wikimedia Commons",
-      routeUrl:dir(["Christchurch Airport","Christchurch Airport accommodation"]),
+      routeUrl:dir(["Christchurch Airport","Airport Gateway Motor Lodge Christchurch"]),
       schedule:[
         {time:"16:25", title:"抵达基督城机场", notes:"入境、取行李、租车；拍全车视频，确认备胎/补胎工具、雨刷、灯光和油种。", query:"Christchurch Airport"},
-        {time:"18:00", title:"入住 Christchurch Airport accommodation", notes:"两家房型不同，分别办理入住。", query:"Christchurch Airport accommodation"},
+        {time:"18:00", title:"入住 Airport Gateway Motor Lodge", notes:"两家房型不同，分别办理入住。", query:"Airport Gateway Motor Lodge Christchurch"},
         {time:"18:30", title:"采购与简餐", notes:"购买早餐、饮用水、零食、防风雨补给；不要把新鲜食品留到离境。", query:"Countdown Christchurch Airport"}
       ],
       highlights:[
@@ -235,13 +49,13 @@
       ],
       meals:[meal("Good Thai Restaurant", "晚餐 · 机场区", "Good Thai Restaurant Christchurch", "落地较晚时的热食选择；出发前一周确认周五营业时间。", 0), meal("机场区超市简餐", "备选 · 最省时", "Woolworths Christchurch Airport", "若入境耗时，直接买熟食和第二天早餐。", 1)],
       fuel:"取车时确认油量和还车规则；机场周边加油站多，不必特意加满。", clothing:"下机后温差明显，外层防风衣放在随身行李最上面。", caution:"不要在疲劳、天黑和刚适应左侧驾驶时赶往Tekapo。", booking:"无", planB:"航班延误就取消采购，次日出城前在机场区超市完成。",
-      stops:[stop("基督城机场",-43.4894,172.5322,"Christchurch Airport","交通"), stop("Christchurch Airport accommodation",-43.4894,172.5322,"Christchurch Airport accommodation","住宿")]
+      stops:[stop("基督城机场",-43.4894,172.5322,"Christchurch Airport","交通"), stop("Airport Gateway Motor Lodge",-43.4897,172.5570,"Airport Gateway Motor Lodge Christchurch","住宿")]
     },
     {
       id:"d02", date:"09.26", weekday:"周六", title:"穿过坎特伯雷平原，抵达星空湖", base:"Lake Tekapo", distanceKm:235, driveTime:"约3小时15分", stayId:"tekapo",
       summary:"基督城—Geraldine—Fairlie—Tekapo。下午留给湖边、好牧羊人教堂和Mount John，夜里看星。",
       image:commons("Church of the Good Shepherd at Lake Tekapo.jpg"), credit:"Pseudopanax / Public Domain",
-      routeUrl:dir(["Christchurch Airport accommodation","Geraldine New Zealand","Fairlie New Zealand","Church of the Good Shepherd Lake Tekapo","Lake Tekapo 镇区 Lake Tekapo"]),
+      routeUrl:dir(["Airport Gateway Motor Lodge Christchurch","Geraldine New Zealand","Fairlie New Zealand","Church of the Good Shepherd Lake Tekapo","35 Andrew Don Drive Lake Tekapo"]),
       schedule:[
         {time:"08:30", title:"出发前往Geraldine", notes:"平原路段适合练习左侧驾驶；每90分钟换司机或休息。", query:"Geraldine New Zealand"},
         {time:"10:15", title:"Geraldine咖啡 / 小镇短停", notes:"补咖啡、洗手间，控制在40分钟。", query:"Geraldine New Zealand"},
@@ -257,19 +71,19 @@
       ],
       meals:[meal("Fairlie Bakehouse", "午餐 · 馅饼", "Fairlie Bakehouse", "在进入Mackenzie Basin前快速解决午餐；热门口味可能售罄。", 2), meal("Kohan Restaurant", "晚餐 · 日式 / 三文鱼", "Kohan Restaurant Lake Tekapo", "Tekapo经典选择，建议提前订位；不想排队可改Dark Sky Diner。", 0, "建议预约")],
       fuel:"建议在Fairlie加满；Tekapo也有加油站，但价格和营业便利度通常不如大镇。", clothing:"白天防晒，日落后迅速降温；观星穿羽绒/抓绒、帽子、手套。", caution:"Burkes Pass可能有霜、雾或残雪；早上查NZTA与MetService。", booking:"Dark Sky Project Summit/Crater Experience建议提前订。", planB:"低云或大风：取消Mount John户外观景，改Dark Sky Project室内体验与湖边咖啡。",
-      stops:[stop("Airport Gateway",-43.4894,172.5322,"Christchurch Airport accommodation","住宿"), stop("Geraldine",-44.0906,171.2430,"Geraldine New Zealand"), stop("Fairlie",-44.0984,170.8284,"Fairlie New Zealand","餐饮"), stop("好牧羊人教堂",-44.0034,170.4824,"Church of the Good Shepherd Lake Tekapo"), stop("Mount John",-43.9856,170.4658,"Mt John Observatory Lake Tekapo"), stop("Tekapo住宿",-44.0047,170.4771,"Lake Tekapo 镇区 Lake Tekapo","住宿")]
+      stops:[stop("Airport Gateway",-43.4897,172.5570,"Airport Gateway Motor Lodge Christchurch","住宿"), stop("Geraldine",-44.0906,171.2430,"Geraldine New Zealand"), stop("Fairlie",-44.0984,170.8284,"Fairlie New Zealand","餐饮"), stop("好牧羊人教堂",-44.0034,170.4824,"Church of the Good Shepherd Lake Tekapo"), stop("Mount John",-43.9856,170.4658,"Mt John Observatory Lake Tekapo"), stop("Tekapo住宿",-44.0010,170.4748,"35 Andrew Don Drive Lake Tekapo","住宿")]
     },
     {
       id:"d03", date:"09.27", weekday:"周日", title:"普卡基蓝与Aoraki雪山正面", base:"Twizel", distanceKm:175, driveTime:"约2小时40分", stayId:"twizel",
       summary:"Tekapo—Lake Pukaki—Aoraki/Mount Cook—Twizel。天气好走完整Hooker Valley；天气差改Tasman Glacier短线。",
       image:commons("NZ Hooker Valley track.jpg"), credit:"Jan Helebrant / CC0",
-      routeUrl:dir(["Lake Tekapo 镇区 Lake Tekapo","Lake Pukaki Viewpoint","White Horse Hill Campground","Twizel 镇区 Twizel"]),
+      routeUrl:dir(["35 Andrew Don Drive Lake Tekapo","Lake Pukaki Viewpoint","White Horse Hill Campground","206 Mackenzie Drive Twizel"]),
       schedule:[
         {time:"08:00", title:"退房前往Lake Pukaki", notes:"先看Peter's Lookout，再沿SH80进入雪山走廊。", query:"Peter's Lookout Lake Pukaki"},
         {time:"10:00", title:"White Horse Hill停车", notes:"支付停车费后开始Hooker Valley；带水和午餐。", query:"White Horse Hill Campground"},
         {time:"10:20–14:00", title:"Hooker Valley Track", notes:"完整往返约10公里/3小时；新第二吊桥已于2026年7月开放。", query:"Hooker Valley Track"},
         {time:"14:30", title:"Mount Cook Village热饮", notes:"若走累就直接休息，不再叠加Tasman短线。", query:"Old Mountaineers Cafe Mount Cook"},
-        {time:"17:00", title:"抵达Twizel入住", notes:"超市采购次日早餐和Wānaka路上的零食。", query:"Twizel 镇区 Twizel"}
+        {time:"17:00", title:"抵达Twizel入住", notes:"超市采购次日早餐和Wānaka路上的零食。", query:"206 Mackenzie Drive Twizel"}
       ],
       highlights:[
         {name:"Peter's Lookout", tag:"公路大片", notes:"SH80、普卡基湖和Aoraki形成最经典的纵深构图。", photoTip:"站在安全观景区，用长焦把公路和雪山压缩在一起，禁止站上车道。", query:"Peter's Lookout Lake Pukaki", image:commons("Track to Hooker Valley on a winter morning with Mt Sefton and Mount Cook in the background.jpg")},
@@ -278,13 +92,13 @@
       ],
       meals:[meal("Mt Cook Alpine Salmon", "途中补给 · 三文鱼", "Mt Cook Alpine Salmon Lake Pukaki", "以采购和短暂停为主，不在这里耗太久。", 2), meal("Ministry of Works Bar & Eatery", "晚餐 · Twizel", "Ministry of Works Bar and Eatery Twizel", "适合徒步后吃热食；周日营业情况出发前再确认。", 0)],
       fuel:"Tekapo或Twizel均可加油；进入SH80前至少保持半箱。", clothing:"真正的四季装备日：排汗层、抓绒、轻羽绒、防水外壳、帽子、手套、防滑徒步鞋。", caution:"White Horse Hill停车现为付费：NZ$2.50/半小时或NZ$25/天，刷卡、无现金；出发前复核DOC页面。", booking:"步道无需预约；停车到场付款。", planB:"风雪/低云：走Kea Point或Tasman Glacier View短线，取消完整Hooker Valley。",
-      stops:[stop("Tekapo住宿",-44.0047,170.4771,"Lake Tekapo 镇区 Lake Tekapo","住宿"), stop("Peter's Lookout",-44.1083,170.1710,"Peter's Lookout Lake Pukaki"), stop("White Horse Hill",-43.7181,170.0910,"White Horse Hill Campground"), stop("Twizel住宿",-44.259,170.097,"Twizel 镇区 Twizel","住宿")]
+      stops:[stop("Tekapo住宿",-44.0010,170.4748,"35 Andrew Don Drive Lake Tekapo","住宿"), stop("Peter's Lookout",-44.1083,170.1710,"Peter's Lookout Lake Pukaki"), stop("White Horse Hill",-43.7181,170.0910,"White Horse Hill Campground"), stop("Twizel住宿",-44.2595,170.0983,"206 Mackenzie Drive Twizel","住宿")]
     },
     {
       id:"d04", date:"09.28", weekday:"周一", title:"穿过黏土尖塔和Lindis Pass", base:"Wānaka", distanceKm:190, driveTime:"约3小时", stayId:"wanaka",
       summary:"Twizel—Omarama Clay Cliffs—Lindis Pass—Wānaka。路线不难，但Clay Cliffs支路可能是碎石路。",
       image:commons("Lake wanaka.jpg"), credit:"Ann Woolliams / CC BY-SA 4.0",
-      routeUrl:dir(["Twizel 镇区 Twizel","Omarama Clay Cliffs","Lindis Pass Viewpoint","Wānaka 镇区 Wanaka"]),
+      routeUrl:dir(["206 Mackenzie Drive Twizel","Omarama Clay Cliffs","Lindis Pass Viewpoint","70B Matai Road Wanaka"]),
       schedule:[
         {time:"09:00", title:"Twizel出发", notes:"先加油，再往Omarama。", query:"Twizel petrol station"},
         {time:"10:15", title:"Omarama Clay Cliffs", notes:"碎石支路慢行；雨后泥泞或租车条款不允许时直接跳过。", query:"Omarama Clay Cliffs"},
@@ -299,13 +113,13 @@
       ],
       meals:[meal("The Wrinkly Rams", "午餐 · Omarama", "The Wrinkly Rams Omarama", "路线中段的稳妥热食停靠。", 0), meal("Big Fig Wānaka", "晚餐 · 地中海共享盘", "Big Fig Wanaka", "不用正式排餐，适合到达时间不确定的转场日。", 2)],
       fuel:"Twizel或Omarama加满；到Wānaka再补下一阶段。", clothing:"高地风大，车里放防风外套；Clay Cliffs穿防滑、耐脏鞋。", caution:"Clay Cliffs最后一段为非铺装路，先核对租车合同；雨后不勉强进入。", booking:"无强制预约。", planB:"雨天跳过Clay Cliffs，把时间留给Wānaka咖啡馆和湖边。",
-      stops:[stop("Twizel住宿",-44.259,170.097,"Twizel 镇区 Twizel","住宿"), stop("Clay Cliffs",-44.4888,169.9596,"Omarama Clay Cliffs"), stop("Lindis Pass",-44.5869,169.6360,"Lindis Pass Viewpoint"), stop("Wānaka住宿",-44.6967,169.1367,"Wānaka 镇区 Wanaka","住宿"), stop("Wānaka Tree",-44.6981,169.1171,"That Wanaka Tree")]
+      stops:[stop("Twizel住宿",-44.2595,170.0983,"206 Mackenzie Drive Twizel","住宿"), stop("Clay Cliffs",-44.4888,169.9596,"Omarama Clay Cliffs"), stop("Lindis Pass",-44.5869,169.6360,"Lindis Pass Viewpoint"), stop("Wānaka住宿",-44.6827,169.1368,"70B Matai Road Wanaka","住宿"), stop("Wānaka Tree",-44.6981,169.1171,"That Wanaka Tree")]
     },
     {
       id:"d05", date:"09.29", weekday:"周二", title:"把Wānaka留给湖、山和慢早餐", base:"Wānaka", distanceKm:45, driveTime:"约1小时", stayId:"wanaka",
       summary:"不做特种兵。上午Diamond Lake/Rocky Mountain，下午湖边与小镇；Roy's Peak仅作为体能和天气都优秀时的替代。",
       image:commons("Lonely tree of Wanaka.jpg"), credit:"Tom Hall / CC BY 2.0",
-      routeUrl:dir(["Wānaka 镇区 Wanaka","Diamond Lake Conservation Area","Rippon Winery Wanaka","Wānaka 镇区 Wanaka"]),
+      routeUrl:dir(["70B Matai Road Wanaka","Diamond Lake Conservation Area","Rippon Winery Wanaka","70B Matai Road Wanaka"]),
       schedule:[
         {time:"08:30", title:"镇上慢早餐", notes:"睡够再出发，西海岸长途驾驶在后面。", query:"Federal Diner Wanaka"},
         {time:"10:00", title:"Diamond Lake / Rocky Mountain", notes:"按天气选择45分钟短线或2–3小时完整环线。", query:"Diamond Lake Conservation Area Wanaka"},
@@ -319,19 +133,19 @@
       ],
       meals:[meal("Federal Diner", "早餐 / Brunch", "Federal Diner Wanaka", "空间小、口碑好；避开正午高峰。", 1), meal("Francesca's Italian Kitchen", "晚餐 · 意式", "Francesca's Italian Kitchen Wanaka", "建议订位，适合两家一起正式吃一顿。", 0, "建议预约")],
       fuel:"Wānaka加满，为明日Crown Range与之后Te Anau做准备。", clothing:"分层穿衣；徒步鞋、防晒、轻薄雨衣。", caution:"Rob Roy在5–11月存在雪崩风险，且进山道路条件复杂，本路书不把它列为主线。", booking:"Rippon品鉴和Francesca's晚餐可提前预约。", planB:"全天雨：Puzzling World + Cinema Paradiso + 咖啡馆。",
-      stops:[stop("Wānaka住宿",-44.6967,169.1367,"Wānaka 镇区 Wanaka","住宿"), stop("Diamond Lake",-44.6672,168.9847,"Diamond Lake Conservation Area Wanaka"), stop("Rippon",-44.6969,169.0998,"Rippon Winery Wanaka"), stop("Wānaka住宿",-44.6967,169.1367,"Wānaka 镇区 Wanaka","住宿")]
+      stops:[stop("Wānaka住宿",-44.6827,169.1368,"70B Matai Road Wanaka","住宿"), stop("Diamond Lake",-44.6672,168.9847,"Diamond Lake Conservation Area Wanaka"), stop("Rippon",-44.6969,169.0998,"Rippon Winery Wanaka"), stop("Wānaka住宿",-44.6827,169.1368,"70B Matai Road Wanaka","住宿")]
     },
     {
       id:"d06", date:"09.30", weekday:"周三", title:"Cardrona与Arrowtown，把路开进皇后镇", base:"Queenstown", distanceKm:120, driveTime:"约2小时15分", stayId:"queenstown",
       summary:"Wānaka—Cardrona—Crown Range—Arrowtown—Queenstown。若Crown Range有雪冰，改走Cromwell的SH6稳妥路线。",
       image:commons("Queenstown - Wakatipu Lake & Remarkable Mountains View from Skyline Gondola Observation Deck.jpg"), credit:"Wikimedia Commons / Public Domain",
-      routeUrl:dir(["Wānaka 镇区 Wanaka","Cardrona Hotel","Crown Range Summit","Arrowtown Chinese Settlement","Queenstown 镇区 Queenstown"]),
+      routeUrl:dir(["70B Matai Road Wanaka","Cardrona Hotel","Crown Range Summit","Arrowtown Chinese Settlement","44 Goldfield Heights Queenstown"]),
       schedule:[
         {time:"09:00", title:"Wānaka出发", notes:"先查看Crown Range webcam和QLDC路况。", query:"Crown Range Summit webcam"},
         {time:"10:00", title:"Cardrona Hotel短停", notes:"经典红色建筑；只喝咖啡，不饮酒驾驶。", query:"Cardrona Hotel"},
         {time:"11:15", title:"Crown Range安全观景", notes:"只在正式停车区停，严禁路肩急停。", query:"Crown Range Summit"},
         {time:"12:30", title:"Arrowtown午餐与华人定居点", notes:"留2–3小时慢走历史街区。", query:"Arrowtown Chinese Settlement"},
-        {time:"16:30", title:"Queenstown入住", notes:"Queenstown accommodation area停车方便，晚上进城可用公共停车。", query:"Queenstown 镇区 Queenstown"}
+        {time:"16:30", title:"Queenstown入住", notes:"Goldfield Heights停车方便，晚上进城可用公共停车。", query:"44 Goldfield Heights Queenstown"}
       ],
       highlights:[
         {name:"Cardrona Hotel", tag:"公路地标", notes:"经典外墙与老车是机位；尊重住客和营业空间。", photoTip:"人在红车旁作为比例，避免正午顶光。", query:"Cardrona Hotel", image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=82"},
@@ -340,13 +154,13 @@
       ],
       meals:[meal("Provisions of Arrowtown", "午餐 / 咖啡", "Provisions of Arrowtown", "花园环境舒服；如果排队长就去The Fork and Tap。", 1), meal("Blue Kanu", "晚餐 · Pacific / Asian", "Blue Kanu Queenstown", "适合共享菜；热门时段建议订位。", 0, "建议预约")],
       fuel:"Wānaka出发前加满；Queenstown/Frankton加油站选择多。", clothing:"Crown Range停车拍照时风冷明显，防风外套放手边。", caution:"Crown Range春季仍可能黑冰或降雪；QLDC提示需要时携带并会安装防滑链。", booking:"Blue Kanu晚餐可预约。", planB:"Crown Range关闭：走Wānaka—Cromwell—Frankton的SH6，增加约45–60分钟。",
-      stops:[stop("Wānaka住宿",-44.6967,169.1367,"Wānaka 镇区 Wanaka","住宿"), stop("Cardrona Hotel",-44.8776,168.9947,"Cardrona Hotel"), stop("Crown Range",-44.9635,168.9482,"Crown Range Summit"), stop("Arrowtown",-44.9388,168.8360,"Arrowtown Chinese Settlement"), stop("Queenstown住宿",-45.0312,168.6626,"Queenstown 镇区 Queenstown","住宿")]
+      stops:[stop("Wānaka住宿",-44.6827,169.1368,"70B Matai Road Wanaka","住宿"), stop("Cardrona Hotel",-44.8776,168.9947,"Cardrona Hotel"), stop("Crown Range",-44.9635,168.9482,"Crown Range Summit"), stop("Arrowtown",-44.9388,168.8360,"Arrowtown Chinese Settlement"), stop("Queenstown住宿",-45.0257,168.6901,"44 Goldfield Heights Queenstown","住宿")]
     },
     {
       id:"d07", date:"10.01", weekday:"周四", title:"Glenorchy公路与皇后镇夜景", base:"Queenstown", distanceKm:95, driveTime:"约1小时50分", stayId:"queenstown",
       summary:"上午沿Lake Wakatipu去Glenorchy，下午回Queenstown坐Skyline或逛湖滨。风景密度高但不需要早起赶路。",
       image:commons("Glenorchy at the Head of Lake Wakatipu.jpg"), credit:"Vladka Kennett / CC BY-SA 3.0",
-      routeUrl:dir(["Queenstown 镇区 Queenstown","Bennett's Bluff Lookout","Glenorchy Wharf","Skyline Queenstown","Queenstown 镇区 Queenstown"]),
+      routeUrl:dir(["44 Goldfield Heights Queenstown","Bennett's Bluff Lookout","Glenorchy Wharf","Skyline Queenstown","44 Goldfield Heights Queenstown"]),
       schedule:[
         {time:"08:30", title:"出发去Glenorchy", notes:"湖岸弯道多，观景只进正式停车区。", query:"Glenorchy New Zealand"},
         {time:"09:30", title:"Bennett's Bluff Lookout", notes:"主观景平台拍湖湾与山脉。", query:"Bennett's Bluff Lookout"},
@@ -361,17 +175,17 @@
       ],
       meals:[meal("Mrs Woolly's General Store", "午餐 · Glenorchy", "Mrs Woolly's General Store Glenorchy", "轻食与咖啡，节省行程时间。", 1), meal("Botswana Butchery", "晚餐 · 牛排", "Botswana Butchery Queenstown", "预算较高但适合正式晚餐；需要提前订位。", 0, "建议预约")],
       fuel:"Queenstown/Frankton出发前半箱以上即可；Glenorchy往返不要依赖沿途补给。", clothing:"湖边与山顶都风大，防风层不可少。", caution:"Queenstown CBD停车紧张，优先Man Street或Boundary Road等公共停车并步行。", booking:"Skyline Gondola建议提前；Botswana Butchery建议订位。", planB:"全天雨：Queenstown Arts & Crafts、咖啡馆、Onsen Hot Pools（如已预约）。",
-      stops:[stop("Queenstown住宿",-45.0312,168.6626,"Queenstown 镇区 Queenstown","住宿"), stop("Bennett's Bluff",-44.9120,168.4937,"Bennett's Bluff Lookout"), stop("Glenorchy Wharf",-44.8505,168.3830,"Glenorchy Wharf"), stop("Skyline",-45.0261,168.6499,"Skyline Queenstown"), stop("Queenstown住宿",-45.0312,168.6626,"Queenstown 镇区 Queenstown","住宿")]
+      stops:[stop("Queenstown住宿",-45.0257,168.6901,"44 Goldfield Heights Queenstown","住宿"), stop("Bennett's Bluff",-44.9120,168.4937,"Bennett's Bluff Lookout"), stop("Glenorchy Wharf",-44.8505,168.3830,"Glenorchy Wharf"), stop("Skyline",-45.0261,168.6499,"Skyline Queenstown"), stop("Queenstown住宿",-45.0257,168.6901,"44 Goldfield Heights Queenstown","住宿")]
     },
     {
       id:"d08", date:"10.02", weekday:"周五", title:"从冒险之都转入峡湾前厅", base:"Te Anau", distanceKm:175, driveTime:"约2小时25分", stayId:"teanau",
       summary:"Queenstown—Kingston—Te Anau。下午以湖边、鸟类保护区或Glowworm Caves为主，为次日Milford保存体力。",
       image:commons("00 1373 Milford Sound -New Zealand.jpg"), credit:"W. Bulach / CC BY-SA 4.0",
-      routeUrl:dir(["Queenstown 镇区 Queenstown","Kingston New Zealand","Te Anau 镇区 Te Anau"]),
+      routeUrl:dir(["44 Goldfield Heights Queenstown","Kingston New Zealand","8 Lawson Burrows Crescent Te Anau"]),
       schedule:[
         {time:"09:30", title:"离开Queenstown", notes:"避开早高峰后出发，Frankton加油。", query:"Frankton Queenstown petrol station"},
         {time:"10:30", title:"Devil's Staircase / Kingston短停", notes:"正式观景位短停，不占路肩。", query:"Devils Staircase Lookout New Zealand"},
-        {time:"13:00", title:"抵达Te Anau午餐入住", notes:"确认Milford船票、天气和SH94状态。", query:"Te Anau 镇区 Te Anau"},
+        {time:"13:00", title:"抵达Te Anau午餐入住", notes:"确认Milford船票、天气和SH94状态。", query:"8 Lawson Burrows Crescent Te Anau"},
         {time:"15:30", title:"湖边或鸟类保护区", notes:"轻松散步；若订Glowworm Caves则按船班提前报到。", query:"Te Anau Bird Sanctuary"}
       ],
       highlights:[
@@ -381,13 +195,13 @@
       ],
       meals:[meal("Sandfly Cafe", "午餐 / 咖啡", "Sandfly Cafe Te Anau", "轻松、适合到达后用餐。", 1), meal("Redcliff Restaurant & Bar", "晚餐 · 新西兰料理", "Redcliff Restaurant Te Anau", "Milford前一晚的正式晚餐，建议订位但不要吃得太晚。", 0, "建议预约")],
       fuel:"进入Te Anau前或抵达后加满，10.3早上不要临时找油站。", clothing:"湖边风冷；Glowworm Caves穿防滑鞋、防水外套和抓绒。", caution:"今晚早睡。Milford Road驾驶强度高，驾驶员禁止饮酒。", booking:"Glowworm Caves可选，若参加需提前选好不影响早睡的时段。", planB:"雨天直接Glowworm Caves或回房休息。",
-      stops:[stop("Queenstown住宿",-45.0312,168.6626,"Queenstown 镇区 Queenstown","住宿"), stop("Kingston",-45.3329,168.7146,"Kingston New Zealand"), stop("Te Anau住宿",-45.4145,167.718,"Te Anau 镇区 Te Anau","住宿"), stop("Te Anau湖滨",-45.4161,167.7166,"Lake Te Anau waterfront")]
+      stops:[stop("Queenstown住宿",-45.0257,168.6901,"44 Goldfield Heights Queenstown","住宿"), stop("Kingston",-45.3329,168.7146,"Kingston New Zealand"), stop("Te Anau住宿",-45.4044,167.7237,"8 Lawson Burrows Crescent Te Anau","住宿"), stop("Te Anau湖滨",-45.4161,167.7166,"Lake Te Anau waterfront")]
     },
     {
       id:"d09", date:"10.03", weekday:"周六", title:"Milford Sound：路本身就是景点", base:"Te Anau", distanceKm:240, driveTime:"约4小时30分", stayId:"teanau",
       summary:"Te Anau—Eglinton Valley—Mirror Lakes—Homer Tunnel—Milford Sound往返。推荐预订中午船班，留足道路停靠和突发管制缓冲。",
       image:commons("00 1373 Milford Sound -New Zealand.jpg"), credit:"W. Bulach / CC BY-SA 4.0",
-      routeUrl:dir(["Te Anau 镇区 Te Anau","Eglinton Valley","Mirror Lakes Fiordland","Monkey Creek","Milford Sound Visitor Terminal","Te Anau 镇区 Te Anau"]),
+      routeUrl:dir(["8 Lawson Burrows Crescent Te Anau","Eglinton Valley","Mirror Lakes Fiordland","Monkey Creek","Milford Sound Visitor Terminal","8 Lawson Burrows Crescent Te Anau"]),
       schedule:[
         {time:"07:00", title:"满油出发", notes:"再次查看Milford Road状态；车内备水、热饮和午餐。", query:"Milford Road status"},
         {time:"08:00", title:"Eglinton Valley", notes:"路旁正式停车位短停10–15分钟。", query:"Eglinton Valley"},
@@ -395,7 +209,7 @@
         {time:"10:00", title:"Monkey Creek / Homer Tunnel", notes:"看天气和停车条件选择；不要喂kea。", query:"Monkey Creek Fiordland"},
         {time:"11:15", title:"抵达Milford Visitor Terminal", notes:"至少提前30分钟停车、步行、办理登船。", query:"Milford Sound Visitor Terminal"},
         {time:"12:00–14:00", title:"峡湾巡游", notes:"甲板湿滑，防水外套和防滑鞋比雨伞有用。", query:"Milford Sound cruise terminal"},
-        {time:"17:30前", title:"返回Te Anau", notes:"天黑前返回；回程减少停靠。", query:"Te Anau 镇区 Te Anau"}
+        {time:"17:30前", title:"返回Te Anau", notes:"天黑前返回；回程减少停靠。", query:"8 Lawson Burrows Crescent Te Anau"}
       ],
       highlights:[
         {name:"Mirror Lakes", tag:"倒影", notes:"水面平静时可看到Earl Mountains倒影；早到人少。", photoTip:"把镜头贴近水面高度，竖构图同时收天空与倒影。", query:"Mirror Lakes Fiordland", image:commons("Milford Sound. New Zealand. (8171073678).jpg")},
@@ -404,19 +218,19 @@
       ],
       meals:[meal("自带午餐与热饮", "最稳妥", "FreshChoice Te Anau", "前一晚准备三明治、巧克力和热水，避免依赖沿途餐饮。", 2), meal("Ditto Te Anau", "晚餐 · 回城后", "Ditto Te Anau", "回程时间不确定，先查看是否可订较晚时段。", 0)],
       fuel:"Te Anau出发必须满油；不要把Milford当作可靠补给点。", clothing:"防水外壳、抓绒/羽绒、防滑鞋、备用袜、帽子、驱蚊。", caution:"SH94有雪崩、落石、冰雪和无信号路段；道路关闭绝不绕行或等待硬闯。", booking:"Milford Sound船票必须提前；建议选择可改期/可退款条款。", planB:"Milford Road关闭：改Te Anau湖、Glowworm Caves或Manapouri；联系船公司改期/退款。",
-      stops:[stop("Te Anau住宿",-45.4145,167.718,"Te Anau 镇区 Te Anau","住宿"), stop("Eglinton Valley",-45.0199,167.9993,"Eglinton Valley"), stop("Mirror Lakes",-45.0267,168.0194,"Mirror Lakes Fiordland"), stop("Monkey Creek",-44.7815,168.0151,"Monkey Creek Fiordland"), stop("Milford Terminal",-44.6715,167.9260,"Milford Sound Visitor Terminal"), stop("Te Anau住宿",-45.4145,167.718,"Te Anau 镇区 Te Anau","住宿")]
+      stops:[stop("Te Anau住宿",-45.4044,167.7237,"8 Lawson Burrows Crescent Te Anau","住宿"), stop("Eglinton Valley",-45.0199,167.9993,"Eglinton Valley"), stop("Mirror Lakes",-45.0267,168.0194,"Mirror Lakes Fiordland"), stop("Monkey Creek",-44.7815,168.0151,"Monkey Creek Fiordland"), stop("Milford Terminal",-44.6715,167.9260,"Milford Sound Visitor Terminal"), stop("Te Anau住宿",-45.4044,167.7237,"8 Lawson Burrows Crescent Te Anau","住宿")]
     },
     {
       id:"d10", date:"10.04", weekday:"周日", title:"全程最长转场：蒂阿瑙到哈斯特", base:"Haast", distanceKm:455, driveTime:"约6小时15分纯驾驶", stayId:"haast",
       summary:"这是全程唯一需要严格控时的长途日。07:30出发，Queenstown/Frankton、Wānaka、Makarora分段休息，最多保留两处Haast Pass短停。",
       image:commons("NZ - Knights Point - Haast Pass - Obelisk.jpg"), credit:"Genet / CC BY-SA 4.0",
-      routeUrl:dir(["Te Anau 镇区 Te Anau","Frankton Queenstown","Wanaka New Zealand","Blue Pools Track","Thunder Creek Falls","Haast 区域 Haast"]),
+      routeUrl:dir(["8 Lawson Burrows Crescent Te Anau","Frankton Queenstown","Wanaka New Zealand","Blue Pools Track","Thunder Creek Falls","35 Fox Moth Drive Haast"]),
       schedule:[
-        {time:"07:30", title:"准时离开Te Anau", notes:"早餐和行李前一晚整理好；两位司机轮换。", query:"Te Anau 镇区 Te Anau"},
+        {time:"07:30", title:"准时离开Te Anau", notes:"早餐和行李前一晚整理好；两位司机轮换。", query:"8 Lawson Burrows Crescent Te Anau"},
         {time:"09:45", title:"Frankton加油与休息", notes:"20分钟完成加油、洗手间、咖啡。", query:"Frankton Queenstown petrol station"},
         {time:"12:00", title:"Wānaka早午餐 / 补给", notes:"控制45分钟，下午山口与西岸天气更不稳定。", query:"Wanaka New Zealand"},
         {time:"14:15", title:"Blue Pools或Thunder Creek二选一", notes:"Blue Pools较耗时；若出发晚或下雨，只停Thunder Creek。", query:"Blue Pools Track"},
-        {time:"17:30前", title:"抵达Haast", notes:"天黑前入住；晚餐选择少，准备自炊。", query:"Haast 区域 Haast"}
+        {time:"17:30前", title:"抵达Haast", notes:"天黑前入住；晚餐选择少，准备自炊。", query:"35 Fox Moth Drive Haast"}
       ],
       highlights:[
         {name:"Blue Pools Track", tag:"按时取舍", notes:"吊桥、蓝绿色河谷；只有在14:00前到达且天气稳定时才走。", photoTip:"桥上快速拍摄并给其他游客让路。", query:"Blue Pools Track", image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=82"},
@@ -425,20 +239,20 @@
       ],
       meals:[meal("Big Fig Wānaka / 超市补给", "早午餐", "Big Fig Wanaka", "用餐与采购一次完成，给西岸留出时间。", 2), meal("自炊或Hard Antler", "晚餐 · Haast", "Hard Antler Bar and Restaurant Haast", "到店前电话/地图确认营业；最好准备自炊备选。", 0)],
       fuel:"Te Anau出发半箱以上；Frankton加满，Wānaka/Makarora看油量补充。Haast补给有限。", clothing:"全天分层、防雨；车内放保温水和薄毯。", caution:"全程最累的一天，严禁把Blue Pools、所有瀑布和海岸点全部塞入。任一司机疲劳立即换人。", booking:"无门票，但住宿晚餐补给需提前规划。", planB:"Crown Range/SH6天气差时仍按主干道走；若明显延误，取消所有Haast Pass步道，仅安全到达。",
-      stops:[stop("Te Anau住宿",-45.4145,167.718,"Te Anau 镇区 Te Anau","住宿"), stop("Frankton",-45.0180,168.7420,"Frankton Queenstown petrol station","加油"), stop("Wānaka",-44.6967,169.1367,"Wanaka New Zealand","餐饮"), stop("Blue Pools",-44.1641,169.2787,"Blue Pools Track"), stop("Thunder Creek",-44.1381,169.3507,"Thunder Creek Falls"), stop("Haast住宿",-43.8815,169.0413,"Haast 区域 Haast","住宿")]
+      stops:[stop("Te Anau住宿",-45.4044,167.7237,"8 Lawson Burrows Crescent Te Anau","住宿"), stop("Frankton",-45.0180,168.7420,"Frankton Queenstown petrol station","加油"), stop("Wānaka",-44.6967,169.1367,"Wanaka New Zealand","餐饮"), stop("Blue Pools",-44.1641,169.2787,"Blue Pools Track"), stop("Thunder Creek",-44.1381,169.3507,"Thunder Creek Falls"), stop("Haast住宿",-43.8518,169.0135,"35 Fox Moth Drive Haast","住宿")]
     },
     {
       id:"d11", date:"10.05", weekday:"周一", title:"西海岸雨林、镜湖与双冰川", base:"Franz Josef", distanceKm:165, driveTime:"约2小时50分", stayId:"franz",
       summary:"Haast—Ship Creek—Fox Glacier—Lake Matheson—Franz Josef。今天里程不长，把最好的天气窗口给Lake Matheson。",
       image:commons("Glassy mirror-like Lake Matheson from Reflection Island jetty.jpg"), credit:"Pseudopanax / Public Domain",
-      routeUrl:dir(["Haast 区域 Haast","Ship Creek New Zealand","Lake Matheson Walk","Fox Glacier South Side Walk","Franz Josef 镇区 Franz Josef"]),
+      routeUrl:dir(["35 Fox Moth Drive Haast","Ship Creek New Zealand","Lake Matheson Walk","Fox Glacier South Side Walk","24 Cron Street Franz Josef"]),
       schedule:[
         {time:"08:30", title:"Haast出发", notes:"驱蚊涂好，先去Ship Creek短走。", query:"Ship Creek New Zealand"},
         {time:"09:15", title:"Ship Creek海岸雨林", notes:"选择Dune Lake Walk短线，控制30–45分钟。", query:"Ship Creek Walk"},
         {time:"11:30", title:"Fox Glacier镇午餐", notes:"先看山峰是否出云，决定Lake Matheson顺序。", query:"Fox Glacier New Zealand"},
         {time:"12:30", title:"Lake Matheson", notes:"短线Jetty 45分钟往返，完整环线约1.5小时。", query:"Lake Matheson Walk"},
         {time:"15:00", title:"Fox Glacier短线 / 咖啡", notes:"若低云或下雨，不追求冰川远眺。", query:"Fox Glacier South Side Walk"},
-        {time:"17:00", title:"入住Franz Josef市中心", notes:"2卧2卫，晚餐步行解决。", query:"Franz Josef 镇区 Franz Josef"}
+        {time:"17:00", title:"入住Franz Josef市中心", notes:"2卧2卫，晚餐步行解决。", query:"24 Cron Street Franz Josef"}
       ],
       highlights:[
         {name:"Ship Creek", tag:"海岸雨林", notes:"海浪、沙丘和古老雨林同时出现；沙蝇活跃。", photoTip:"用栈道和树根做前景，海岸留在远处。", query:"Ship Creek Walk", image:"https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=82"},
@@ -447,13 +261,13 @@
       ],
       meals:[meal("Matheson Cafe", "午餐 / 咖啡 · Fox", "Matheson Cafe Fox Glacier", "和Lake Matheson行程自然衔接；临行前查营业日。", 1), meal("Alice May Restaurant", "晚餐 · Franz Josef", "Alice May Restaurant Franz Josef", "镇中心稳妥选择，建议提前订位。", 0, "建议预约")],
       fuel:"Haast出发前看油量；Fox Glacier或Franz Josef补油，为次日北上。", clothing:"防水外套、徒步鞋、驱蚊；镜湖清晨/阴影处湿冷。", caution:"西海岸天气变化很快；直升机只选清晰退款/改期条款，不因天气勉强。", booking:"若考虑Heli Hike或观光飞行，提前预订可退款时段，并把天气作为最终决定。", planB:"大雨：缩短Lake Matheson，去West Coast Wildlife Centre或咖啡馆。",
-      stops:[stop("Haast住宿",-43.8815,169.0413,"Haast 区域 Haast","住宿"), stop("Ship Creek",-43.6761,169.2218,"Ship Creek Walk"), stop("Lake Matheson",-43.4392,169.9665,"Lake Matheson Walk"), stop("Fox Glacier",-43.4631,169.9981,"Fox Glacier South Side Walk"), stop("Franz住宿",-43.3896,170.1813,"Franz Josef 镇区 Franz Josef","住宿")]
+      stops:[stop("Haast住宿",-43.8518,169.0135,"35 Fox Moth Drive Haast","住宿"), stop("Ship Creek",-43.6761,169.2218,"Ship Creek Walk"), stop("Lake Matheson",-43.4392,169.9665,"Lake Matheson Walk"), stop("Fox Glacier",-43.4631,169.9981,"Fox Glacier South Side Walk"), stop("Franz住宿",-43.3887,170.1843,"24 Cron Street Franz Josef","住宿")]
     },
     {
       id:"d12", date:"10.06", weekday:"周二", title:"冰川晨光之后，追一抹峡谷蓝", base:"Hokitika", distanceKm:205, driveTime:"约3小时15分", stayId:"hokitika",
       summary:"Franz Josef—Ross—Hokitika Gorge—Hokitika。先看天气：山峰清晰则上午短走，之后北上；Hokitika Gorge放在下午。",
       image:commons("Hokitika Gorge (3).jpg"), credit:"lumoplank / CC0",
-      routeUrl:dir(["Franz Josef 镇区 Franz Josef","Ross New Zealand","Hokitika Gorge Scenic Reserve","Hokitika 镇区 Hokitika"]),
+      routeUrl:dir(["24 Cron Street Franz Josef","Ross New Zealand","Hokitika Gorge Scenic Reserve","2 Revell Street Hokitika"]),
       schedule:[
         {time:"08:00", title:"Franz Josef晨间短走", notes:"可选Tatare Tunnels或Waiho河谷短线，按DOC当日信息。", query:"Franz Josef Glacier Valley Walk"},
         {time:"10:30", title:"北上Ross", notes:"历史淘金小镇短停或直接通过。", query:"Ross New Zealand"},
@@ -469,20 +283,20 @@
       ],
       meals:[meal("Gatherer Wholefoods", "午餐 · Hokitika", "Gatherer Wholefoods Hokitika", "轻食和蔬菜补给；若休息则改Stumpers。", 1), meal("Stumpers Bar & Cafe", "晚餐 · 小镇中心", "Stumpers Bar and Cafe Hokitika", "适合日落前后，出发前核对周二营业。", 0)],
       fuel:"Franz Josef或Hokitika加油；去Hokitika Gorge前确保至少半箱。", clothing:"峡谷步道湿滑，防水鞋；海边看日落加防风层。", caution:"Hokitika Gorge手机信号和餐饮有限；不要越过护栏接近急流。", booking:"无门票；若前一日直升机因天气改期，不建议占用今天太晚时段。", planB:"大雨或峡谷关闭：留在Hokitika看手工艺、海滩和咖啡馆。",
-      stops:[stop("Franz住宿",-43.3896,170.1813,"Franz Josef 镇区 Franz Josef","住宿"), stop("Ross",-42.8970,170.8150,"Ross New Zealand"), stop("Hokitika Gorge",-42.9564,171.0171,"Hokitika Gorge Scenic Reserve"), stop("Hokitika住宿",-42.7167,170.9667,"Hokitika 镇区 Hokitika","住宿")]
+      stops:[stop("Franz住宿",-43.3887,170.1843,"24 Cron Street Franz Josef","住宿"), stop("Ross",-42.8970,170.8150,"Ross New Zealand"), stop("Hokitika Gorge",-42.9564,171.0171,"Hokitika Gorge Scenic Reserve"), stop("Hokitika住宿",-42.7151,170.9651,"2 Revell Street Hokitika","住宿")]
     },
     {
       id:"d13", date:"10.07", weekday:"周三", title:"沿SH73翻越Arthur's Pass，住进Castle Hill", base:"Arthur's Pass / Castle Hill", distanceKm:255, driveTime:"约3小时45分–4小时15分", stayId:"castlehill",
       summary:"Hokitika—Greymouth—Otira Viaduct—Arthur's Pass—Castle Hill。取消Punakaiki后，今天以高山公路、峡谷观景和傍晚入住为主。",
       image:commons("New Zealand Arthurs Pass.jpg"), credit:"Eli Duke / CC BY-SA 2.0",
-      routeUrl:dir(["Hokitika 镇区 Hokitika","Greymouth New Zealand","Otira Viaduct Lookout","Arthur's Pass Village","Devils Punchbowl Walking Track","Castle Hill Village Castle Hill"]),
+      routeUrl:dir(["2 Revell Street Hokitika","Greymouth New Zealand","Otira Viaduct Lookout","Arthur's Pass Village","Devils Punchbowl Walking Track","3 Bevel Court Castle Hill"]),
       schedule:[
         {time:"08:30", title:"离开Hokitika", notes:"早餐后直接出发；先在Greymouth完成加油、午餐和最后补给。", query:"Greymouth New Zealand"},
         {time:"09:30", title:"Greymouth补给", notes:"把水、零食和Castle Hill晚餐买齐，之后SH73沿线补给选择很少。", query:"Greymouth New Zealand"},
         {time:"11:30", title:"Otira Viaduct Lookout", notes:"短停拍高架桥、峡谷和山路；留意横风，不在车道边停车。", query:"Otira Viaduct Lookout"},
         {time:"12:15", title:"Arthur's Pass Village午餐", notes:"餐饮选择少，营业时间以当天为准；也可直接吃自带午餐。", query:"Arthur's Pass Cafe"},
         {time:"13:15", title:"Devils Punchbowl Track（可选）", notes:"往返约1小时、台阶较多；雨大、结冰或行程延误就跳过。", query:"Devils Punchbowl Walking Track"},
-        {time:"16:30–17:00", title:"抵达Castle Hill入住", notes:"Castle Hill Village；先安顿、做饭，若天色和天气允许再拍Kura Tāwhiti晚光。", query:"Castle Hill Village Castle Hill New Zealand"}
+        {time:"16:30–17:00", title:"抵达Castle Hill入住", notes:"3 Bevel Court；先安顿、做饭，若天色和天气允许再拍Kura Tāwhiti晚光。", query:"3 Bevel Court Castle Hill New Zealand"}
       ],
       highlights:[
         {name:"Otira Viaduct Lookout", tag:"峡谷公路", notes:"高架桥跨越陡峭山谷，是SH73最有辨识度的观景点之一。", photoTip:"用长焦压缩公路、桥和山谷；人站在护栏内侧，避免靠近车道。", query:"Otira Viaduct Lookout", image:commons("New Zealand Arthurs Pass.jpg")},
@@ -491,13 +305,13 @@
       ],
       meals:[meal("Sevenpenny", "午餐 · Greymouth", "Sevenpenny Greymouth", "适合在长距离高山公路前补充热量；也可改为超市采购。", 1), meal("Wobbly Kea", "午餐备选 · Arthur's Pass", "Wobbly Kea Arthur's Pass", "营业时间和座位有限，建议随车准备三明治和热水。", 0), meal("Castle Hill自炊", "晚餐 · 住宿", "Four Square Springfield New Zealand", "在Greymouth或Arthur's Pass前买好食材，Castle Hill周边不要临时找餐厅。", 2)],
       fuel:"Greymouth加满；Arthur's Pass与Springfield虽有补给但不应作为唯一依赖。", clothing:"高山风雨和低温，穿保暖层、防水壳、手套/帽子；瀑布步道穿防滑鞋。", caution:"每天出发前查NZTA SH73路况；遇雪冰或官方关闭绝不进入。车内不留可见行李，kea会啄橡胶部件。", booking:"无门票；Devils Punchbowl按天气和体力现场决定。", planB:"SH73仍开放但天气差：只停Otira与Arthur's Pass村，取消瀑布步道，提前到Castle Hill入住。",
-      stops:[stop("Hokitika住宿",-42.7167,170.9667,"Hokitika 镇区 Hokitika","住宿"), stop("Greymouth",-42.4504,171.2108,"Greymouth New Zealand","加油/午餐"), stop("Otira Viaduct",-42.8737,171.5588,"Otira Viaduct Lookout"), stop("Arthur's Pass",-42.9440,171.5660,"Arthur's Pass Village"), stop("Devils Punchbowl",-42.9398,171.5628,"Devils Punchbowl Walking Track"), stop("Castle Hill住宿",-43.2294,171.7136,"Castle Hill Village Castle Hill New Zealand","住宿")]
+      stops:[stop("Hokitika住宿",-42.7151,170.9651,"2 Revell Street Hokitika","住宿"), stop("Greymouth",-42.4504,171.2108,"Greymouth New Zealand","加油/午餐"), stop("Otira Viaduct",-42.8737,171.5588,"Otira Viaduct Lookout"), stop("Arthur's Pass",-42.9440,171.5660,"Arthur's Pass Village"), stop("Devils Punchbowl",-42.9398,171.5628,"Devils Punchbowl Walking Track"), stop("Castle Hill住宿",-43.2270,171.7118,"3 Bevel Court Castle Hill New Zealand","住宿")]
     },
     {
       id:"d14", date:"10.08", weekday:"周四", title:"Castle Hill晨光，回到基督城入住第6套", base:"Castle Hill → Christchurch", distanceKm:110, driveTime:"约1小时30分–1小时45分", stayId:"chc-final",
       summary:"早晨拍Kura Tāwhiti，经过Springfield回到基督城；下午以市中心散步和第6套房源入住为主。",
       image:commons("Kura Tāwhiti, Castle Hill, Canterbury, New Zealand.jpg"), credit:"Michal Klajban / CC BY-SA 4.0",
-      routeUrl:dir(["Castle Hill Village Castle Hill New Zealand","Kura Tawhiti Castle Hill Conservation Area","Springfield New Zealand","Christchurch Central City New Zealand"]),
+      routeUrl:dir(["3 Bevel Court Castle Hill New Zealand","Kura Tawhiti Castle Hill Conservation Area","Springfield New Zealand","Christchurch Central City New Zealand"]),
       schedule:[
         {time:"08:00", title:"Kura Tāwhiti Access Track", notes:"免费、无需预订；安排1–2小时自由环行，带水并只在指定区域活动。", query:"Kura Tawhiti Castle Hill Conservation Area"},
         {time:"10:30", title:"经Springfield回城", notes:"SH73转SH1；Springfield可短停买馅饼或咖啡，不要把午后行程排太满。", query:"Springfield New Zealand"},
@@ -512,7 +326,7 @@
       ],
       meals:[meal("Springfield午餐", "午餐 · 公路馅饼", "Springfield New Zealand", "从Castle Hill回城的顺路停靠；营业情况以当天为准。", 2), meal("Riverside Market", "晚餐 · 多人多选择", "Riverside Market Christchurch", "抵达市中心后各自选餐，适合四人不想再开车的一晚。", 0), meal("Little High Eatery", "备选 · 市中心", "Little High Eatery Christchurch", "若Riverside过于拥挤，可改去Little High。", 1)],
       fuel:"Castle Hill出发前确认油量；Springfield或进城后加油，第二天还车前再按合同要求补满。", clothing:"早晨仍按高山层次穿着，进入城市后可减层；随身带轻便雨衣。", caution:"Castle Hill无饮用水和稳定手机信号；车内不放贵重物品，确认第6套车库/预留车位的使用规则。", booking:"无必须预订；若想坐电车或Avon River Punt，临近出发查看班次。", planB:"雨雪或低云：取消Kura Tāwhiti长走，直接经Springfield进城，把下午留给Art Gallery、Canterbury Museum和Riverside。",
-      stops:[stop("Castle Hill住宿",-43.2294,171.7136,"Castle Hill Village Castle Hill New Zealand","住宿"), stop("Kura Tāwhiti",-43.2304,171.7154,"Kura Tawhiti Castle Hill Conservation Area"), stop("Springfield",-43.3885,172.3523,"Springfield New Zealand","餐饮"), stop("基督城第6套住宿",-43.5321,172.6362,"Christchurch Central City New Zealand","住宿"), stop("Riverside Market",-43.5330,172.6334,"Riverside Market Christchurch","餐饮")]
+      stops:[stop("Castle Hill住宿",-43.2270,171.7118,"3 Bevel Court Castle Hill New Zealand","住宿"), stop("Kura Tāwhiti",-43.2304,171.7154,"Kura Tawhiti Castle Hill Conservation Area"), stop("Springfield",-43.3885,172.3523,"Springfield New Zealand","餐饮"), stop("基督城第6套住宿",-43.5230,172.6260,"Christchurch Central City New Zealand","住宿"), stop("Riverside Market",-43.5330,172.6334,"Riverside Market Christchurch","餐饮")]
     },
     {
       id:"d15", date:"10.09", weekday:"周五", title:"基督城市区慢游：花园、艺术与河畔", base:"Christchurch Central City", distanceKm:12, driveTime:"城市步行/短途驾车", stayId:"chc-final",
@@ -533,7 +347,7 @@
       ],
       meals:[meal("Victoria Street咖啡馆", "早餐 · 市中心", "Victoria Street Christchurch cafes", "靠近第6套房源，先看当天开门情况。", 1), meal("Riverside Market", "午餐 · 多选择", "Riverside Market Christchurch", "四人可以分开选餐，饭后直接步行去河畔。", 0), meal("Little High Eatery", "晚餐 · 备选", "Little High Eatery Christchurch", "不想排队时的室内备选；提前查营业时间。", 2)],
       fuel:"今天不必专门开车加油；晚餐后确认油量，必要时到机场方向油站加满。", clothing:"城市步行为主，穿舒适防滑鞋；带轻便雨衣和薄外套，早晚温差仍明显。", caution:"市中心部分路段有施工或单行线；停车尽量使用房源车位或正规停车场，不在街边长时间留行李。", booking:"电车、Punt和正式餐厅均为可选项目；不预订也能完成核心城市路线。", planB:"全天下雨：Art Gallery + Canterbury Museum + Riverside Market + 咖啡馆，取消花园长走。",
-      stops:[stop("第6套住宿",-43.5321,172.6362,"Christchurch Central City New Zealand","住宿"), stop("Botanic Gardens",-43.5302,172.6207,"Christchurch Botanic Gardens"), stop("Arts Centre",-43.5308,172.6255,"Christchurch Arts Centre"), stop("Riverside Market",-43.5330,172.6334,"Riverside Market Christchurch","餐饮"), stop("New Regent Street",-43.5286,172.6368,"New Regent Street Christchurch")]
+      stops:[stop("第6套住宿",-43.5230,172.6260,"Christchurch Central City New Zealand","住宿"), stop("Botanic Gardens",-43.5302,172.6207,"Christchurch Botanic Gardens"), stop("Arts Centre",-43.5308,172.6255,"Christchurch Arts Centre"), stop("Riverside Market",-43.5330,172.6334,"Riverside Market Christchurch","餐饮"), stop("New Regent Street",-43.5286,172.6368,"New Regent Street Christchurch")]
     },
     {
       id:"d16", date:"10.10", weekday:"周六", title:"退房、加油还车，飞回悉尼转成都", base:"Christchurch → Sydney → Chengdu", distanceKm:14, driveTime:"约25分钟 + 还车", stayId:null,
@@ -554,7 +368,7 @@
       ],
       meals:[meal("市中心早餐", "早餐 · 近房源", "Christchurch Central City breakfast", "优先步行解决，给退房和还车留出余量。", 1), meal("机场餐饮", "备选 · 航站楼", "Christchurch Airport food", "不为市区餐厅压缩还车和国际航班缓冲。", 0)],
       fuel:"按租车合同规定油量还车；保留加油小票并拍油表。", clothing:"把一套轻薄衣物放随身行李，悉尼转机和成都抵达温差不同。", caution:"15:25为国际航班，建议12:00左右进入机场流程；确认租车公司还车点、营业时间和机场接驳。", booking:"无需新增景点预订；保存两段航班和租车订单截图。", planB:"市区拥堵或天气差：退房后直接去机场，机场内吃午餐。",
-      stops:[stop("第6套住宿",-43.5321,172.6362,"Christchurch Central City New Zealand","住宿"), stop("机场加油",-43.4932,172.5494,"Christchurch Airport petrol station","加油"), stop("基督城机场",-43.4894,172.5322,"Christchurch Airport","交通")]
+      stops:[stop("第6套住宿",-43.5230,172.6260,"Christchurch Central City New Zealand","住宿"), stop("机场加油",-43.4932,172.5494,"Christchurch Airport petrol station","加油"), stop("基督城机场",-43.4894,172.5322,"Christchurch Airport","交通")]
     }
   ];
 
@@ -599,7 +413,7 @@
     meta: {
       title:"新西兰南岛15晚自驾路书", dates:"2026.09.25—10.10", travelers:"4人 / 2对夫妻", nights:15, distanceKm:2470, queryDate:"2026.08.15",
       routeBases:[
-        {name:"Christchurch Airport",lat:-43.4894,lng:172.5322},{name:"Lake Tekapo",lat:-44.0040,lng:170.4771},{name:"Twizel",lat:-44.259,lng:170.097},{name:"Wānaka",lat:-44.6967,lng:169.1367},{name:"Queenstown",lat:-45.0312,lng:168.6626},{name:"Te Anau",lat:-45.4145,lng:167.7180},{name:"Milford Sound",lat:-44.6715,lng:167.9260},{name:"Haast",lat:-43.8800,lng:169.0400},{name:"Franz Josef",lat:-43.3890,lng:170.1800},{name:"Hokitika",lat:-42.7160,lng:170.9670},{name:"Arthur's Pass",lat:-42.9440,lng:171.5660},{name:"Castle Hill",lat:-43.2304,lng:171.7154},{name:"Christchurch",lat:-43.5321,lng:172.6362}
+        {name:"Christchurch Airport",lat:-43.4894,lng:172.5322},{name:"Lake Tekapo",lat:-44.0040,lng:170.4771},{name:"Twizel",lat:-44.2595,lng:170.0983},{name:"Wānaka",lat:-44.6967,lng:169.1367},{name:"Queenstown",lat:-45.0312,lng:168.6626},{name:"Te Anau",lat:-45.4145,lng:167.7180},{name:"Milford Sound",lat:-44.6715,lng:167.9260},{name:"Haast",lat:-43.8800,lng:169.0400},{name:"Franz Josef",lat:-43.3890,lng:170.1800},{name:"Hokitika",lat:-42.7160,lng:170.9670},{name:"Arthur's Pass",lat:-42.9440,lng:171.5660},{name:"Castle Hill",lat:-43.2304,lng:171.7154},{name:"Christchurch",lat:-43.5321,lng:172.6362}
       ]
     },
     hotels, days, bookings, prep, sources,
