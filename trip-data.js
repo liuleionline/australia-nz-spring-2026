@@ -28,7 +28,7 @@
     { id:"franz", date:"10.5", nights:1, city:"Franz Josef / Waiau", name:"TWO FOUR CRON · Downtown 2 Bedroom Premium Stay", address:"24 Cron Street, Franz Josef / Waiau 7886（请以订单页最终门牌为准）", price:1824.80, facts:["2卧","2卫","免费停车 / EV"], image:commons("Franz Josef Glacier, New Zealand (5).JPG"), map:q("24 Cron Street Franz Josef"), link:"https://www.airbnb.com/rooms/1192646002050539125", note:"市中心，餐厅步行方便；保留现有订单。", lat:-43.3887, lng:170.1843 },
     { id:"hokitika", date:"10.6", nights:1, city:"Hokitika", name:"Hoki Boatshed Accommodation", address:"2 Revell Street, Hokitika 7810", price:1891.17, facts:["海边位置","4人","停车"], image:commons("Hokitika Gorge (3).jpg"), map:q("2 Revell Street Hokitika"), link:"https://www.airbnb.com/rooms/1095911928830221258", note:"入住15:00，退房11:00；适合日落后去Glow Worm Dell。", lat:-42.7151, lng:170.9651 },
     { id:"castlehill", date:"10.7", nights:1, city:"Castle Hill", name:"Castle Hill现代宽敞度假屋", address:"3 Bevel Court, Castle Hill Village 7580", price:2421.06, facts:["3卧","2卫","免费停车"], image:commons("Kura Tāwhiti, Castle Hill, Canterbury, New Zealand.jpg"), map:q("3 Bevel Court Castle Hill New Zealand"), link:"https://www.airbnb.com/rooms/22409971", note:"已调整为10月7日入住；山区别墅，附近餐饮很少，抵达前买好晚餐和早餐。", lat:-43.2270, lng:171.7118 },
-    { id:"chc-final", date:"10.8–9", nights:2, city:"基督城市中心", name:"第6套：漫步到体育场 · 2卧2卫 · 预留停车位", address:"Christchurch Central City（以订单页最终门牌为准）", price:"", facts:["2卧","2卫","King + 2张单人床","预留车位"], image:commons("Christchurch Botanic Gardens in autumn.jpg"), map:q("Christchurch Central City New Zealand"), link:"https://www.airbnb.com/rooms/1241368912811080729", note:"已确认预订；10月8–10日入住。第6套房源总价待从订单补录。", lat:-43.5230, lng:172.6260 }
+    { id:"chc-final", date:"10.8–9", nights:2, city:"基督城市中心", name:"第6套：漫步到体育场 · 2卧2卫 · 预留停车位", address:"187 Kilmore Street, Christchurch Central, Christchurch 8013, New Zealand", price:"", facts:["2卧","2卫","King + 2张单人床","预留车位"], image:commons("Christchurch Botanic Gardens in autumn.jpg"), map:q("187 Kilmore Street Christchurch 8013 New Zealand"), link:"https://www.airbnb.com/rooms/1241368912811080729", note:"已确认预订；10月8–10日入住。第6套房源总价待从订单补录。", lat:-43.5230, lng:172.6260 }
   ];
   hotels.forEach(h => { if (h.user == null) { h.user = h.price / 2; h.shen = h.price / 2; } });
 
@@ -311,12 +311,12 @@
       id:"d14", date:"10.08", weekday:"周四", title:"Castle Hill晨光，回到基督城入住第6套", base:"Castle Hill → Christchurch", distanceKm:110, driveTime:"约1小时30分–1小时45分", stayId:"chc-final",
       summary:"早晨拍Kura Tāwhiti，经过Springfield回到基督城；下午以市中心散步和第6套房源入住为主。",
       image:commons("Kura Tāwhiti, Castle Hill, Canterbury, New Zealand.jpg"), credit:"Michal Klajban / CC BY-SA 4.0",
-      routeUrl:dir(["3 Bevel Court Castle Hill New Zealand","Kura Tawhiti Castle Hill Conservation Area","Springfield New Zealand","Christchurch Central City New Zealand"]),
+      routeUrl:dir(["3 Bevel Court Castle Hill New Zealand","Kura Tawhiti Castle Hill Conservation Area","Springfield New Zealand","187 Kilmore Street Christchurch 8013 New Zealand"]),
       schedule:[
         {time:"08:00", title:"Kura Tāwhiti Access Track", notes:"免费、无需预订；安排1–2小时自由环行，带水并只在指定区域活动。", query:"Kura Tawhiti Castle Hill Conservation Area"},
         {time:"10:30", title:"经Springfield回城", notes:"SH73转SH1；Springfield可短停买馅饼或咖啡，不要把午后行程排太满。", query:"Springfield New Zealand"},
         {time:"12:30", title:"Springfield午餐", notes:"以当日营业为准；若排队，简单打包带走。", query:"Springfield New Zealand"},
-        {time:"14:00", title:"入住第6套基督城房源", notes:"确认自助入住、车库/预留车位和行李卸放；地址以订单页最终门牌为准。", query:"Christchurch Central City New Zealand"},
+        {time:"14:00", title:"入住第6套基督城房源", notes:"确认自助入住、车库/预留车位和行李卸放；入住地址为187 Kilmore Street。", query:"187 Kilmore Street Christchurch 8013 New Zealand"},
         {time:"15:00", title:"市中心轻松散步", notes:"按体力选择New Regent Street、Cathedral Junction、Riverside Market和Avon River。", query:"New Regent Street Christchurch"}
       ],
       highlights:[
@@ -326,19 +326,19 @@
       ],
       meals:[meal("Springfield午餐", "午餐 · 公路馅饼", "Springfield New Zealand", "从Castle Hill回城的顺路停靠；营业情况以当天为准。", 2), meal("Riverside Market", "晚餐 · 多人多选择", "Riverside Market Christchurch", "抵达市中心后各自选餐，适合四人不想再开车的一晚。", 0), meal("Little High Eatery", "备选 · 市中心", "Little High Eatery Christchurch", "若Riverside过于拥挤，可改去Little High。", 1)],
       fuel:"Castle Hill出发前确认油量；Springfield或进城后加油，第二天还车前再按合同要求补满。", clothing:"早晨仍按高山层次穿着，进入城市后可减层；随身带轻便雨衣。", caution:"Castle Hill无饮用水和稳定手机信号；车内不放贵重物品，确认第6套车库/预留车位的使用规则。", booking:"无必须预订；若想坐电车或Avon River Punt，临近出发查看班次。", planB:"雨雪或低云：取消Kura Tāwhiti长走，直接经Springfield进城，把下午留给Art Gallery、Canterbury Museum和Riverside。",
-      stops:[stop("Castle Hill住宿",-43.2270,171.7118,"3 Bevel Court Castle Hill New Zealand","住宿"), stop("Kura Tāwhiti",-43.2304,171.7154,"Kura Tawhiti Castle Hill Conservation Area"), stop("Springfield",-43.3885,172.3523,"Springfield New Zealand","餐饮"), stop("基督城第6套住宿",-43.5230,172.6260,"Christchurch Central City New Zealand","住宿"), stop("Riverside Market",-43.5330,172.6334,"Riverside Market Christchurch","餐饮")]
+      stops:[stop("Castle Hill住宿",-43.2270,171.7118,"3 Bevel Court Castle Hill New Zealand","住宿"), stop("Kura Tāwhiti",-43.2304,171.7154,"Kura Tawhiti Castle Hill Conservation Area"), stop("Springfield",-43.3885,172.3523,"Springfield New Zealand","餐饮"), stop("基督城第6套住宿",-43.5230,172.6260,"187 Kilmore Street Christchurch 8013 New Zealand","住宿"), stop("Riverside Market",-43.5330,172.6334,"Riverside Market Christchurch","餐饮")]
     },
     {
       id:"d15", date:"10.09", weekday:"周五", title:"基督城市区慢游：花园、艺术与河畔", base:"Christchurch Central City", distanceKm:12, driveTime:"城市步行/短途驾车", stayId:"chc-final",
       summary:"不再搬家，整天以步行和短途车程游览基督城；晚上继续住第6套房源，减少还车前的折腾。",
       image:commons("Christchurch Botanic Gardens in autumn.jpg"), credit:"Bernard Spragg / CC0",
-      routeUrl:dir(["Christchurch Central City New Zealand","Christchurch Botanic Gardens","Christchurch Art Gallery Te Puna o Waiwhetu","Riverside Market Christchurch","New Regent Street Christchurch"]),
+      routeUrl:dir(["187 Kilmore Street Christchurch 8013 New Zealand","Christchurch Botanic Gardens","Christchurch Art Gallery Te Puna o Waiwhetu","Riverside Market Christchurch","New Regent Street Christchurch"]),
       schedule:[
         {time:"09:00", title:"Botanic Gardens与Avon River", notes:"清晨光线柔和，安排1.5–2小时；可从市中心步行或短驾前往。", query:"Christchurch Botanic Gardens"},
         {time:"11:30", title:"Arts Centre / Art Gallery", notes:"根据当天开放时间二选一或都看；室内项目适合雨天。", query:"Christchurch Art Gallery Te Puna o Waiwhetu"},
         {time:"13:00", title:"市中心午餐", notes:"Victoria Street、Riverside Market或Little High均可，减少开车找位。", query:"Riverside Market Christchurch"},
         {time:"15:00", title:"New Regent Street与Cathedral Junction", notes:"彩色街屋、电车和城市复兴建筑集中，适合慢拍。", query:"New Regent Street Christchurch"},
-        {time:"17:00", title:"回房整理行李", notes:"把护照、驾照、租车合同和充电器集中；确认第二天还车路线。", query:"Christchurch Central City New Zealand"}
+        {time:"17:00", title:"回房整理行李", notes:"把护照、驾照、租车合同和充电器集中；确认第二天还车路线。", query:"187 Kilmore Street Christchurch 8013 New Zealand"}
       ],
       highlights:[
         {name:"Christchurch Botanic Gardens", tag:"城市绿洲", notes:"从高山和西海岸回到花园与Avon River，节奏自然放缓。", photoTip:"沿河拍桥、倒影和春季新绿；人物放在步道交叉处增加尺度。", query:"Christchurch Botanic Gardens", image:commons("Christchurch Botanic Gardens in autumn.jpg")},
@@ -347,16 +347,16 @@
       ],
       meals:[meal("Victoria Street咖啡馆", "早餐 · 市中心", "Victoria Street Christchurch cafes", "靠近第6套房源，先看当天开门情况。", 1), meal("Riverside Market", "午餐 · 多选择", "Riverside Market Christchurch", "四人可以分开选餐，饭后直接步行去河畔。", 0), meal("Little High Eatery", "晚餐 · 备选", "Little High Eatery Christchurch", "不想排队时的室内备选；提前查营业时间。", 2)],
       fuel:"今天不必专门开车加油；晚餐后确认油量，必要时到机场方向油站加满。", clothing:"城市步行为主，穿舒适防滑鞋；带轻便雨衣和薄外套，早晚温差仍明显。", caution:"市中心部分路段有施工或单行线；停车尽量使用房源车位或正规停车场，不在街边长时间留行李。", booking:"电车、Punt和正式餐厅均为可选项目；不预订也能完成核心城市路线。", planB:"全天下雨：Art Gallery + Canterbury Museum + Riverside Market + 咖啡馆，取消花园长走。",
-      stops:[stop("第6套住宿",-43.5230,172.6260,"Christchurch Central City New Zealand","住宿"), stop("Botanic Gardens",-43.5302,172.6207,"Christchurch Botanic Gardens"), stop("Arts Centre",-43.5308,172.6255,"Christchurch Arts Centre"), stop("Riverside Market",-43.5330,172.6334,"Riverside Market Christchurch","餐饮"), stop("New Regent Street",-43.5286,172.6368,"New Regent Street Christchurch")]
+      stops:[stop("第6套住宿",-43.5230,172.6260,"187 Kilmore Street Christchurch 8013 New Zealand","住宿"), stop("Botanic Gardens",-43.5302,172.6207,"Christchurch Botanic Gardens"), stop("Arts Centre",-43.5308,172.6255,"Christchurch Arts Centre"), stop("Riverside Market",-43.5330,172.6334,"Riverside Market Christchurch","餐饮"), stop("New Regent Street",-43.5286,172.6368,"New Regent Street Christchurch")]
     },
     {
       id:"d16", date:"10.10", weekday:"周六", title:"退房、加油还车，飞回悉尼转成都", base:"Christchurch → Sydney → Chengdu", distanceKm:14, driveTime:"约25分钟 + 还车", stayId:null,
       summary:"10:00退房后不再安排远距离景点；完成加油、还车和国际航班值机，15:25起飞。",
       image:commons("Christchurch Botanic Gardens in autumn.jpg"), credit:"Bernard Spragg / CC0",
-      routeUrl:dir(["Christchurch Central City New Zealand","Christchurch Airport petrol station","Christchurch Airport"]),
+      routeUrl:dir(["187 Kilmore Street Christchurch 8013 New Zealand","Christchurch Airport petrol station","Christchurch Airport"]),
       schedule:[
-        {time:"08:00", title:"最后早餐与短散步", notes:"在第6套房源附近解决，控制行李和时间，不再安排远处景点。", query:"Christchurch Central City New Zealand"},
-        {time:"10:00", title:"退房", notes:"核对护照、充电器、驾照、租车合同与全部行李；确认房源车位无遗留物。", query:"Christchurch Central City New Zealand"},
+        {time:"08:00", title:"最后早餐与短散步", notes:"在第6套房源附近解决，控制行李和时间，不再安排远处景点。", query:"breakfast near 187 Kilmore Street Christchurch"},
+        {time:"10:00", title:"退房", notes:"核对护照、充电器、驾照、租车合同与全部行李；确认房源车位无遗留物。", query:"187 Kilmore Street Christchurch 8013 New Zealand"},
         {time:"11:30", title:"机场方向加油", notes:"按租车合同补至要求油量，保留小票并拍油表。", query:"Christchurch Airport petrol station"},
         {time:"12:00–12:15", title:"还车与前往航站楼", notes:"为找还车点、接驳和国际安检留出缓冲。", query:"Christchurch Airport car rental returns", url:"https://maps.app.goo.gl/eGEPVYGisXpXQqKk7"},
         {time:"15:25–17:05", title:"NZ223 基督城—悉尼", notes:"均为当地时间；抵达后按跨航站楼/安检指引转机。", query:"Christchurch Airport"},
@@ -366,9 +366,9 @@
         {name:"还车前车况", tag:"证据照片", notes:"油表、里程、车身四角、车内和还车位再次拍照，保留至押金退回。", photoTip:"照片带时间信息；把加油小票与租车合同一起保存。", query:"Christchurch Airport car rental returns", url:"https://maps.app.goo.gl/eGEPVYGisXpXQqKk7", image:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=82"},
         {name:"机场最后合影", tag:"旅程收尾", notes:"不要为了最后一张照片压缩还车和国际航班缓冲。", photoTip:"在航站楼或还车后拍四人合影，不在道路边停车。", query:"Christchurch Airport", image:commons("Christchurch Botanic Gardens in autumn.jpg")}
       ],
-      meals:[meal("市中心早餐", "早餐 · 近房源", "Christchurch Central City breakfast", "优先步行解决，给退房和还车留出余量。", 1), meal("机场餐饮", "备选 · 航站楼", "Christchurch Airport food", "不为市区餐厅压缩还车和国际航班缓冲。", 0)],
+      meals:[meal("市中心早餐", "早餐 · 近房源", "breakfast near 187 Kilmore Street Christchurch", "优先步行解决，给退房和还车留出余量。", 1), meal("机场餐饮", "备选 · 航站楼", "Christchurch Airport food", "不为市区餐厅压缩还车和国际航班缓冲。", 0)],
       fuel:"按租车合同规定油量还车；保留加油小票并拍油表。", clothing:"把一套轻薄衣物放随身行李，悉尼转机和成都抵达温差不同。", caution:"15:25为国际航班，建议12:00左右进入机场流程；确认租车公司还车点、营业时间和机场接驳。", booking:"无需新增景点预订；保存两段航班和租车订单截图。", planB:"市区拥堵或天气差：退房后直接去机场，机场内吃午餐。",
-      stops:[stop("第6套住宿",-43.5230,172.6260,"Christchurch Central City New Zealand","住宿"), stop("机场加油",-43.4932,172.5494,"Christchurch Airport petrol station","加油"), stop("基督城机场",-43.4894,172.5322,"Christchurch Airport","交通")]
+      stops:[stop("第6套住宿",-43.5230,172.6260,"187 Kilmore Street Christchurch 8013 New Zealand","住宿"), stop("机场加油",-43.4932,172.5494,"Christchurch Airport petrol station","加油"), stop("基督城机场",-43.4894,172.5322,"Christchurch Airport","交通")]
     }
   ];
 
