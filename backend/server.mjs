@@ -24,6 +24,7 @@ const SESSION_MS = SESSION_DAYS * 24 * 60 * 60 * 1000;
 const MAX_BACKUPS = Math.max(7, Number(process.env.MAX_BACKUPS || 45));
 const ALLOWED_USERS = ["LL", "YM", "QNL", "SZ"];
 const ADMIN_USER = "LL";
+const SCHEMA_VERSION = 3;
 const BOOTSTRAP_PASSWORD = String(process.env.ROUTEBOOK_BOOTSTRAP_PASSWORD || "");
 const DISPLAY_NAMES = {
   LL: "旅伴L",
@@ -88,7 +89,7 @@ function toPublicUser(user) {
 
 function baseState() {
   return {
-    schema_version: 2,
+    schema_version: SCHEMA_VERSION,
     users: {},
     sessions: {},
     expenses: {},
@@ -97,6 +98,41 @@ function baseState() {
     backups: {},
     audit: []
   };
+}
+
+function normalizeJournalState(value) {
+  const journals = Object.fromEntries(ALLOWED_USERS.map((username) => [username, {}]));
+  if (!value || typeof value !== "object" || Array.isArray(value)) return journals;
+
+  for (const [key, candidate] of Object.entries(value)) {
+    if (!candidate || typeof candidate !== "object" || Array.isArray(candidate)) continue;
+
+    const username = normalizeUsername(key);
+    const isUserBucket = isAllowedUsername(username) && !("entry" in candidate);
+    if (isUserBucket) {
+      for (const [dayId, row] of Object.entries(candidate)) {
+        if (!row || typeof row !== "object" || Array.isArray(row) || !row.entry || typeof row.entry !== "object") continue;
+        journals[username][dayId] = {
+          ...deepClone(row),
+          day_id: String(row.day_id || dayId),
+          updated_by: username
+        };
+      }
+      continue;
+    }
+
+    // Schema v2 stored one shared row per day. Preserve it under the last known editor.
+    if (!candidate.entry || typeof candidate.entry !== "object" || Array.isArray(candidate.entry)) continue;
+    const legacyActor = normalizeUsername(candidate.updated_by || candidate.entry.updatedBy);
+    const owner = isAllowedUsername(legacyActor) ? legacyActor : ADMIN_USER;
+    journals[owner][key] = {
+      ...deepClone(candidate),
+      day_id: String(candidate.day_id || key),
+      updated_by: owner
+    };
+  }
+
+  return journals;
 }
 
 function normalizeState(raw) {
@@ -112,8 +148,9 @@ function normalizeState(raw) {
   for (const key of ["users", "sessions", "expenses", "tasks", "journal", "backups"]) {
     if (!next[key] || typeof next[key] !== "object" || Array.isArray(next[key])) next[key] = {};
   }
+  next.journal = normalizeJournalState(next.journal);
   if (!Array.isArray(next.audit)) next.audit = [];
-  next.schema_version = 2;
+  next.schema_version = SCHEMA_VERSION;
   return next;
 }
 
@@ -410,7 +447,7 @@ function validateExpense(body, { requireId = false } = {}) {
 
 function exportBackupData() {
   return {
-    schema_version: 2,
+    schema_version: SCHEMA_VERSION,
     generated_at: nowIso(),
     users: deepClone(state.users),
     expenses: deepClone(state.expenses),
@@ -603,7 +640,7 @@ async function restoreBackup(backupId, actor) {
     targetState.users = deepClone(payload.users);
     targetState.expenses = deepClone(payload.expenses);
     targetState.tasks = deepClone(payload.tasks);
-    targetState.journal = deepClone(payload.journal);
+    targetState.journal = normalizeJournalState(payload.journal);
     targetState.audit = Array.isArray(payload.audit) ? deepClone(payload.audit) : [];
     targetState.sessions = {};
     appendAudit(targetState, "backup.restore", actor, { backup_id: row.id });
@@ -871,11 +908,13 @@ app.post("/api/routebook/tasks", requireFullAuth, async (req, res, next) => {
 });
 
 app.get("/api/routebook/journal", (_req, res) => {
-  const entries = {};
-  for (const [dayId, row] of Object.entries(state.journal)) {
-    entries[dayId] = row.entry;
+  const journals = Object.fromEntries(ALLOWED_USERS.map((username) => [username, {}]));
+  for (const username of ALLOWED_USERS) {
+    for (const [dayId, row] of Object.entries(state.journal[username] || {})) {
+      if (row?.entry && typeof row.entry === "object") journals[username][dayId] = row.entry;
+    }
   }
-  res.json({ entries });
+  res.json({ journals });
 });
 
 app.put("/api/routebook/journal", requireFullAuth, async (req, res, next) => {
@@ -890,17 +929,21 @@ app.put("/api/routebook/journal", requireFullAuth, async (req, res, next) => {
     }
     const actor = req.auth.user.username;
     const row = await queueWrite(async (targetState) => {
+      const safeEntry = { ...deepClone(entry), updatedBy: actor };
       const nextRow = {
         day_id: dayId,
-        entry: deepClone(entry),
+        entry: safeEntry,
         updated_by: actor,
         updated_at: nowIso()
       };
-      targetState.journal[dayId] = nextRow;
+      if (!targetState.journal[actor] || typeof targetState.journal[actor] !== "object") {
+        targetState.journal[actor] = {};
+      }
+      targetState.journal[actor][dayId] = nextRow;
       appendAudit(targetState, "journal.update", actor, { day_id: dayId });
       return nextRow;
     });
-    return res.json({ entry: row.entry, updated_at: row.updated_at });
+    return res.json({ username: actor, entry: row.entry, updated_at: row.updated_at });
   } catch (error) {
     return next(error);
   }

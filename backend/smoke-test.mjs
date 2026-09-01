@@ -1,5 +1,5 @@
 import { spawn } from "node:child_process";
-import { mkdtemp, rm } from "node:fs/promises";
+import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 
@@ -7,6 +7,17 @@ const port = 18787;
 const bootstrapPassword = "Test-only-bootstrap-2026!";
 const baseUrl = `http://127.0.0.1:${port}`;
 const dataDir = await mkdtemp(path.join(os.tmpdir(), "routebook-api-test-"));
+await writeFile(path.join(dataDir, "routebook-state.json"), JSON.stringify({
+  schema_version: 2,
+  journal: {
+    d01: {
+      day_id: "d01",
+      entry: { summary: "legacy journal", updatedBy: "YM", savedAt: "2026-08-01T00:00:00.000Z" },
+      updated_by: "YM",
+      updated_at: "2026-08-01T00:00:00.000Z"
+    }
+  }
+}), "utf8");
 const child = spawn(process.execPath, ["server.mjs"], {
   cwd: new URL(".", import.meta.url),
   env: {
@@ -79,6 +90,10 @@ try {
   let result = await request("/api/routebook/auth");
   assert(result.response.status === 401, "Anonymous auth check must return 401");
 
+  result = await request("/api/routebook/journal");
+  assert(result.response.status === 200 && result.body.journals?.YM?.d01?.summary === "legacy journal",
+    "Legacy shared journal rows must migrate to their last known editor");
+
   result = await request("/api/routebook/auth", {
     method: "POST",
     body: JSON.stringify({ action: "login", username: "UNKNOWN", password: bootstrapPassword })
@@ -130,6 +145,26 @@ try {
   });
   assert(result.response.status === 200 && result.body.token, "YM password change must succeed");
   const ymToken = result.body.token;
+
+  result = await request("/api/routebook/journal", {
+    method: "PUT",
+    headers: { Authorization: `Bearer ${llToken}` },
+    body: JSON.stringify({ dayId: "d02", entry: { summary: "LL journal", updatedBy: "YM" } })
+  });
+  assert(result.response.status === 200 && result.body.username === "LL" && result.body.entry.updatedBy === "LL",
+    "Journal writes must use the authenticated account as owner");
+
+  result = await request("/api/routebook/journal", {
+    method: "PUT",
+    headers: { Authorization: `Bearer ${ymToken}` },
+    body: JSON.stringify({ dayId: "d02", entry: { summary: "YM journal" } })
+  });
+  assert(result.response.status === 200 && result.body.username === "YM",
+    "A second participant must be able to save the same day independently");
+
+  result = await request("/api/routebook/journal");
+  assert(result.body.journals?.LL?.d02?.summary === "LL journal" && result.body.journals?.YM?.d02?.summary === "YM journal",
+    "Saving the same day for two participants must not overwrite either entry");
 
   result = await request("/api/routebook/auth", {
     method: "POST",

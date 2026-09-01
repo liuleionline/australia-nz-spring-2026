@@ -16,10 +16,13 @@
   const dayById = (id) => data.days.find((day) => day.id === id);
   const flightById = (id) => data.flights.find((flight) => flight.id === id);
   const fallbackImage = "data:image/svg+xml;charset=utf-8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dce8df"/><stop offset="1" stop-color="#8bb4ad"/></linearGradient></defs><rect width="900" height="520" fill="url(#g)"/><path d="M0 420L170 240l110 100 160-210 180 220 110-130 170 200v100H0z" fill="#284f47" opacity=".62"/><circle cx="710" cy="105" r="48" fill="#f1b85b"/><text x="40" y="475" fill="white" font-family="sans-serif" font-size="28">Australia · New Zealand</text></svg>');
+  const JOURNAL_USERS = ["LL", "YM", "QNL", "SZ"];
+  const JOURNAL_LABELS = { LL: "LL / 旅伴L", YM: "YM / 旅伴M", QNL: "QNL / 旅伴Q", SZ: "SZ / 旅伴S" };
 
   let activeDayId = localStorage.getItem("au-nz-active-day") || data.days[0].id;
   let activeJournalId = localStorage.getItem("au-nz-journal-day") || activeDayId;
-  let journal = loadJournal();
+  let journals = Object.fromEntries(JOURNAL_USERS.map((username) => [username, {}]));
+  let journal = {};
   let pendingPhotos = [];
   let map;
   let mapLayer;
@@ -138,6 +141,9 @@
     if (payload.token) rememberAuthToken(payload.token);
     currentUser = payload.user || null;
     canEdit = !!currentUser && !currentUser.mustChange;
+    const username = String(currentUser?.username || "").toUpperCase();
+    journal = currentUser ? loadJournalForUser(username) : {};
+    if (JOURNAL_USERS.includes(username)) journals[username] = journal;
     syncAuthState();
   }
 
@@ -145,6 +151,7 @@
     rememberAuthToken("");
     currentUser = null;
     canEdit = false;
+    journal = {};
     syncAuthState();
   }
 
@@ -161,8 +168,34 @@
   let ledgerFilter = "all";
   let expenseSubmitting = false;
 
-  function loadJournal() {
-    try { return JSON.parse(localStorage.getItem("au-nz-journal-v1") || "{}"); } catch { return {}; }
+  function journalStorageKey(username) {
+    return `au-nz-journal-v2-${String(username || "").toUpperCase()}`;
+  }
+
+  function loadJournalForUser(username) {
+    const normalized = String(username || "").toUpperCase();
+    if (!JOURNAL_USERS.includes(normalized)) return {};
+    try {
+      const scoped = localStorage.getItem(journalStorageKey(normalized));
+      if (scoped) return JSON.parse(scoped) || {};
+
+      const legacy = localStorage.getItem("au-nz-journal-v1");
+      const migratedTo = localStorage.getItem("au-nz-journal-v1-migrated-to");
+      if (legacy && !migratedTo) {
+        const parsed = JSON.parse(legacy) || {};
+        localStorage.setItem(journalStorageKey(normalized), JSON.stringify(parsed));
+        localStorage.setItem("au-nz-journal-v1-migrated-to", normalized);
+        return parsed;
+      }
+    } catch { /* iOS private browsing may block local storage */ }
+    return {};
+  }
+
+  function persistCurrentJournal() {
+    const username = String(currentUser?.username || "").toUpperCase();
+    if (!JOURNAL_USERS.includes(username)) return;
+    journals[username] = journal;
+    localStorage.setItem(journalStorageKey(username), JSON.stringify(journal));
   }
 
   async function init() {
@@ -820,26 +853,68 @@
     $("#sourceList").innerHTML = data.sources.map((source) => `<div class="source-item"><a href="${source.url}" target="_blank" rel="noreferrer">${esc(source.label)} ↗</a><span>${esc(source.note)}</span></div>`).join("");
   }
 
+  function journalEntryHasContent(entry = {}) {
+    return Boolean(
+      String(entry.summary || "").trim() ||
+      String(entry.food || "").trim() ||
+      String(entry.feeling || "").trim() ||
+      (Array.isArray(entry.photos) && entry.photos.length)
+    );
+  }
+
+  function safeJournalPhoto(value) {
+    const source = String(value || "");
+    if (/^data:image\/(?:jpeg|png|webp);base64,/i.test(source)) return source;
+    if (/^https:\/\//i.test(source)) return source;
+    return "";
+  }
+
+  function journalText(value, emptyText) {
+    const text = String(value || "").trim();
+    return text ? esc(text).replace(/\n/g, "<br>") : `<span class="journal-empty">${emptyText}</span>`;
+  }
+
+  function renderJournalGallery(dayId) {
+    const target = $("#journalEntries");
+    if (!target) return;
+    target.innerHTML = JOURNAL_USERS.map((username) => {
+      const entry = journals[username]?.[dayId] || {};
+      const photos = (Array.isArray(entry.photos) ? entry.photos : []).map(safeJournalPhoto).filter(Boolean);
+      const hasContent = journalEntryHasContent(entry);
+      return `<article class="journal-entry-card ${hasContent ? "has-content" : "is-empty"}">
+        <header><div class="journal-avatar">${esc(username.slice(0, 2))}</div><div><strong>${esc(JOURNAL_LABELS[username])}</strong><span>${hasContent && entry.savedAt ? "更新于 " + esc(new Date(entry.savedAt).toLocaleString("zh-CN")) : "尚未填写这一天"}</span></div></header>
+        ${hasContent ? `<div class="journal-entry-copy"><section><h4>今天的纪要</h4><p>${journalText(entry.summary, "未填写")}</p></section><div class="journal-entry-pair"><section><h4>好吃的 / 餐厅</h4><p>${journalText(entry.food, "未填写")}</p></section><section><h4>好玩的 / 感受</h4><p>${journalText(entry.feeling, "未填写")}</p></section></div></div>${photos.length ? `<div class="journal-entry-photos">${photos.map((photo) => `<img src="${photo}" alt="${esc(JOURNAL_LABELS[username])}的游记照片" loading="lazy">`).join("")}</div>` : ""}` : `<p class="journal-empty-note">旅途中写下的文字和照片会显示在这里。</p>`}
+      </article>`;
+    }).join("");
+  }
+
   function renderJournalPicker() {
-    $("#journalPicker").innerHTML = data.days.map((day) => `<button class="journal-day ${day.id === activeJournalId ? "is-active" : ""}" data-journal-picker="${day.id}"><strong>${esc(day.date)}</strong><span>${esc(day.base)}</span></button>`).join("");
-    $$("[data-journal-picker]", $("#journalPicker")).forEach((button) => button.addEventListener("click", () => { activeJournalId = button.dataset.journalPicker; localStorage.setItem("au-nz-journal-day", activeJournalId); renderJournalPicker(); loadJournalForm(activeJournalId); }));
+    $("#journalPicker").innerHTML = data.days.map((day) => {
+      const count = JOURNAL_USERS.filter((username) => journalEntryHasContent(journals[username]?.[day.id])).length;
+      return `<button class="journal-day ${day.id === activeJournalId ? "is-active" : ""}" data-journal-picker="${day.id}"><strong>${esc(day.date)}</strong><span>${esc(day.base)} · ${count}人已写</span></button>`;
+    }).join("");
+    document.querySelectorAll("[data-journal-picker]").forEach((button) => button.addEventListener("click", () => { activeJournalId = button.dataset.journalPicker; localStorage.setItem("au-nz-journal-day", activeJournalId); renderJournalPicker(); loadJournalForm(activeJournalId); }));
   }
 
   function loadJournalForm(dayId) {
     const day = dayById(dayId) || data.days[0];
     activeJournalId = day.id;
     const entry = journal[day.id] || {};
+    renderJournalGallery(day.id);
+    const editorTitle = $("#journalEditorTitle");
+    if (editorTitle) editorTitle.textContent = canEdit ? `编辑我的游记 · ${JOURNAL_LABELS[currentUser?.username] || currentUser?.username || ""}` : "登录后编辑自己的游记";
     $("#journalPrompt").innerHTML = `<strong>${esc(day.date)} · ${esc(day.title)}</strong><br>${esc((day.journalPrompts || ["今天最想记住什么？", "有没有下次会改变的安排？"]).join(" · "))}`;
     $("#journalSummary").value = entry.summary || "";
     $("#journalFood").value = entry.food || "";
     $("#journalFeeling").value = entry.feeling || "";
-    pendingPhotos = entry.photos || [];
+    pendingPhotos = Array.isArray(entry.photos) ? entry.photos : [];
     renderPhotoPreview();
     ["#journalSummary", "#journalFood", "#journalFeeling", "#journalPhotos", "#saveJournalBtn"].forEach((selector) => { const node = $(selector); if (node) node.disabled = !canEdit; });
     $("#journalSaved").textContent = canEdit ? (entry.savedAt ? `已保存 ${new Date(entry.savedAt).toLocaleString("zh-CN")}` : "尚未填写") : "游客只读：登录后可编辑";
   }
   function renderPhotoPreview() {
-    $("#journalPhotoPreview").innerHTML = pendingPhotos.length ? pendingPhotos.map((photo) => `<img src="${photo}" alt="游记照片">`).join("") : `<span class="micro">还没有照片</span>`;
+    const photos = pendingPhotos.map(safeJournalPhoto).filter(Boolean);
+    $("#journalPhotoPreview").innerHTML = photos.length ? photos.map((photo) => `<img src="${photo}" alt="游记照片">`).join("") : `<span class="micro">还没有照片</span>`;
   }
 
   function compressImage(file) {
@@ -863,41 +938,62 @@
   }
 
   async function refreshJournalState() {
-    if (!currentUser || !canEdit) return;
     try {
       const response = await apiFetch("/api/routebook/journal");
       if (!response.ok) return;
       const payload = await response.json();
-      const remote = payload.entries || {};
-      Object.entries(remote).forEach(([dayId, entry]) => {
-        const local = journal[dayId];
-        const remoteTime = Date.parse(entry?.savedAt || 0) || 0;
-        const localTime = Date.parse(local?.savedAt || 0) || 0;
-        if (!local || remoteTime >= localTime) journal[dayId] = entry;
-      });
-      try { localStorage.setItem("au-nz-journal-v1", JSON.stringify(journal)); } catch { /* keep memory copy */ }
-    } catch { /* local journal remains available */ }
+      const remoteBooks = payload.journals && typeof payload.journals === "object" ? payload.journals : {};
+      const currentUsername = String(currentUser?.username || "").toUpperCase();
+
+      // Compatibility during a rolling deployment from the former shared API.
+      if (payload.entries && JOURNAL_USERS.includes(currentUsername) && !remoteBooks[currentUsername]) {
+        remoteBooks[currentUsername] = payload.entries;
+      }
+
+      for (const username of JOURNAL_USERS) {
+        const remote = remoteBooks[username] && typeof remoteBooks[username] === "object" ? remoteBooks[username] : {};
+        const local = username === currentUsername ? journal : {};
+        const merged = { ...remote };
+        Object.entries(local).forEach(([dayId, entry]) => {
+          const remoteTime = Date.parse(remote[dayId]?.savedAt || 0) || 0;
+          const localTime = Date.parse(entry?.savedAt || 0) || 0;
+          if (!remote[dayId] || localTime > remoteTime) merged[dayId] = entry;
+        });
+        journals[username] = merged;
+      }
+
+      if (JOURNAL_USERS.includes(currentUsername)) {
+        journal = journals[currentUsername];
+        try { persistCurrentJournal(); } catch { /* keep memory copy */ }
+      }
+      renderJournalPicker();
+      renderJournalGallery(activeJournalId);
+    } catch { /* cached journal remains available */ }
   }
 
   async function saveJournal() {
-    if (!canEdit) { $("#journalSaved").textContent = "请先登录后再保存游记"; return; }
+    if (!canEdit || !currentUser) { $("#journalSaved").textContent = "请先登录后再保存游记"; return; }
+    const username = String(currentUser.username || "").toUpperCase();
     const entry = {
       summary: $("#journalSummary").value,
       food: $("#journalFood").value,
       feeling: $("#journalFeeling").value,
-      photos: pendingPhotos,
+      photos: pendingPhotos.map(safeJournalPhoto).filter(Boolean),
       savedAt: new Date().toISOString(),
-      updatedBy: currentUser?.username || ""
+      updatedBy: username
     };
     journal[activeJournalId] = entry;
+    journals[username] = journal;
+    let localSaved = true;
     try {
-      localStorage.setItem("au-nz-journal-v1", JSON.stringify(journal));
+      persistCurrentJournal();
       $("#journalSaved").textContent = "本机已保存，正在同步…";
-      renderJournalPicker();
     } catch {
-      $("#journalSaved").textContent = "保存失败：照片过大，请减少照片数量或先导出";
-      return;
+      localSaved = false;
+      $("#journalSaved").textContent = "本机缓存不可用，正在同步云端…";
     }
+    renderJournalPicker();
+    renderJournalGallery(activeJournalId);
     try {
       const response = await apiFetch("/api/routebook/journal", {
         method: "PUT",
@@ -909,9 +1005,15 @@
         if (recoverAuthFromResponse(response, payload)) return;
         throw new Error(payload.error || "云端同步失败");
       }
-      $("#journalSaved").textContent = `本机与云端均已保存 ${new Date().toLocaleString("zh-CN")}`;
+      journal[activeJournalId] = payload.entry || entry;
+      journals[username] = journal;
+      try { persistCurrentJournal(); } catch { /* cloud copy is authoritative */ }
+      renderJournalGallery(activeJournalId);
+      $("#journalSaved").textContent = `${localSaved ? "本机与云端均" : "云端"}已保存 ${new Date().toLocaleString("zh-CN")}`;
     } catch (error) {
-      $("#journalSaved").textContent = `本机已保存；${error.message || "云端同步暂不可用"}`;
+      $("#journalSaved").textContent = localSaved
+        ? `本机已保存；${error.message || "云端同步暂不可用"}`
+        : `保存失败：${error.message || "本机缓存与云端均不可用"}`;
     }
   }
 
@@ -926,14 +1028,25 @@
   function exportMarkdown() {
     const lines = [`# ${data.meta.title}`, `\n${data.meta.dates} · ${data.meta.travelers}`, ""];
     data.days.forEach((day) => {
-      const entry = journal[day.id] || {};
-      lines.push(`## ${day.date} · ${day.title}`, `住宿：${day.base}`, "", entry.summary || "（还没有填写当天纪要）", "", `**好吃的**：${entry.food || ""}`, `**好玩的 / 感受**：${entry.feeling || ""}`, entry.photos?.length ? `照片：${entry.photos.length}张（请同时保存JSON或页面截图）` : "", "");
+      lines.push(`## ${day.date} · ${day.title}`, `住宿：${day.base}`, "");
+      JOURNAL_USERS.forEach((username) => {
+        const entry = journals[username]?.[day.id] || {};
+        lines.push(
+          `### ${JOURNAL_LABELS[username]}`,
+          entry.summary || "（还没有填写当天纪要）",
+          "",
+          `**好吃的**：${entry.food || "未填写"}`,
+          `**好玩的 / 感受**：${entry.feeling || "未填写"}`,
+          entry.photos?.length ? `照片：${entry.photos.length}张（请同时保存JSON或页面截图）` : "",
+          ""
+        );
+      });
     });
-    download("澳新之春-每日游记.md", lines.join("\n"), "text/markdown;charset=utf-8");
+    download("澳新之春-四人每日游记.md", lines.join("\n"), "text/markdown;charset=utf-8");
   }
 
   function exportJson() {
-    download("澳新之春-每日游记.json", JSON.stringify({ meta: data.meta, journal }, null, 2), "application/json;charset=utf-8");
+    download("澳新之春-四人每日游记.json", JSON.stringify({ meta: data.meta, journals }, null, 2), "application/json;charset=utf-8");
   }
 
   function injectLeaflet() {

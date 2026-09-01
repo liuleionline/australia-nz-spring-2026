@@ -11,7 +11,7 @@
   <link rel="mask-icon" href="brand/logo-a-southern-cross-route.svg" color="#123a32">
   <link rel="manifest" href="site.webmanifest">
   <title>澳新之春 · 完整路书预览版</title>
-  <link rel="stylesheet" href="integrated-styles.css?v=20260825-3">
+  <link rel="stylesheet" href="integrated-styles.css?v=20260901-1">
 </head>
 <body>
   <header class="hero" id="top">
@@ -99,7 +99,24 @@
 
     <section class="section journal-section page-panel" id="journal" data-page="journal" data-page-label="游记">
       <div class="section-heading section-heading-split"><div><p class="eyebrow">TRAVEL JOURNAL</p><h2>每日游记 · 旅途中填写</h2></div><div class="journal-actions"><button class="btn btn-accent" id="exportMdBtn">导出 Markdown</button><button class="btn btn-outline" id="exportJsonBtn">导出 JSON</button><button class="btn btn-outline" id="journalPrintBtn">打印游记 / PDF</button></div></div>
-      <div class="journal-layout"><aside><p class="micro">选择日期</p><div id="journalPicker" class="journal-picker"></div></aside><div class="journal-editor"><div id="journalPrompt" class="journal-prompt"></div><label>今天的纪要<textarea id="journalSummary" rows="5" placeholder="今天去了哪里？最想记住的一个细节是什么？"></textarea></label><div class="journal-two"><label>好吃的 / 餐厅<textarea id="journalFood" rows="4" placeholder="记录菜名、价格、是否值得预约……"></textarea></label><label>好玩的 / 感受<textarea id="journalFeeling" rows="4" placeholder="记录开心、意外、遗憾或下一次想怎么走……"></textarea></label></div><label>照片（可多选，浏览器本地保存）<input id="journalPhotos" type="file" accept="image/*" multiple></label><div id="journalPhotoPreview" class="photo-preview"></div><div class="journal-save"><span id="journalSaved">尚未填写</span><button class="btn btn-accent" id="saveJournalBtn">保存当天游记</button></div></div></div>
+      <div class="journal-layout">
+        <aside><p class="micro">选择日期</p><div id="journalPicker" class="journal-picker"></div></aside>
+        <div class="journal-content">
+          <section class="journal-gallery" aria-labelledby="journalGalleryTitle">
+            <div class="journal-gallery-heading"><div><p class="eyebrow">FOUR VOICES</p><h3 id="journalGalleryTitle">四人的当天记录</h3></div><p>每位参与者的文字和照片按账号独立保存，并在这里分别呈现。</p></div>
+            <div id="journalEntries" class="journal-entries"></div>
+          </section>
+          <div class="journal-editor">
+            <h3 id="journalEditorTitle">编辑我的游记</h3>
+            <div id="journalPrompt" class="journal-prompt"></div>
+            <label>今天的纪要<textarea id="journalSummary" rows="5" placeholder="今天去了哪里？最想记住的一个细节是什么？"></textarea></label>
+            <div class="journal-two"><label>好吃的 / 餐厅<textarea id="journalFood" rows="4" placeholder="记录菜名、价格、是否值得预约……"></textarea></label><label>好玩的 / 感受<textarea id="journalFeeling" rows="4" placeholder="记录开心、意外、遗憾或下一次想怎么走……"></textarea></label></div>
+            <label>照片（可多选，保存后同步到本人游记）<input id="journalPhotos" type="file" accept="image/*" multiple></label>
+            <div id="journalPhotoPreview" class="photo-preview"></div>
+            <div class="journal-save"><span id="journalSaved">尚未填写</span><button class="btn btn-accent" id="saveJournalBtn">保存我的当天游记</button></div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="section section-sources page-panel" id="sources" data-page="sources" data-page-label="来源"><div class="section-heading"><p class="eyebrow">SOURCES</p><h2>官方来源与版本说明</h2></div><div id="sourceList" class="source-list"></div><div class="version-note"><strong>这是整合预览版。</strong> 后续还可以继续补餐厅具体预约号、门票价格、租车合同、实时路况和旅行照片；最终版可直接打印为PDF或部署为手机网页。</div></section>
@@ -118,7 +135,7 @@
     <script src="lodging-image-overrides.js?v=20260821-6"></script>
   <script src="route-image-map.js?v=20260821-3"></script>
   <script>window.ROUTEBOOK_API_BASE = "https://g2-struc.ixx.men";</script>
-  <script src="integrated-app.js?v=20260831-2"></script>
+  <script src="integrated-app.js?v=20260901-1"></script>
   <script src="page-navigation.js?v=20260821-6"></script>
 </body>
 </html>
