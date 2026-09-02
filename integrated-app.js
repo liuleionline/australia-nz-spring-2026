@@ -17,7 +17,7 @@
   const flightById = (id) => data.flights.find((flight) => flight.id === id);
   const fallbackImage = "data:image/svg+xml;charset=utf-8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dce8df"/><stop offset="1" stop-color="#8bb4ad"/></linearGradient></defs><rect width="900" height="520" fill="url(#g)"/><path d="M0 420L170 240l110 100 160-210 180 220 110-130 170 200v100H0z" fill="#284f47" opacity=".62"/><circle cx="710" cy="105" r="48" fill="#f1b85b"/><text x="40" y="475" fill="white" font-family="sans-serif" font-size="28">Australia · New Zealand</text></svg>');
   const JOURNAL_USERS = ["LL", "YM", "QNL", "SZ"];
-  const JOURNAL_LABELS = { LL: "LL / 旅伴L", YM: "YM / 旅伴M", QNL: "QNL / 旅伴Q", SZ: "SZ / 旅伴S" };
+  const JOURNAL_LABELS = { LL: "LL", YM: "YM", QNL: "QNL", SZ: "SZ" };
 
   let activeDayId = localStorage.getItem("au-nz-active-day") || data.days[0].id;
   let activeJournalId = localStorage.getItem("au-nz-journal-day") || activeDayId;
@@ -874,19 +874,31 @@
     return text ? esc(text).replace(/\n/g, "<br>") : `<span class="journal-empty">${emptyText}</span>`;
   }
 
+  function journalDate(day) {
+    const value = String(day?.date || "").trim();
+    return value ? `2026.${value}` : "2026";
+  }
+
   function renderJournalGallery(dayId) {
     const target = $("#journalEntries");
     if (!target) return;
+    const day = dayById(dayId);
+    const printButton = $("#journalPrintBtn");
+    if (printButton) {
+      printButton.disabled = !JOURNAL_USERS.some((username) => journalEntryHasContent(journals[username]?.[dayId]));
+      printButton.title = printButton.disabled ? "当天还没有可打印的游记" : "只打印当天已填写的游记";
+    }
     const currentUsername = String(currentUser?.username || "").toUpperCase();
     target.innerHTML = JOURNAL_USERS.map((username) => {
       const entry = journals[username]?.[dayId] || {};
       const photos = (Array.isArray(entry.photos) ? entry.photos : []).map(safeJournalPhoto).filter(Boolean);
       const hasContent = journalEntryHasContent(entry);
       const canManage = canEdit && username === currentUsername && hasContent;
-      return `<article class="journal-entry-card ${hasContent ? "has-content" : "is-empty"}">
-        <header><div class="journal-avatar">${esc(username.slice(0, 2))}</div><div><strong>${esc(JOURNAL_LABELS[username])}</strong><span>${hasContent && entry.savedAt ? "更新于 " + esc(new Date(entry.savedAt).toLocaleString("zh-CN")) : "尚未填写这一天"}</span></div></header>
-        ${canManage ? `<div class="journal-entry-actions"><button class="journal-entry-action" type="button" data-edit-journal="${esc(dayId)}">编辑</button><button class="journal-entry-action journal-entry-action-danger" type="button" data-delete-journal="${esc(dayId)}">删除</button></div>` : ""}
-        ${hasContent ? `<div class="journal-entry-copy"><section><h4>今天的纪要</h4><p>${journalText(entry.summary, "未填写")}</p></section><div class="journal-entry-pair"><section><h4>好吃的 / 餐厅</h4><p>${journalText(entry.food, "未填写")}</p></section><section><h4>好玩的 / 感受</h4><p>${journalText(entry.feeling, "未填写")}</p></section></div></div>${photos.length ? `<div class="journal-entry-photos">${photos.map((photo) => `<img src="${photo}" alt="${esc(JOURNAL_LABELS[username])}的游记照片" loading="lazy">`).join("")}</div>` : ""}` : `<p class="journal-empty-note">旅途中写下的文字和照片会显示在这里。</p>`}
+      const compactEntry = photos.length <= 1 && [entry.summary, entry.food, entry.feeling].map((value) => String(value || "").trim()).join("").length <= 450;
+      const fieldClass = (value) => String(value || "").trim() ? "" : " journal-field-empty";
+      return `<article class="journal-entry-card ${hasContent ? "has-content" : "is-empty"}${compactEntry ? " is-compact-entry" : ""}">
+        ${hasContent ? `<div class="journal-entry-copy"><section class="${fieldClass(entry.summary)}"><h4>今天的纪要</h4><p>${journalText(entry.summary, "未填写")}</p></section><div class="journal-entry-pair"><section class="${fieldClass(entry.food)}"><h4>好吃的 / 餐厅</h4><p>${journalText(entry.food, "未填写")}</p></section><section class="${fieldClass(entry.feeling)}"><h4>好玩的 / 感受</h4><p>${journalText(entry.feeling, "未填写")}</p></section></div></div>${photos.length ? `<div class="journal-entry-photos">${photos.map((photo) => `<img src="${photo}" alt="${esc(username)}的游记照片" loading="lazy">`).join("")}</div>` : ""}` : `<p class="journal-empty-note">旅途中写下的文字和照片会显示在这里。</p>`}
+        <footer class="journal-entry-footer"><div class="journal-entry-byline"><strong>${esc(username)}</strong><span>${hasContent ? esc(journalDate(day)) : "尚未填写"}</span></div>${canManage ? `<div class="journal-entry-actions"><button class="journal-entry-action" type="button" data-edit-journal="${esc(dayId)}">编辑</button><button class="journal-entry-action journal-entry-action-danger" type="button" data-delete-journal="${esc(dayId)}">删除</button></div>` : ""}</footer>
       </article>`;
     }).join("");
 
@@ -1156,9 +1168,47 @@
     setTimeout(() => map.invalidateSize(), 100);
   }
 
+  function resetJournalPrint() {
+    document.body.classList.remove("print-journal");
+    document.getElementById("journalPrintPageStyle")?.remove();
+  }
+
+  function prepareJournalPrint() {
+    document.body.classList.add("print-journal");
+    let pageStyle = document.getElementById("journalPrintPageStyle");
+    if (!pageStyle) {
+      pageStyle = document.createElement("style");
+      pageStyle.id = "journalPrintPageStyle";
+      pageStyle.textContent = "@page{size:A4;margin:16mm 18mm 18mm}";
+      document.head.appendChild(pageStyle);
+    }
+  }
+
+  async function printJournal() {
+    if (!JOURNAL_USERS.some((username) => journalEntryHasContent(journals[username]?.[activeJournalId]))) return;
+    const images = [...document.querySelectorAll("#journalEntries .has-content img")];
+    images.forEach((image) => { image.loading = "eager"; });
+    await Promise.race([
+      Promise.all(images.map((image) => image.decode ? image.decode().catch(() => {}) : Promise.resolve())),
+      new Promise((resolve) => window.setTimeout(resolve, 4000))
+    ]);
+    prepareJournalPrint();
+    window.print();
+  }
+
+  window.addEventListener("beforeprint", () => {
+    if (document.documentElement.dataset.activePage === "journal") prepareJournalPrint();
+  });
+  window.addEventListener("afterprint", resetJournalPrint);
+  window.addEventListener("pageshow", resetJournalPrint);
+  const printMedia = window.matchMedia?.("print");
+  const handlePrintMedia = (event) => { if (!event.matches) resetJournalPrint(); };
+  if (printMedia?.addEventListener) printMedia.addEventListener("change", handlePrintMedia);
+  else printMedia?.addListener?.(handlePrintMedia);
+
   function bindShell() {
     $("#printBtn").addEventListener("click", () => window.print());
-    $("#journalPrintBtn").addEventListener("click", () => window.print());
+    $("#journalPrintBtn").addEventListener("click", printJournal);
     $("#exportMdBtn").addEventListener("click", exportMarkdown);
     $("#exportJsonBtn").addEventListener("click", exportJson);
     $("#loadMapBtn").addEventListener("click", loadMap);
