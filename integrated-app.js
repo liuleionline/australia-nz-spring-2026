@@ -552,10 +552,15 @@
 
   async function refreshTaskState() {
     try {
-      const response = await apiFetch("/api/routebook/tasks", { credentials: "include" });
+      const response = await apiFetch("/api/routebook/tasks", { credentials: "include", cache: "no-store" });
       if (!response.ok) return;
-      const rows = await response.json();
-      taskState = Object.fromEntries((rows.tasks || rows || []).map((row) => [row.id, row]));
+      const payload = await response.json();
+      const tasks = payload.tasks || payload;
+      const rows = Array.isArray(tasks)
+        ? tasks.map((row) => [row?.task_id || row?.id, row])
+        : Object.entries(tasks);
+      taskState = Object.fromEntries(rows.filter(([id, row]) => id && row && typeof row === "object")
+        .map(([id, row]) => [id, { ...row, id }]));
     } catch { /* public preview remains read-only */ }
   }
 
