@@ -877,15 +877,27 @@
   function renderJournalGallery(dayId) {
     const target = $("#journalEntries");
     if (!target) return;
+    const currentUsername = String(currentUser?.username || "").toUpperCase();
     target.innerHTML = JOURNAL_USERS.map((username) => {
       const entry = journals[username]?.[dayId] || {};
       const photos = (Array.isArray(entry.photos) ? entry.photos : []).map(safeJournalPhoto).filter(Boolean);
       const hasContent = journalEntryHasContent(entry);
+      const canManage = canEdit && username === currentUsername && hasContent;
       return `<article class="journal-entry-card ${hasContent ? "has-content" : "is-empty"}">
         <header><div class="journal-avatar">${esc(username.slice(0, 2))}</div><div><strong>${esc(JOURNAL_LABELS[username])}</strong><span>${hasContent && entry.savedAt ? "更新于 " + esc(new Date(entry.savedAt).toLocaleString("zh-CN")) : "尚未填写这一天"}</span></div></header>
+        ${canManage ? `<div class="journal-entry-actions"><button class="journal-entry-action" type="button" data-edit-journal="${esc(dayId)}">编辑</button><button class="journal-entry-action journal-entry-action-danger" type="button" data-delete-journal="${esc(dayId)}">删除</button></div>` : ""}
         ${hasContent ? `<div class="journal-entry-copy"><section><h4>今天的纪要</h4><p>${journalText(entry.summary, "未填写")}</p></section><div class="journal-entry-pair"><section><h4>好吃的 / 餐厅</h4><p>${journalText(entry.food, "未填写")}</p></section><section><h4>好玩的 / 感受</h4><p>${journalText(entry.feeling, "未填写")}</p></section></div></div>${photos.length ? `<div class="journal-entry-photos">${photos.map((photo) => `<img src="${photo}" alt="${esc(JOURNAL_LABELS[username])}的游记照片" loading="lazy">`).join("")}</div>` : ""}` : `<p class="journal-empty-note">旅途中写下的文字和照片会显示在这里。</p>`}
       </article>`;
     }).join("");
+
+    target.querySelectorAll("[data-edit-journal]").forEach((button) => button.addEventListener("click", () => {
+      activeJournalId = button.dataset.editJournal;
+      renderJournalPicker();
+      loadJournalForm(activeJournalId);
+      $(".journal-editor")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.setTimeout(() => $("#journalSummary")?.focus(), 350);
+    }));
+    target.querySelectorAll("[data-delete-journal]").forEach((button) => button.addEventListener("click", () => deleteJournal(button.dataset.deleteJournal)));
   }
 
   function renderJournalPicker() {
@@ -910,6 +922,8 @@
     pendingPhotos = Array.isArray(entry.photos) ? entry.photos : [];
     renderPhotoPreview();
     ["#journalSummary", "#journalFood", "#journalFeeling", "#journalPhotos", "#saveJournalBtn"].forEach((selector) => { const node = $(selector); if (node) node.disabled = !canEdit; });
+    const saveButton = $("#saveJournalBtn");
+    if (saveButton) saveButton.textContent = journalEntryHasContent(entry) ? "保存修改" : "保存我的当天游记";
     $("#journalSaved").textContent = canEdit ? (entry.savedAt ? `已保存 ${new Date(entry.savedAt).toLocaleString("zh-CN")}` : "尚未填写") : "游客只读：登录后可编辑";
   }
   function renderPhotoPreview() {
@@ -943,6 +957,7 @@
       if (!response.ok) return;
       const payload = await response.json();
       const remoteBooks = payload.journals && typeof payload.journals === "object" ? payload.journals : {};
+      const remoteDeletions = payload.deletions && typeof payload.deletions === "object" ? payload.deletions : {};
       const currentUsername = String(currentUser?.username || "").toUpperCase();
 
       // Compatibility during a rolling deployment from the former shared API.
@@ -953,10 +968,16 @@
       for (const username of JOURNAL_USERS) {
         const remote = remoteBooks[username] && typeof remoteBooks[username] === "object" ? remoteBooks[username] : {};
         const local = username === currentUsername ? journal : {};
+        const deletions = remoteDeletions[username] && typeof remoteDeletions[username] === "object" ? remoteDeletions[username] : {};
         const merged = { ...remote };
         Object.entries(local).forEach(([dayId, entry]) => {
           const remoteTime = Date.parse(remote[dayId]?.savedAt || 0) || 0;
           const localTime = Date.parse(entry?.savedAt || 0) || 0;
+          const deletedTime = Date.parse(deletions[dayId] || 0) || 0;
+          if (deletedTime >= localTime) {
+            delete merged[dayId];
+            return;
+          }
           if (!remote[dayId] || localTime > remoteTime) merged[dayId] = entry;
         });
         journals[username] = merged;
@@ -1014,6 +1035,41 @@
       $("#journalSaved").textContent = localSaved
         ? `本机已保存；${error.message || "云端同步暂不可用"}`
         : `保存失败：${error.message || "本机缓存与云端均不可用"}`;
+    }
+  }
+
+  async function deleteJournal(dayId) {
+    if (!canEdit || !currentUser) {
+      $("#journalSaved").textContent = "请先登录后再删除游记";
+      return;
+    }
+    const day = dayById(dayId);
+    if (!window.confirm(`确认删除你在 ${day?.date || dayId} 的游记吗？删除后可通过备份恢复，但网页中会立即移除。`)) return;
+    const button = document.querySelector("[data-delete-journal]");
+    if (button) {
+      button.disabled = true;
+      button.textContent = "删除中…";
+    }
+    try {
+      const response = await apiFetch(`/api/routebook/journal/${encodeURIComponent(dayId)}`, { method: "DELETE" });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        if (recoverAuthFromResponse(response, payload)) return;
+        throw new Error(payload.error || "删除失败");
+      }
+      const username = String(currentUser.username || "").toUpperCase();
+      delete journal[dayId];
+      journals[username] = journal;
+      try { persistCurrentJournal(); } catch { /* server deletion is authoritative */ }
+      pendingPhotos = [];
+      const photoInput = $("#journalPhotos");
+      if (photoInput) photoInput.value = "";
+      renderJournalPicker();
+      loadJournalForm(dayId);
+      $("#journalSaved").textContent = "已删除本人当天游记";
+    } catch (error) {
+      $("#journalSaved").textContent = error.message || "删除失败";
+      renderJournalGallery(dayId);
     }
   }
 

@@ -111,7 +111,7 @@ function normalizeJournalState(value) {
     const isUserBucket = isAllowedUsername(username) && !("entry" in candidate);
     if (isUserBucket) {
       for (const [dayId, row] of Object.entries(candidate)) {
-        if (!row || typeof row !== "object" || Array.isArray(row) || !row.entry || typeof row.entry !== "object") continue;
+        if (!row || typeof row !== "object" || Array.isArray(row) || (!row.deleted && (!row.entry || typeof row.entry !== "object"))) continue;
         journals[username][dayId] = {
           ...deepClone(row),
           day_id: String(row.day_id || dayId),
@@ -909,12 +909,17 @@ app.post("/api/routebook/tasks", requireFullAuth, async (req, res, next) => {
 
 app.get("/api/routebook/journal", (_req, res) => {
   const journals = Object.fromEntries(ALLOWED_USERS.map((username) => [username, {}]));
+  const deletions = Object.fromEntries(ALLOWED_USERS.map((username) => [username, {}]));
   for (const username of ALLOWED_USERS) {
     for (const [dayId, row] of Object.entries(state.journal[username] || {})) {
+      if (row?.deleted) {
+        deletions[username][dayId] = row.updated_at;
+        continue;
+      }
       if (row?.entry && typeof row.entry === "object") journals[username][dayId] = row.entry;
     }
   }
-  res.json({ journals });
+  res.json({ journals, deletions });
 });
 
 app.put("/api/routebook/journal", requireFullAuth, async (req, res, next) => {
@@ -933,6 +938,7 @@ app.put("/api/routebook/journal", requireFullAuth, async (req, res, next) => {
       const nextRow = {
         day_id: dayId,
         entry: safeEntry,
+        deleted: false,
         updated_by: actor,
         updated_at: nowIso()
       };
@@ -944,6 +950,35 @@ app.put("/api/routebook/journal", requireFullAuth, async (req, res, next) => {
       return nextRow;
     });
     return res.json({ username: actor, entry: row.entry, updated_at: row.updated_at });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+app.delete("/api/routebook/journal/:dayId", requireFullAuth, async (req, res, next) => {
+  try {
+    const dayId = String(req.params?.dayId || "").trim();
+    if (!dayId || dayId.length > 120) {
+      return res.status(400).json({ error: "游记日期无效", code: "JOURNAL_INVALID" });
+    }
+    const actor = req.auth.user.username;
+    const row = await queueWrite(async (targetState) => {
+      const existing = targetState.journal[actor]?.[dayId];
+      if (!existing || existing.deleted) return null;
+      const deletedAt = nowIso();
+      const nextRow = {
+        day_id: dayId,
+        entry: null,
+        deleted: true,
+        updated_by: actor,
+        updated_at: deletedAt
+      };
+      targetState.journal[actor][dayId] = nextRow;
+      appendAudit(targetState, "journal.delete", actor, { day_id: dayId });
+      return nextRow;
+    });
+    if (!row) return res.status(404).json({ error: "找不到本人当天的游记", code: "JOURNAL_NOT_FOUND" });
+    return res.json({ username: actor, dayId, deleted: true, deleted_at: row.updated_at });
   } catch (error) {
     return next(error);
   }

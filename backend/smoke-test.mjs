@@ -15,6 +15,15 @@ await writeFile(path.join(dataDir, "routebook-state.json"), JSON.stringify({
       entry: { summary: "legacy journal", updatedBy: "YM", savedAt: "2026-08-01T00:00:00.000Z" },
       updated_by: "YM",
       updated_at: "2026-08-01T00:00:00.000Z"
+    },
+    LL: {
+      d03: {
+        day_id: "d03",
+        entry: null,
+        deleted: true,
+        updated_by: "LL",
+        updated_at: "2026-08-02T00:00:00.000Z"
+      }
     }
   }
 }), "utf8");
@@ -93,6 +102,8 @@ try {
   result = await request("/api/routebook/journal");
   assert(result.response.status === 200 && result.body.journals?.YM?.d01?.summary === "legacy journal",
     "Legacy shared journal rows must migrate to their last known editor");
+  assert(result.body.deletions?.LL?.d03 === "2026-08-02T00:00:00.000Z",
+    "Journal tombstones must survive server startup normalization");
 
   result = await request("/api/routebook/auth", {
     method: "POST",
@@ -165,6 +176,26 @@ try {
   result = await request("/api/routebook/journal");
   assert(result.body.journals?.LL?.d02?.summary === "LL journal" && result.body.journals?.YM?.d02?.summary === "YM journal",
     "Saving the same day for two participants must not overwrite either entry");
+
+  result = await request("/api/routebook/journal/d02", {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${llToken}` }
+  });
+  assert(result.response.status === 200 && result.body.username === "LL" && result.body.deleted === true,
+    "A participant must be able to delete their own journal entry");
+
+  result = await request("/api/routebook/journal");
+  assert(!result.body.journals?.LL?.d02 && result.body.journals?.YM?.d02?.summary === "YM journal",
+    "Deleting LL journal must not delete YM journal for the same day");
+  assert(typeof result.body.deletions?.LL?.d02 === "string",
+    "Deleted journal must publish a tombstone timestamp for stale client caches");
+
+  result = await request("/api/routebook/journal/d02", {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${llToken}` }
+  });
+  assert(result.response.status === 404 && result.body.code === "JOURNAL_NOT_FOUND",
+    "A participant must not be able to delete another participant journal by day id");
 
   result = await request("/api/routebook/auth", {
     method: "POST",

@@ -402,3 +402,13 @@ body.is-guest [data-auth-only] { display: none !important; }
 @media(max-width:880px){.journal-entries{grid-template-columns:1fr}}
 @media(max-width:680px){.journal-gallery,.journal-editor{padding:16px}.journal-gallery-heading{display:block}.journal-gallery-heading>p{margin-top:7px;text-align:left}.journal-entry-pair{grid-template-columns:1fr}.journal-entry-photos{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media print{.journal-editor{display:none!important}.journal-entries{grid-template-columns:repeat(2,minmax(0,1fr))}.journal-entry-card{break-inside:avoid}.journal-entry-photos img{max-height:150px}}
+
+
+/* journal owner actions v1 */
+.journal-entry-actions{display:flex;justify-content:flex-end;gap:7px;margin-top:10px}
+.journal-entry-action{min-height:34px;padding:6px 13px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);font-size:11px;font-weight:800;cursor:pointer}
+.journal-entry-action:hover{border-color:var(--ink)}
+.journal-entry-action-danger{border-color:#e8c1b5;color:#a74132;background:#fff8f5}
+.journal-entry-action:disabled{cursor:wait;opacity:.55}
+@media(max-width:680px){.journal-entry-action{min-height:40px;padding:8px 16px}}
+@media print{.journal-entry-actions{display:none!important}}
