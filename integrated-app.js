@@ -3,7 +3,6 @@
   const API_BASE = String(window.ROUTEBOOK_API_BASE || "").replace(/\/$/, "");
   const apiUrl = (path) => `${API_BASE}${path}`;
   const data = window.TRIP_DATA;
-  const baseExpenses = (data.accounting?.expenses || []).map((item) => ({ ...item, participants: [...(item.participants || [])] }));
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const money = (value) => {
@@ -152,6 +151,7 @@
     currentUser = null;
     canEdit = false;
     journal = {};
+    if (data.accounting) data.accounting.expenses = [];
     syncAuthState();
   }
 
@@ -231,15 +231,19 @@
   }
 
   async function refreshExpenseState() {
+    if (!currentUser) {
+      if (data.accounting) data.accounting.expenses = [];
+      return;
+    }
     try {
-      const response = await apiFetch("/api/routebook/expenses", { credentials: "include" });
+      const response = await apiFetch("/api/routebook/expenses", { credentials: "include", cache: "no-store" });
       if (!response.ok) return;
       const payload = await response.json();
       const remote = payload.expenses || [];
-      const merged = new Map(baseExpenses.map((item) => [item.id, { ...item, participants: [...(item.participants || [])] }]));
-      remote.forEach((item) => item.deleted ? merged.delete(item.id) : merged.set(item.id, item));
-      data.accounting.expenses = [...merged.values()];
-    } catch { /* public preview remains usable */ }
+      data.accounting.expenses = remote
+        .filter((item) => item && !item.deleted)
+        .map((item) => ({ ...item, participants: [...(item.participants || [])] }));
+    } catch { /* keep the last successfully loaded server snapshot */ }
   }
 
   function renderAuthBar() {
