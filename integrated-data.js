@@ -43,14 +43,14 @@
       city: "Sydney",
       name: "ibis Styles Sydney Central",
       address: "27–33 Wentworth Avenue, Sydney NSW 2010",
-      price: 5036.44,
-      user: 2357.74,
-      shen: 2678.70,
-      facts: ["2间房", "中央车站 / Surry Hills", "沈家与刘家价格不同"],
+      price: null,
+      user: null,
+      shen: null,
+      facts: ["2间房", "中央车站 / Surry Hills"],
       image: cityImage,
       map: q("ibis Styles Sydney Central 27-33 Wentworth Avenue Sydney"),
       link: "https://www.ibisstylessydneycentral.com.au/accommodation-sydney-cbd/",
-      note: "沈家 ¥2,678.70；刘家 ¥2,357.74；这项不AA。"
+      note: ""
     },
     {
       id: "melbourne-hie",
@@ -59,14 +59,14 @@
       city: "Melbourne",
       name: "Holiday Inn Express Melbourne Little Collins",
       address: "589–599 Little Collins Street, Melbourne VIC 3000",
-      price: 6312.94,
-      user: 3156.47,
-      shen: 3156.47,
-      facts: ["2间房", "含早餐", "Southern Cross附近", "两家AA"],
+      price: null,
+      user: null,
+      shen: null,
+      facts: ["2间房", "含早餐", "Southern Cross附近"],
       image: melbourneImage,
       map: q("Holiday Inn Express Melbourne Little Collins 589 Little Collins Street"),
       link: "https://www.ihg.com/holidayinnexpress/hotels/gb/en/melbourne/mellc/hoteldetail?fromRedirect=true&glat=sear&qDest=melbourne",
-      note: "付款记录 ¥3,152.97 + ¥3,159.97；按两家AA，每家 ¥3,156.47。"
+      note: ""
     }
   ];
 

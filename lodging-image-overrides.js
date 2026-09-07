@@ -14,43 +14,43 @@
       position: "center center"
     },
     "tekapo": {
-      src: "https://a0.muscache.com/im/pictures/miso/Hosting-29215377/original/8666f318-f45a-4829-a584-5f33431d4090.jpeg?im_w=720",
+      src: "https://a0.muscache.com/im/pictures/miso/Hosting-1234979367439107795/original/b58f1836-331c-42a8-b9ce-62f0ce6e6e2a.jpeg?im_w=720&width=720&quality=70&auto=webp",
       position: "center center"
     },
     "twizel": {
-      src: "https://a0.muscache.com/im/pictures/ffd39269-1484-4c33-9f62-4908c22e19e9.jpg?auto=webp&im_w=720&quality=70&width=720",
+      src: "https://a0.muscache.com/im/pictures/miso/Hosting-26610263/original/987bd274-6747-45c1-a588-c53aba528050.jpeg?im_w=720&width=720&quality=70&auto=webp",
       position: "center center"
     },
     "wanaka": {
-      src: "https://a0.muscache.com/im/pictures/miso/Hosting-638009211870028013/original/2efb3da2-c524-48bf-b145-63637d1fdcc2.jpeg?im_w=720",
+      src: "https://a0.muscache.com/im/pictures/miso/Hosting-638009211870028013/original/2efb3da2-c524-48bf-b145-63637d1fdcc2.jpeg?im_w=720&width=720&quality=70&auto=webp",
       position: "center center"
     },
     "queenstown": {
-      src: "https://a0.muscache.com/im/pictures/hosting/Hosting-1644535952191581825/original/4f9ab887-f434-4ff0-9ed5-b375c2298165.jpeg?im_w=720",
+      src: "https://a0.muscache.com/im/pictures/hosting/Hosting-1691172239380274952/original/961319fd-5565-483e-a25b-9a01aa114ebf.jpeg?im_w=720&width=720&quality=70&auto=webp",
       position: "center center"
     },
     "teanau": {
-      src: "https://a0.muscache.com/im/pictures/4b56660d-afa6-437f-b4b5-7aee9ad930cd.jpg?im_w=720",
+      src: "https://a0.muscache.com/im/pictures/hosting/Hosting-1328515587337095762/original/90f3c0dc-3a0f-4b1e-ad16-4cd27a3c5375.jpeg?im_w=720&width=720&quality=70&auto=webp",
       position: "center center"
     },
     "haast": {
-      src: "https://a0.muscache.com/im/pictures/miso/Hosting-1148248503776849185/original/a9f30e84-bba7-4e47-8744-af65a77fcfa7.jpeg?im_w=720",
+      src: "https://a0.muscache.com/im/pictures/hosting/Hosting-1195345556254873961/original/09a37ca0-ba9f-4407-a4f3-3638c11cff12.jpeg?im_w=720&width=720&quality=70&auto=webp",
       position: "center center"
     },
     "franz": {
-      src: "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTE5MjY0NjAwMjA1MDUzOTEyNQ%3D%3D/original/3eff3910-5729-4fef-8b86-d8697455a37a.jpeg?im_w=720",
+      src: "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTE5MjY0NjAwMjA1MDUzOTEyNQ%3D%3D/original/3eff3910-5729-4fef-8b86-d8697455a37a.jpeg?im_w=720&width=720&quality=70&auto=webp",
       position: "center center"
     },
     "hokitika": {
-      src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/692367339.jpg?k=9f010f56e662b8528494a9f9019e747cd95eb3c334104c4ea36a35c2871f5591&o=",
+      src: "https://a0.muscache.com/im/pictures/miso/Hosting-1431569775284311748/original/9e6a1140-1ab1-450d-9103-8af42d818d56.jpeg?im_w=720&width=720&quality=70&auto=webp",
       position: "center center"
     },
     "castlehill": {
-      src: "https://a0.muscache.com/im/pictures/miso/Hosting-22409971/original/28246979-fc2f-4b03-b92f-dac87f8bb6c3.jpeg?im_w=720",
+      src: "https://a0.muscache.com/im/pictures/hosting/Hosting-1565659033496668162/original/618e1464-b111-401a-a876-ac743e2cd7a2.jpeg?im_w=720&width=720&quality=70&auto=webp",
       position: "center center"
     },
     "chc-final": {
-      src: "https://a0.muscache.com/im/pictures/miso/Hosting-1241368912811080729/original/a5e21437-b535-43de-8540-249ffbafba82.jpeg?im_w=720",
+      src: "https://a0.muscache.com/im/pictures/miso/Hosting-1241368912811080729/original/a5e21437-b535-43de-8540-249ffbafba82.jpeg?im_w=720&width=720&quality=70&auto=webp",
       position: "center center"
     }
   };
