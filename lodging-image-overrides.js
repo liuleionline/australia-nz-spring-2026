@@ -2,7 +2,7 @@
   "use strict";
   const hotelPhotos = {
     "sydney-ibis": {
-      src: "https://images.meetingsbooker.com/images/venues/ibisstylessydneycentral-0.jpg",
+      src: "https://d2e5ushqwiltxm.cloudfront.net/wp-content/uploads/sites/294/2025/05/26031848/0314_Salter_Brothers_Mercure_Hotels_31stMay2023-Edit.jpg",
       position: "center center"
     },
     "melbourne-hie": {
@@ -10,7 +10,7 @@
       position: "center center"
     },
     "chc-airport": {
-      src: "https://images.squarespace-cdn.com/content/v1/664bc984ad08e42274c915f3/1722312413760-BVX0FVZ8GNZDC90ZRYQF/Airport%2BGateway%2BMotel%2B-%2B812-2.jpg",
+      src: "https://static1.squarespace.com/static/664bc984ad08e42274c915f3/t/6a6a839f192fd02d2957eeaf/1785365407801/Airport+Gateway+Chrtistchurch.png?format=1500w",
       position: "center center"
     },
     "tekapo": {
