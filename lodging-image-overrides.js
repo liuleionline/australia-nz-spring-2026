@@ -2,15 +2,15 @@
   "use strict";
   const hotelPhotos = {
     "sydney-ibis": {
-      src: "https://d2e5ushqwiltxm.cloudfront.net/wp-content/uploads/sites/294/2025/05/26031848/0314_Salter_Brothers_Mercure_Hotels_31stMay2023-Edit.jpg",
+      src: "https://d2e5ushqwiltxm.cloudfront.net/wp-content/uploads/sites/294/2024/02/06235446/0041_IBIS_Styles_Syd_Central_9thNOV2023-Edit.jpg",
       position: "center center"
     },
     "melbourne-hie": {
-      src: "https://digital.ihg.com/is/image/ihg/holiday-inn-express-melbourne-7527478507-original",
+      src: "https://digital.ihg.com/is/image/ihg/holiday-inn-express-melbourne-7442407160-4x3?wid=733",
       position: "center center"
     },
     "chc-airport": {
-      src: "https://static1.squarespace.com/static/664bc984ad08e42274c915f3/t/6a6a839f192fd02d2957eeaf/1785365407801/Airport+Gateway+Chrtistchurch.png?format=1500w",
+      src: "https://images.squarespace-cdn.com/content/v1/664bc984ad08e42274c915f3/554b8d09-ccfd-47ed-b3df-a7f30d128030/Airport%2BGateway%2B-%2BRoom%2B504-NoLama.jpg",
       position: "center center"
     },
     "tekapo": {
