@@ -157,16 +157,18 @@
       stops:[stop("Wānaka住宿",-44.6827,169.1368,"70B Matai Road Wanaka","住宿"), stop("Cardrona Hotel",-44.8776,168.9947,"Cardrona Hotel"), stop("Crown Range",-44.9635,168.9482,"Crown Range Summit"), stop("Arrowtown",-44.9388,168.8360,"Arrowtown Chinese Settlement"), stop("Queenstown住宿",-45.0257,168.6901,"44 Goldfield Heights Queenstown","住宿")]
     },
     {
-      id:"d07", date:"10.01", weekday:"周四", title:"Glenorchy公路与皇后镇夜景", base:"Queenstown", distanceKm:95, driveTime:"约1小时50分", stayId:"queenstown",
-      summary:"上午沿Lake Wakatipu去Glenorchy，下午回Queenstown坐Skyline或逛湖滨。风景密度高但不需要早起赶路。",
+      id:"d07", date:"10.01", weekday:"周四", title:"Glenorchy公路与Skyline滑板车", base:"Queenstown", distanceKm:95, driveTime:"约1小时50分", stayId:"queenstown",
+      summary:"上午沿Lake Wakatipu去Glenorchy，午后回Queenstown；15:30上Skyline，给5次Luge滑板车留足排队和体验时间。",
       image:commons("Glenorchy at the Head of Lake Wakatipu.jpg"), credit:"Vladka Kennett / CC BY-SA 3.0",
       routeUrl:dir(["44 Goldfield Heights Queenstown","Bennett's Bluff Lookout","Glenorchy Wharf","Skyline Queenstown","44 Goldfield Heights Queenstown"]),
       schedule:[
         {time:"08:30", title:"出发去Glenorchy", notes:"湖岸弯道多，观景只进正式停车区。", query:"Glenorchy New Zealand"},
         {time:"09:30", title:"Bennett's Bluff Lookout", notes:"主观景平台拍湖湾与山脉。", query:"Bennett's Bluff Lookout"},
-        {time:"10:30", title:"Glenorchy Wharf与红棚", notes:"走湖岸、喝咖啡；不继续深入碎石天堂公路。", query:"Glenorchy Wharf"},
-        {time:"14:30", title:"返回Queenstown", notes:"回房休息或Queenstown Gardens。", query:"Queenstown Gardens"},
-        {time:"17:00", title:"Skyline Gondola / 夜景", notes:"提前订票可减少排队，日落前上山。", query:"Skyline Queenstown"}
+        {time:"10:30", title:"Glenorchy Wharf与红棚", notes:"走湖岸、喝咖啡并吃早午餐；13:00前返程，不继续深入碎石天堂公路。", query:"Glenorchy Wharf"},
+        {time:"14:30", title:"返回Queenstown并停车", notes:"不回房久休；直接前往Brecon Street，给购票核验和排队留缓冲。", query:"Skyline Queenstown"},
+        {time:"15:30", title:"Skyline Gondola上山", notes:"4位成人日期票已确认；手机保存四张独立二维码。", query:"Skyline Queenstown"},
+        {time:"16:00–18:30", title:"5次Luge滑板车", notes:"先完成安全教学；每次约15分钟，但要给缆车与排队留时间，滑板车优先于等夜景。", query:"Skyline Queenstown Luge"},
+        {time:"18:30后", title:"观景、晚餐后下山", notes:"是否等夜景看体力和当天营业时间；不要因拍夜景耽误Luge。", query:"Skyline Queenstown"}
       ],
       highlights:[
         {name:"Bennett's Bluff", tag:"湖岸大片", notes:"Wakatipu湖弯与雪山的层次最强。", photoTip:"用长焦把弯道、湖湾和山体压在一起。", query:"Bennett's Bluff Lookout", image:commons("Glenorchy at the Head of Lake Wakatipu.jpg")},
@@ -174,42 +176,45 @@
         {name:"Skyline Bob's Peak", tag:"城市全景", notes:"俯瞰Queenstown、Lake Wakatipu与The Remarkables。", photoTip:"日落前30分钟上观景台，等城市灯亮后再下山。", query:"Skyline Queenstown", image:commons("Queenstown - Wakatipu Lake & Remarkable Mountains View from Skyline Gondola Observation Deck.jpg")}
       ],
       meals:[meal("Mrs Woolly's General Store", "午餐 · Glenorchy", "Mrs Woolly's General Store Glenorchy", "轻食与咖啡，节省行程时间。", 1), meal("Botswana Butchery", "晚餐 · 牛排", "Botswana Butchery Queenstown", "预算较高但适合正式晚餐；需要提前订位。", 0, "建议预约")],
-      fuel:"Queenstown/Frankton出发前半箱以上即可；Glenorchy往返不要依赖沿途补给。", clothing:"湖边与山顶都风大，防风层不可少。", caution:"Queenstown CBD停车紧张，优先Man Street或Boundary Road等公共停车并步行。", booking:"Skyline Gondola建议提前；Botswana Butchery建议订位。", planB:"全天雨：Queenstown Arts & Crafts、咖啡馆、Onsen Hot Pools（如已预约）。",
+      fuel:"Queenstown/Frankton出发前半箱以上即可；Glenorchy往返不要依赖沿途补给。", clothing:"湖边与山顶都风大，防风层不可少；Luge穿包脚鞋。", caution:"Queenstown CBD停车紧张，优先Man Street或Boundary Road等公共停车并步行。", booking:"Skyline Gondola + 5次Luge已确认（4位成人、日期票，无固定入场时段）；Botswana Butchery如需用餐另行订位。", planB:"Luge因天气暂停：保留Gondola与观景，现场按票务条款处理；Glenorchy段按天气缩短。",
       stops:[stop("Queenstown住宿",-45.0257,168.6901,"44 Goldfield Heights Queenstown","住宿"), stop("Bennett's Bluff",-44.9120,168.4937,"Bennett's Bluff Lookout"), stop("Glenorchy Wharf",-44.8505,168.3830,"Glenorchy Wharf"), stop("Skyline",-45.0261,168.6499,"Skyline Queenstown"), stop("Queenstown住宿",-45.0257,168.6901,"44 Goldfield Heights Queenstown","住宿")]
     },
     {
       id:"d08", date:"10.02", weekday:"周五", title:"从冒险之都转入峡湾前厅", base:"Te Anau", distanceKm:175, driveTime:"约2小时25分", stayId:"teanau",
-      summary:"Queenstown—Kingston—Te Anau。下午以湖边、鸟类保护区或Glowworm Caves为主，为次日Milford保存体力。",
+      summary:"Queenstown—Kingston—Te Anau。14:45到RealNZ Visitor Centre报到，参加15:15–17:30萤火虫洞体验，为次日Milford保存体力。",
       image:commons("00 1373 Milford Sound -New Zealand.jpg"), credit:"W. Bulach / CC BY-SA 4.0",
-      routeUrl:dir(["44 Goldfield Heights Queenstown","Kingston New Zealand","8 Lawson Burrows Crescent Te Anau"]),
+      routeUrl:dir(["44 Goldfield Heights Queenstown","Kingston New Zealand","8 Lawson Burrows Crescent Te Anau","85 Lakefront Drive Te Anau","8 Lawson Burrows Crescent Te Anau"]),
       schedule:[
         {time:"09:30", title:"离开Queenstown", notes:"避开早高峰后出发，Frankton加油。", query:"Frankton Queenstown petrol station"},
         {time:"10:30", title:"Devil's Staircase / Kingston短停", notes:"正式观景位短停，不占路肩。", query:"Devils Staircase Lookout New Zealand"},
-        {time:"13:00", title:"抵达Te Anau午餐入住", notes:"确认Milford船票、天气和SH94状态。", query:"8 Lawson Burrows Crescent Te Anau"},
-        {time:"15:30", title:"湖边或鸟类保护区", notes:"轻松散步；若订Glowworm Caves则按船班提前报到。", query:"Te Anau Bird Sanctuary"}
+        {time:"12:45", title:"抵达Te Anau午餐与安置行李", notes:"用餐控制在45分钟；住宿若不能提前入住就先寄存行李。", query:"8 Lawson Burrows Crescent Te Anau"},
+        {time:"14:30", title:"前往RealNZ Visitor Centre", notes:"集合点为85 Lakefront Drive；14:45前到前台报到。", query:"RealNZ Visitor Centre Te Anau"},
+        {time:"15:15–17:30", title:"Te Anau Glowworm Caves", notes:"4位成人订单已确认；洞内禁止摄影，需弯腰并上下台阶。", query:"RealNZ Te Anau Glowworm Caves"},
+        {time:"18:00后", title:"晚餐、加满油并早休息", notes:"准备10.3车上水、热饮和午餐，再查一次SH94状态。", query:"Te Anau"}
       ],
       highlights:[
         {name:"Lake Te Anau湖滨", tag:"慢下来", notes:"大湖与远山是峡湾前奏，适合在长途日之间放空。", photoTip:"沿Lakefront Drive找木栈道与水鸟作前景。", query:"Lake Te Anau waterfront", image:commons("Milford Sound. New Zealand. (8171073678).jpg")},
         {name:"Te Anau Bird Sanctuary", tag:"本土鸟类", notes:"可了解takahē等新西兰鸟类；捐赠与开放信息临行前确认。", photoTip:"不用闪光灯，不追逐鸟类。", query:"Te Anau Bird Sanctuary", image:"https://images.unsplash.com/photo-1452570053594-1b985d6ea890?auto=format&fit=crop&w=1200&q=82"},
-        {name:"Glowworm Caves", tag:"可选预约", notes:"含湖上往返和洞穴小船；洞内8–12°C且禁止拍照。", photoTip:"把相机收好，照片留给湖上航程。", query:"RealNZ Te Anau Glowworm Caves", image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=82"}
+        {name:"Glowworm Caves", tag:"已确认", notes:"15:15–17:30，须14:45前在RealNZ Visitor Centre报到；洞内8–12°C且禁止拍照。", photoTip:"把相机收好，照片留给湖上航程。", query:"RealNZ Te Anau Glowworm Caves", image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=82"}
       ],
       meals:[meal("Sandfly Cafe", "午餐 / 咖啡", "Sandfly Cafe Te Anau", "轻松、适合到达后用餐。", 1), meal("Redcliff Restaurant & Bar", "晚餐 · 新西兰料理", "Redcliff Restaurant Te Anau", "Milford前一晚的正式晚餐，建议订位但不要吃得太晚。", 0, "建议预约")],
-      fuel:"进入Te Anau前或抵达后加满，10.3早上不要临时找油站。", clothing:"湖边风冷；Glowworm Caves穿防滑鞋、防水外套和抓绒。", caution:"今晚早睡。Milford Road驾驶强度高，驾驶员禁止饮酒。", booking:"Glowworm Caves可选，若参加需提前选好不影响早睡的时段。", planB:"雨天直接Glowworm Caves或回房休息。",
-      stops:[stop("Queenstown住宿",-45.0257,168.6901,"44 Goldfield Heights Queenstown","住宿"), stop("Kingston",-45.3329,168.7146,"Kingston New Zealand"), stop("Te Anau住宿",-45.4044,167.7237,"8 Lawson Burrows Crescent Te Anau","住宿"), stop("Te Anau湖滨",-45.4161,167.7166,"Lake Te Anau waterfront")]
+      fuel:"进入Te Anau前或抵达后加满，10.3早上不要临时找油站。", clothing:"湖边风冷；Glowworm Caves穿防滑鞋、防水外套和抓绒。", caution:"14:45报到时间不可压缩；今晚早睡，Milford Road驾驶员禁止饮酒。", booking:"Te Anau Glowworm Caves已确认：10.2 15:15–17:30，4位成人，14:45前报到。", planB:"洞穴体验通常不受普通降雨影响；若RealNZ通知取消，按订单条款改期或退款。",
+      stops:[stop("Queenstown住宿",-45.0257,168.6901,"44 Goldfield Heights Queenstown","住宿"), stop("Kingston",-45.3329,168.7146,"Kingston New Zealand"), stop("Te Anau住宿",-45.4044,167.7237,"8 Lawson Burrows Crescent Te Anau","住宿"), stop("RealNZ Visitor Centre",-45.4164,167.7174,"85 Lakefront Drive Te Anau","集合")]
     },
     {
       id:"d09", date:"10.03", weekday:"周六", title:"Milford Sound：路本身就是景点", base:"Te Anau", distanceKm:240, driveTime:"约4小时30分", stayId:"teanau",
-      summary:"Te Anau—Eglinton Valley—Mirror Lakes—Homer Tunnel—Milford Sound往返。推荐预订中午船班，留足道路停靠和突发管制缓冲。",
+      summary:"Te Anau—Eglinton Valley—Mirror Lakes—Homer Tunnel—Milford Sound往返。13:15–14:55经典游船已确认，按12:55报到时间倒排道路与停车缓冲。",
       image:commons("00 1373 Milford Sound -New Zealand.jpg"), credit:"W. Bulach / CC BY-SA 4.0",
       routeUrl:dir(["8 Lawson Burrows Crescent Te Anau","Eglinton Valley","Mirror Lakes Fiordland","Monkey Creek","Milford Sound Visitor Terminal","8 Lawson Burrows Crescent Te Anau"]),
       schedule:[
-        {time:"07:00", title:"满油出发", notes:"再次查看Milford Road状态；车内备水、热饮和午餐。", query:"Milford Road status"},
-        {time:"08:00", title:"Eglinton Valley", notes:"路旁正式停车位短停10–15分钟。", query:"Eglinton Valley"},
-        {time:"08:40", title:"Mirror Lakes", notes:"小步道约20–30分钟，平静无风时倒影最好。", query:"Mirror Lakes Fiordland"},
-        {time:"10:00", title:"Monkey Creek / Homer Tunnel", notes:"看天气和停车条件选择；不要喂kea。", query:"Monkey Creek Fiordland"},
-        {time:"11:15", title:"抵达Milford Visitor Terminal", notes:"至少提前30分钟停车、步行、办理登船。", query:"Milford Sound Visitor Terminal"},
-        {time:"12:00–14:00", title:"峡湾巡游", notes:"甲板湿滑，防水外套和防滑鞋比雨伞有用。", query:"Milford Sound cruise terminal"},
-        {time:"17:30前", title:"返回Te Anau", notes:"天黑前返回；回程减少停靠。", query:"8 Lawson Burrows Crescent Te Anau"}
+        {time:"07:30", title:"满油出发", notes:"再次查看Milford Road状态；车内备水、热饮和午餐。", query:"Milford Road status"},
+        {time:"08:40", title:"Eglinton Valley", notes:"路旁正式停车位短停10–15分钟。", query:"Eglinton Valley"},
+        {time:"09:20", title:"Mirror Lakes", notes:"小步道约20–30分钟；若道路延误就直接跳过。", query:"Mirror Lakes Fiordland"},
+        {time:"10:30", title:"Monkey Creek / Homer Tunnel", notes:"只选停车条件安全的点，11:00前继续前往Milford；不要喂kea。", query:"Monkey Creek Fiordland"},
+        {time:"11:45", title:"抵达Milford停车场", notes:"停车、步行5–10分钟到Visitor Terminal；旺时停车可能耗45–60分钟。", query:"Milford Sound Visitor Terminal"},
+        {time:"12:55", title:"RealNZ柜台报到", notes:"4位成人经典游船已确认；不要晚于订单要求的提前20分钟。", query:"Milford Sound Visitor Terminal"},
+        {time:"13:15–14:55", title:"Milford Sound Classic Cruise", notes:"甲板湿滑，防水外套和防滑鞋比雨伞有用。", query:"Milford Sound cruise terminal"},
+        {time:"15:15", title:"离开Milford返回Te Anau", notes:"回程只做必要休息，不重复停靠；预计18:00–18:30抵达。", query:"8 Lawson Burrows Crescent Te Anau"}
       ],
       highlights:[
         {name:"Mirror Lakes", tag:"倒影", notes:"水面平静时可看到Earl Mountains倒影；早到人少。", photoTip:"把镜头贴近水面高度，竖构图同时收天空与倒影。", query:"Mirror Lakes Fiordland", image:commons("Milford Sound. New Zealand. (8171073678).jpg")},
@@ -217,7 +222,7 @@
         {name:"Milford Sound Cruise", tag:"必订精华", notes:"雨天瀑布反而更多；船上室内外都能看景。", photoTip:"靠近瀑布时保护镜头，Mitre Peak用竖构图。", query:"Milford Sound cruise terminal", image:commons("00 1373 Milford Sound -New Zealand.jpg")}
       ],
       meals:[meal("自带午餐与热饮", "最稳妥", "FreshChoice Te Anau", "前一晚准备三明治、巧克力和热水，避免依赖沿途餐饮。", 2), meal("Ditto Te Anau", "晚餐 · 回城后", "Ditto Te Anau", "回程时间不确定，先查看是否可订较晚时段。", 0)],
-      fuel:"Te Anau出发必须满油；不要把Milford当作可靠补给点。", clothing:"防水外壳、抓绒/羽绒、防滑鞋、备用袜、帽子、驱蚊。", caution:"SH94有雪崩、落石、冰雪和无信号路段；道路关闭绝不绕行或等待硬闯。", booking:"Milford Sound船票必须提前；建议选择可改期/可退款条款。", planB:"Milford Road关闭：改Te Anau湖、Glowworm Caves或Manapouri；联系船公司改期/退款。",
+      fuel:"Te Anau出发必须满油；不要把Milford当作可靠补给点。", clothing:"防水外壳、抓绒/羽绒、防滑鞋、备用袜、帽子、驱蚊。", caution:"SH94有雪崩、落石、冰雪和无信号路段；道路关闭绝不绕行或等待硬闯。", booking:"RealNZ Milford Sound Classic Cruise已确认：10.3 13:15–14:55，4位成人，12:55前报到。", planB:"Milford Road关闭：联系RealNZ按订单条款改期或退款，当天改Te Anau湖或Manapouri。",
       stops:[stop("Te Anau住宿",-45.4044,167.7237,"8 Lawson Burrows Crescent Te Anau","住宿"), stop("Eglinton Valley",-45.0199,167.9993,"Eglinton Valley"), stop("Mirror Lakes",-45.0267,168.0194,"Mirror Lakes Fiordland"), stop("Monkey Creek",-44.7815,168.0151,"Monkey Creek Fiordland"), stop("Milford Terminal",-44.6715,167.9260,"Milford Sound Visitor Terminal"), stop("Te Anau住宿",-45.4044,167.7237,"8 Lawson Burrows Crescent Te Anau","住宿")]
     },
     {
@@ -373,10 +378,10 @@
   ];
 
   const bookings = [
-    { id:"milford", priority:"最高优先", title:"10.3 Milford Sound Cruise", note:"建议预订中午前后船班；自驾从Te Anau单程约121公里/2–3小时并留停车步行时间。选择可改期或至少提前24小时退款条款。", link:"https://www.realnz.com/en/experiences/day-cruises/milford-sound-day-trip-from-te-anau/" },
+    { id:"milford", priority:"已确认", title:"10.3 Milford Sound Classic Cruise", note:"4位成人；13:15–14:55，12:55前到Milford Sound Visitor Terminal的RealNZ柜台报到。", link:"https://www.realnz.com/en/experiences/cruises/milford-sound-classic-cruise/" },
     { id:"stargazing", priority:"建议提前", title:"9.26 Tekapo星空体验", note:"Summit Experience约1小时45分；天气不佳时会有室内替代/改期安排，具体以订单条款为准。", link:"https://www.darkskyproject.co.nz/experiences/" },
-    { id:"skyline", priority:"建议提前", title:"10.1 Skyline Queenstown Gondola", note:"提前购票可减少售票排队；开放时间随季节调整。", link:"https://queenstown.skyline.co.nz/things-to-do/queenstown-gondola/" },
-    { id:"glowworm", priority:"可选", title:"10.2 Te Anau Glowworm Caves", note:"含湖上往返；洞内8–12°C、需弯腰和上下台阶、禁止摄影。", link:"https://www.realnz.com/en/experiences/glowworm-caves/te-anau-glowworm-caves/" },
+    { id:"skyline", priority:"已确认", title:"10.1 Skyline Gondola + 5次Luge", note:"4位成人日期票，无固定入场时段；计划15:30上山、16:00–18:30优先完成5次Luge。", link:"https://queenstown.skyline.co.nz/things-to-do/queenstown-luge/" },
+    { id:"glowworm", priority:"已确认", title:"10.2 Te Anau Glowworm Caves", note:"4位成人；15:15–17:30，14:45前到85 Lakefront Drive的RealNZ Visitor Centre报到。", link:"https://www.realnz.com/en/experiences/glowworm-caves/te-anau-glowworm-caves/" },
     { id:"heli", priority:"天气项目", title:"10.5–10.6 冰川观光飞行 / Heli Hike", note:"仅选择清晰的天气取消与退款条款；把它视为加分项，不让它拖乱西海岸住宿路线。", link:q("Franz Josef Glacier heli hike") },
     { id:"restaurants", priority:"餐厅", title:"Queenstown / Wānaka / Te Anau正式晚餐", note:"优先订Blue Kanu、Botswana Butchery、Francesca's、Redcliff；其余保持机动。", link:q("Blue Kanu Queenstown") },
     { id:"chch-tram", priority:"可选", title:"10.8–10.9 Christchurch Tram / Punt", note:"市中心步行已经足够；若想坐电车或Avon River Punt，再临近出发查看班次与订票。", link:q("Christchurch Tramway") },

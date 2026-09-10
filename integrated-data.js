@@ -280,18 +280,17 @@
       id: "au5",
       date: "09.23",
       weekday: "周三",
-      title: "墨尔本城市核心：市场、巷弄与艺术",
+      title: "墨尔本城市核心：图书馆、巷弄与艺术",
       base: "墨尔本",
       distanceKm: 0,
       driveTime: "步行 / 免费电车",
       stayId: "melbourne-hie",
-      summary: "把墨尔本最有代表性的城市气质排在同一天：Queen Victoria Market、State Library、巷弄咖啡、NGV与Southbank。",
+      summary: "把墨尔本最有代表性的城市气质排在同一天：State Library、巷弄咖啡、NGV与Southbank；Queen Victoria Market改到9.24上午。",
       image: marketImage,
       credit: "Unsplash / market image",
-      routeUrl: transitDir(["Holiday Inn Express Melbourne Little Collins", "Queen Victoria Market", "State Library Victoria", "Hosier Lane", "NGV International", "Southbank Promenade"]),
+      routeUrl: transitDir(["Holiday Inn Express Melbourne Little Collins", "State Library Victoria", "Hosier Lane", "NGV International", "Southbank Promenade"]),
       schedule: [
         { time: "08:30", title: "酒店早餐", notes: "利用含早餐优势，早一点出发。", query: "Holiday Inn Express Melbourne Little Collins" },
-        { time: "09:30", title: "Queen Victoria Market", notes: "周三通常关闭；若2026日期有特别活动，以官方What's On为准，常规市场可改9.24早上或下午外观。", query: "Queen Victoria Market Melbourne" },
         { time: "10:30", title: "State Library Victoria", notes: "La Trobe Reading Room是室内拍照重点，注意安静。", query: "State Library Victoria" },
         { time: "12:30", title: "Hardware Lane / Chinatown午餐", notes: "先吃再逛巷弄，避免把午餐拖到下午。", query: "Hardware Lane Melbourne" },
         { time: "14:00", title: "Hosier Lane与AC/DC Lane", notes: "看街头艺术和咖啡店，拍照时不要堵住店铺出入口。", query: "Hosier Lane Melbourne" },
@@ -304,79 +303,51 @@
         { name: "Southbank Promenade", tag: "河畔收尾", notes: "傍晚把城市、河面和电车灯串起来。", photoTip: "日落前到河岸，等灯光亮起再拍一轮。", query: "Southbank Promenade Melbourne", image: melbourneImage }
       ],
       meals: [
-        meal("Queen Victoria Market食品摊", "早午餐 / 市场", "Queen Victoria Market food hall Melbourne", "先确认当天是否营业；市场开放日以官方日历为准。", marketImage),
-        meal("Market Lane Coffee", "咖啡", "Market Lane Coffee Queen Victoria Market", "适合上午补咖啡；不把咖啡排成唯一早餐。", foodImage),
+        meal("Hardware Lane / Chinatown", "午餐 / 城市中心", "Hardware Lane Melbourne", "按当天步行节奏选择，不为排队压缩下午行程。", foodImage),
         meal("Tipo 00", "晚餐 / 意大利面", "Tipo 00 Melbourne", "热门店，想吃需提前预约；没有位置就选Hardware Lane备选。", foodImage, "建议预约")
       ],
       fuel: "无自驾。",
-      clothing: "城市步行日穿舒适鞋；市场和巷弄部分路面不平。",
-      caution: "Queen Victoria Market常规周三关闭，不能把它当成固定营业日；请在出发前复核官方日历。",
+      clothing: "城市步行日穿舒适鞋；巷弄与河岸部分路面可能湿滑或不平。",
+      caution: "城市步行和电车转场较多，过街注意左侧行驶车辆；晚间沿河不要安排过远。",
       booking: "NGV特展与Tipo 00如有明确目标，提前订；普通常设展可灵活安排。",
-      planB: "若QVM关闭：改为Melbourne Museum或Royal Exhibition Building，下午保留NGV和Southbank。",
-      stops: [stop("Holiday Inn Express Melbourne Little Collins", -37.8150, 144.9558, "Holiday Inn Express Melbourne Little Collins", "住宿"), stop("Queen Victoria Market", -37.8076, 144.9568, "Queen Victoria Market Melbourne", "市场"), stop("State Library Victoria", -37.8097, 144.9652, "State Library Victoria", "拍照"), stop("Hosier Lane", -37.8176, 144.9691, "Hosier Lane Melbourne", "拍照"), stop("NGV International", -37.8226, 144.9689, "NGV International Melbourne", "艺术"), stop("Southbank Promenade", -37.8205, 144.9650, "Southbank Promenade Melbourne", "拍照")],
+      planB: "若下雨：优先State Library与NGV，压缩巷弄和Southbank户外时间。",
+      stops: [stop("Holiday Inn Express Melbourne Little Collins", -37.8150, 144.9558, "Holiday Inn Express Melbourne Little Collins", "住宿"), stop("State Library Victoria", -37.8097, 144.9652, "State Library Victoria", "拍照"), stop("Hosier Lane", -37.8176, 144.9691, "Hosier Lane Melbourne", "拍照"), stop("NGV International", -37.8226, 144.9689, "NGV International Melbourne", "艺术"), stop("Southbank Promenade", -37.8205, 144.9650, "Southbank Promenade Melbourne", "拍照")],
       journalPrompts: ["今天最喜欢的巷弄或咖啡是哪一个？", "哪件艺术作品或建筑细节让你停留最久？"]
     },
     {
       id: "au6",
       date: "09.24",
       weekday: "周四",
-      title: "墨尔本近郊二选一：企鹅岛或酒乡",
+      title: "Queen Victoria Market与企鹅岛一日游",
       base: "墨尔本",
       distanceKm: 0,
-      driveTime: "一日游 / 约2–3小时交通",
+      driveTime: "跟团一日游",
       stayId: "melbourne-hie",
-      summary: "A适合想看澳洲野生动物，B适合想轻松吃喝。大洋路不放在这天，避免长途赶路影响次日飞行。",
+      summary: "上午先逛Queen Victoria Market，10:50在Immigration Museum集合参加Ozzie Tours企鹅岛一日游；Yarra Valley酒庄方案取消。",
       image: beachImage,
       credit: "Unsplash / coastal landscape",
-      routeUrl: transitDir(["Holiday Inn Express Melbourne Little Collins", "Phillip Island Penguin Parade"]),
+      routeUrl: transitDir(["Holiday Inn Express Melbourne Little Collins", "Queen Victoria Market", "Immigration Museum Melbourne", "Phillip Island Penguin Parade"]),
       schedule: [
-        { time: "07:30", title: "早餐后决定A/B", notes: "A要预留返程交通和企鹅入场等待；B更适合睡到自然醒。", query: "Holiday Inn Express Melbourne Little Collins" },
-        { time: "全天", title: "选择一套近郊方案", notes: "见下方两套行程卡，晚上回酒店整理次日飞行行李。", query: "Melbourne CBD" },
-        { time: "20:30前", title: "回酒店确认JQ171", notes: "确认11:05起飞、行李额度和前往机场的交通。", query: "Melbourne Airport" }
-      ],
-      choices: [
-        {
-          label: "A · Phillip Island企鹅归巢（经典动物记忆）",
-          summary: "距墨尔本约90分钟车程，企鹅入场后还要等待归巢；最省心是参加正规一日团，不建议临时拼公共交通。",
-          routeUrl: q("Phillip Island Penguin Parade 1019 Ventnor Road Summerlands Victoria"),
-          schedule: [
-            { time: "上午", title: "参加Phillip Island一日游", notes: "确认接送点和返程时间，带外套。", query: "Phillip Island Nature Parks" },
-            { time: "下午", title: "Nobbies / 海岸线（视团程）", notes: "以当天团行程为准，不额外叠加太多点。", query: "The Nobbies Phillip Island" },
-            { time: "日落后", title: "Penguin Parade", notes: "官方要求提前购票；现场禁止闪光灯、不要触碰或喂食企鹅。", query: "Penguin Parade Phillip Island" }
-          ],
-          highlights: [
-            { name: "Penguin Parade观景台", tag: "必打卡", notes: "小企鹅每天傍晚回到海滩，入场和座位按票种安排。", photoTip: "现场禁止闪光灯，提前把手机调至夜景并保持安静。", query: "Penguin Parade Phillip Island", image: beachImage },
-            { name: "The Nobbies", tag: "海岸风景", notes: "木栈道、海风和海鸟，按天气与团程安排。", photoTip: "风大时用广角低机位，注意帽子和手机。", query: "The Nobbies Phillip Island", image: beachImage }
-          ],
-          meals: [meal("Penguin Parade Visitor Centre", "晚餐 / 简餐", "Penguin Parade Visitor Centre cafe", "先确认团餐安排；企鹅归巢前不要吃得过饱。", foodImage), meal("Cowes小镇", "备选 / 晚餐", "Cowes Phillip Island restaurants", "若团程允许，在Cowes解决晚餐。", foodImage)]
-        },
-        {
-          label: "B · Yarra Valley酒庄与乡村午餐（轻松优先）",
-          summary: "以1–2家酒庄加一顿午餐为限，不追求一天打卡很多酒庄；建议参加有接送的一日团。",
-          routeUrl: q("Yarra Valley Victoria wineries"),
-          schedule: [
-            { time: "09:00", title: "参加Yarra Valley一日游", notes: "确认接送点与是否包含品酒费用。", query: "Yarra Valley Victoria" },
-            { time: "11:00", title: "酒庄 / 乳酪 / 巧克力体验", notes: "优先选择景观和午餐质量，不叠加过多点位。", query: "Yarra Valley winery" },
-            { time: "15:30", title: "回程咖啡", notes: "把晚上留给整理行李和早睡。", query: "Yarra Valley cafe" }
-          ],
-          highlights: [
-            { name: "葡萄园山谷视角", tag: "乡村风景", notes: "秋季色彩、山谷和酒庄建筑适合慢拍。", photoTip: "避免把酒庄拍成纯旅游团照，留出道路和山脊线。", query: "Yarra Valley winery", image: beachImage },
-            { name: "酒庄午餐", tag: "味觉记忆", notes: "安排一顿坐下来吃的午餐，比连续品酒更舒服。", photoTip: "拍桌面细节、窗外山谷和同行者举杯。", query: "Yarra Valley winery restaurant", image: foodImage }
-          ],
-          meals: [meal("Yarra Valley酒庄餐厅", "午餐 / 酒乡", "Yarra Valley winery restaurant", "提前确认是否含午餐、是否需要预订。", foodImage, "建议预约"), meal("墨尔本CBD晚餐", "晚餐 / 回城", "Melbourne CBD restaurants", "回城后简单吃，别安排需要长时间排队的店。", foodImage)]
-        }
+        { time: "07:30", title: "早餐并准备NZTD资料", notes: "先填好四人的护照、JQ171航班和申报信息；因11:05才进入起飞前24小时，暂不提交。", query: "Holiday Inn Express Melbourne Little Collins" },
+        { time: "09:00–10:15", title: "Queen Victoria Market", notes: "只逛重点食品与纪念品区域，10:15准时离场。", query: "Queen Victoria Market Melbourne" },
+        { time: "10:15", title: "前往Immigration Museum集合点", notes: "预留35分钟转场；时间紧时直接打车，集合点为Flinders St与Market St街角。", query: "Immigration Museum Melbourne" },
+        { time: "10:50", title: "Ozzie Tours企鹅岛一日游集合", notes: "4人订单已确认；上车后11:05起可提交NZTD。下午与返程以导游当天安排为准。", query: "Immigration Museum Melbourne" },
+        { time: "日落后", title: "Penguin Parade", notes: "按团程前往观景区；禁止闪光灯，不触碰或喂食企鹅。", query: "Penguin Parade Phillip Island" },
+        { time: "回城后", title: "确认JQ171并整理行李", notes: "确认9.25 11:05起飞、行李额度和前往机场的交通；不再加夜间活动。", query: "Melbourne Airport" }
       ],
       highlights: [
+        { name: "Queen Victoria Market", tag: "上午市场", notes: "9:00–10:15限时逛；优先熟食、咖啡和伴手礼，不往返绕路。", photoTip: "拍摊位细节即可，避免因拍照延误10:50集合。", query: "Queen Victoria Market Melbourne", image: marketImage },
+        { name: "Penguin Parade观景台", tag: "已确认", notes: "企鹅岛一日游按订单执行，下午点位和回城时间以导游安排为准。", photoTip: "现场禁止闪光灯，提前把手机调至低亮度并保持安静。", query: "Penguin Parade Phillip Island", image: beachImage },
         { name: "不选大洋路的理由", tag: "节奏取舍", notes: "大洋路一日往返车程很长；这次把它留作下一次专门安排，更符合9.25早班飞行。", photoTip: "不要为了多一个目的地牺牲最后一晚睡眠。", query: "Great Ocean Road Victoria", image: beachImage }
       ],
-      meals: [meal("按A/B方案安排", "近郊午餐", "Melbourne day tour restaurants", "预订一日游时确认是否包含午餐、返程时间与接送点。", foodImage)],
-      fuel: "无自驾；如果参加酒庄/企鹅团，确认是否含接送。",
-      clothing: "无论A/B都要带防风保暖层；企鹅岛晚间明显更冷。",
+      meals: [meal("Queen Victoria Market", "早餐补充 / 市场", "Queen Victoria Market food hall Melbourne", "控制用餐时间，10:15必须离场。", marketImage), meal("按导游安排", "午餐 / 晚餐", "Phillip Island restaurants", "订单未写明餐食，以团程为准，随身带水和小零食。", foodImage)],
+      fuel: "无自驾；企鹅岛往返由Ozzie Tours负责。",
+      clothing: "市场后直接上团车；随身带防风保暖层，企鹅岛晚间明显更冷。",
       caution: "企鹅归巢不是演出，时间随日落变化；必须预留等待时间并遵守禁拍和安静规定。",
-      booking: "Penguin Parade必须提前购票；Yarra Valley酒庄和一日团也建议提前锁定。",
-      planB: "近郊团售罄或天气恶劣：改为Melbourne Museum + Carlton + Fitzroy咖啡街区。",
-      stops: [stop("Phillip Island Penguin Parade", -38.0504, 145.2400, "Penguin Parade Phillip Island", "选项A"), stop("The Nobbies", -38.5104, 145.1124, "The Nobbies Phillip Island", "选项A"), stop("Yarra Valley", -37.6900, 145.5600, "Yarra Valley Victoria", "选项B"), stop("Holiday Inn Express Melbourne Little Collins", -37.8150, 144.9558, "Holiday Inn Express Melbourne Little Collins", "住宿")],
-      journalPrompts: ["企鹅岛还是Yarra Valley？这次取舍满意吗？", "今天最值得提前预订的体验是什么？"]
+      booking: "Ozzie Tours企鹅岛一日游已确认：9.24 10:50，Immigration Museum集合，4位成人。",
+      planB: "若运营方因天气取消，按订单通知处理改期或退款；不要自行改成Yarra Valley。",
+      stops: [stop("Holiday Inn Express Melbourne Little Collins", -37.8150, 144.9558, "Holiday Inn Express Melbourne Little Collins", "住宿"), stop("Queen Victoria Market", -37.8076, 144.9568, "Queen Victoria Market Melbourne", "市场"), stop("Immigration Museum", -37.8192, 144.9604, "Immigration Museum Melbourne", "集合"), stop("Phillip Island Penguin Parade", -38.0504, 145.2400, "Penguin Parade Phillip Island", "已确认")],
+      journalPrompts: ["Queen Victoria Market限时逛的节奏是否合适？", "企鹅归巢最安静、最难忘的瞬间是什么？"]
     }
   ];
 
@@ -446,9 +417,8 @@
     { id: "au-flights", priority: "航班", title: "澳洲与返程航班状态", note: "出发前72小时、每次转机当天各查一次；时间均为当地时间。", link: "https://www.jetstar.com/au/en/help/articles/flight-status" },
     { id: "opera-tour", priority: "可选", title: "悉尼歌剧院内部导览 / 演出", note: "外观免费；若想进场或看演出，按官方场次购票。", link: "https://www.sydneyoperahouse.com/tours" },
     { id: "bondi-weather", priority: "每日", title: "9.21 Bondi / Manly天气决策", note: "出发当天看降雨、风力和海浪；A/B二选一。", link: "https://www.bom.gov.au/nsw/forecasts/sydney.shtml" },
-    { id: "penguins", priority: "必须", title: "Phillip Island Penguin Parade", note: "官方明确要求提前购票；确认票种、接送和返程时间。", link: "https://www.penguins.org.au/public/attractions/penguin-parade/" },
-    { id: "yarra", priority: "可选", title: "Yarra Valley酒庄一日游", note: "如果选B，提前预约接送型一日游和午餐。", link: "https://www.visityarravalley.com.au/" },
-    { id: "qvm", priority: "核对", title: "Queen Victoria Market营业日", note: "常规周三关闭；9.23当天不要把市场当成必到点，临行核对官方日历。", link: "https://qvm.com.au/about/" },
+    { id: "penguins", priority: "已确认", title: "9.24 Ozzie Tours企鹅岛一日游", note: "4位成人；10:50在Immigration Museum（Flinders St与Market St街角）集合。", link: "https://www.penguins.org.au/public/attractions/penguin-parade/" },
+    { id: "qvm", priority: "已安排", title: "9.24 Queen Victoria Market", note: "09:00–10:15；10:15准时离场前往企鹅团集合点。", link: "https://qvm.com.au/about/" },
     ...data.bookings
   ];
 
@@ -481,6 +451,8 @@
     { id: "SZ", name: "旅伴S" }
   ];
   data.todos = [
+    { id: "todo-nztd", kind: "todo", priority: "9.24", title: "填写并提交4人新西兰入境申报", note: "9.24早上先填写；JQ171于9.25 11:05起飞，最早9.24 11:05后提交。每人单独申报，提交后保存确认邮件。", link: "https://www.travellerdeclaration.govt.nz/" },
+    { id: "todo-sh6-oct4", kind: "todo", priority: "10.4前", title: "复核10.4 Te Anau→Haast驾驶线路", note: "10.3晚和10.4清晨查看NZTA Journey Planner，重点核对SH6 Makarora–Lake Hāwea。若仍限制通行且绕行约14小时，不要当天硬开，需及时调整住宿或拆分路线。", link: "https://www.journeys.nzta.govt.nz/" },
     { id: "todo-nz-visa", kind: "todo", priority: "待办", title: "办理新西兰签证 / 签注", note: "提前办理签注；当前行程按不需要签证理解，出发前仍按官方要求复核。", link: "https://www.immigration.govt.nz/" },
     { id: "todo-sim", kind: "todo", priority: "待办", title: "购买电话卡", note: "9月19日开始使用，准备覆盖30天；提前确认eSIM/实体卡、热点和流量。", link: "" },
     { id: "todo-dinner", kind: "todo", priority: "待办", title: "跟大姐、三姐约饭", note: "优先安排9月20日，若不便则改为9月21日。", link: "" },
