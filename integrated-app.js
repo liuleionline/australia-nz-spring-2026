@@ -708,7 +708,7 @@
     $("#ledgerTypeFilter").onchange = (event) => { ledgerFilter = event.target.value; renderBudget(); };
     $("#addExpenseBtn")?.addEventListener("click", () => openExpenseModal());
     $("#ledgerAnalysis").innerHTML = Object.entries(byType).map(([type, amount]) => `<article class="ledger-analysis-card ledger-type-${typeClass(type)}"><div><strong>${esc(type)}</strong><span>${money(amount)} · ${percent(amount)}</span></div><div class="ledger-bar"><i style="width:${percent(amount)}"></i></div></article>`).join("");
-    $("#ledgerSettlement").innerHTML = `<div class="ledger-settlement-head"><div><p class="eyebrow">SETTLEMENT</p><h3>${supportsFamilySettlement ? "家庭结算" : "当前结算快照"}</h3><span>按参与人均摊${supportsFamilySettlement ? "，再汇总到家庭" : ""}</span></div>${canEdit && supportsFamilySettlement ? `<button class="btn btn-outline" id="editTravelersBtn" type="button">旅伴与家庭分组</button>` : ""}</div><div class="settlement-grid settlement-family-grid">${settlement.groups.map(group => `<div class="settlement-card"><strong>${esc(group.label)}</strong>${supportsFamilySettlement ? `<small>${esc(group.members.join("、"))}</small>` : ""}<span class="${group.balanceCents >= 0 ? "balance-positive" : "balance-negative"}">${group.balanceCents === 0 ? "已结清" : `${group.balanceCents > 0 ? "应收 " : "应付 "}${money(Math.abs(group.balanceCents) / 100)}`}</span><small>已付 ${money(group.paidCents / 100)} · 应承担 ${money(group.owedCents / 100)}</small></div>`).join("")}</div>${supportsFamilySettlement && settlement.transfers.length ? `<div class="settlement-transfers"><strong>建议转账</strong>${settlement.transfers.map(item => `<p>${esc(item.from)} → ${esc(item.to)}：${money(item.cents / 100)}</p>`).join("")}</div>` : ""}<p class="micro">${supportsFamilySettlement ? "家庭名称相同的旅伴合并结算；留空者独立结算。" : ""}每笔消费按所选参与人均摊，不足一分的尾差按旅伴列表顺序分配。结算使用全部账目，不受类型筛选影响。</p>`;
+    $("#ledgerSettlement").innerHTML = `<div class="ledger-settlement-head"><div><p class="eyebrow">SETTLEMENT</p><h3>${supportsFamilySettlement ? "家庭结算" : "当前结算快照"}</h3><span>按参与人均摊${supportsFamilySettlement ? "，再汇总到家庭" : ""}</span></div>${canEdit && supportsFamilySettlement ? `<button class="btn btn-outline" id="editTravelersBtn" type="button">家庭组合</button>` : ""}</div><div class="settlement-grid settlement-family-grid">${settlement.groups.map(group => `<div class="settlement-card"><strong>${esc(group.label)}</strong>${supportsFamilySettlement ? `<small>${esc(group.members.join("、"))}</small>` : ""}<span class="${group.balanceCents >= 0 ? "balance-positive" : "balance-negative"}">${group.balanceCents === 0 ? "已结清" : `${group.balanceCents > 0 ? "应收 " : "应付 "}${money(Math.abs(group.balanceCents) / 100)}`}</span><small>已付 ${money(group.paidCents / 100)} · 应承担 ${money(group.owedCents / 100)}</small></div>`).join("")}</div>${supportsFamilySettlement && settlement.transfers.length ? `<div class="settlement-transfers"><strong>建议转账</strong>${settlement.transfers.map(item => `<p>${esc(item.from)} → ${esc(item.to)}：${money(item.cents / 100)}</p>`).join("")}</div>` : ""}<p class="micro">${supportsFamilySettlement ? "通过“家庭组合”选择成员合并结算；未组合的旅伴独立结算。" : ""}每笔消费按所选参与人均摊，不足一分的尾差按旅伴列表顺序分配。结算使用全部账目，不受类型筛选影响。</p>`;
     $("#editTravelersBtn")?.addEventListener("click", openTravelersModal);
     $("#ledgerRows").innerHTML = filtered.map((item) => `<tr class="ledger-row ledger-type-${typeClass(item.type)}"><td>${esc(item.date)}</td><td><span class="ledger-type-chip">${esc(item.type)}</span></td><td>${esc(item.note)}</td><td><strong>${money(item.amount)}</strong>${item.currency && item.currency !== "CNY" ? `<small class="ledger-fx-note">${esc(item.original_amount)} ${esc(item.currency)} × ${esc(item.exchange_rate)}</small>` : ""}</td><td>${esc(labels[item.payer] || item.payer)}</td><td>${esc((item.participants || []).map(id => labels[id] || id).join("、"))}</td><td class="ledger-actions">${canEdit ? `<button class="ledger-icon-btn" data-edit-expense="${esc(item.id)}" type="button">编辑</button><button class="ledger-icon-btn ledger-icon-btn-danger" data-delete-expense="${esc(item.id)}" type="button">删除</button>` : "—"}</td></tr>`).join("");
     $$("[data-edit-expense]", $("#ledgerRows")).forEach((button) => button.addEventListener("click", () => openExpenseModal((data.accounting.expenses || []).find((item) => item.id === button.dataset.editExpense))));
@@ -723,28 +723,84 @@
     const draft = ledgerTravelers.map(person => ({ ...person }));
     const used = new Set((data.accounting.expenses || []).flatMap(row => [row.payer, ...(row.participants || [])]));
     const modal = $("#expenseModal");
-    let submitting = false;
+    const selected = new Set();
+    let submitting = false, naming = false, editingFamily = "", managementOpen = false;
+    const members = () => draft.filter(person => selected.has(person.id));
+    const defaultFamilyName = () => members().map(person => person.name.split(" / ")[0].trim()).join("和").slice(0, 38) + "一家";
     function draw() {
-      modal.innerHTML = `<div class="modal-card modal-card-wide" role="dialog" aria-modal="true" aria-label="旅伴与家庭分组"><button class="modal-close" type="button" aria-label="关闭">×</button><h2>旅伴与家庭分组</h2><p class="modal-note">可添加任意数量的旅伴。填写相同家庭名称的人合并结算；家庭名称留空则独立结算。保存后同行者共同使用。</p><form id="travelersForm" class="modal-form"><div class="traveler-list">${draft.map((person, index) => `<div class="traveler-row" data-traveler-index="${index}"><label>旅伴姓名<input name="traveler_name" maxlength="40" value="${esc(person.name)}" required></label><label>家庭 / 结算单位<input name="traveler_family" list="familyNames" maxlength="40" placeholder="留空则独立结算" value="${esc(person.family)}"></label><button class="btn btn-outline" data-remove-traveler="${index}" type="button" ${used.has(person.id) ? 'disabled title="已有账目引用，不能删除"' : ""}>移除</button></div>`).join("")}</div><datalist id="familyNames">${[...new Set(draft.map(person => person.family).filter(Boolean))].map(name => `<option value="${esc(name)}"></option>`).join("")}</datalist><button class="btn btn-outline" id="addTravelerBtn" type="button">＋ 添加旅伴</button><p class="micro">已有账目引用的旅伴不能移除，可改名或调整分组。家庭分组会重新汇总全部旧账。</p><button class="btn btn-accent" type="submit">保存旅伴与分组</button><p id="travelersError" class="modal-error" role="alert"></p></form></div>`;
+      const families = [...new Set(draft.map(person => person.family).filter(Boolean))];
+      modal.innerHTML = `<div class="modal-card modal-card-wide family-composer" role="dialog" aria-modal="true" aria-label="家庭组合"><button class="modal-close" type="button" aria-label="关闭">×</button><h2>家庭组合</h2><p class="modal-note">点选同一家人的成员，再点击“组合家庭”。未组合的旅伴独立结算，人数不限。</p><form id="travelersForm" class="modal-form"><div class="family-member-list">${draft.map(person => `<label class="family-member"><input type="checkbox" name="family_member" value="${esc(person.id)}" ${selected.has(person.id) ? "checked" : ""}><span><strong data-member-name="${esc(person.id)}">${esc(person.name || "未命名旅伴")}</strong><small>${esc(person.family || "独立结算")}</small></span></label>`).join("")}</div><div class="family-selection-actions"><span id="familySelectionCount" role="status">已选 ${selected.size} 人</span><button class="btn btn-accent" id="combineFamilyBtn" type="button" ${selected.size < 2 || naming ? "disabled" : ""}>${editingFamily ? "调整这个家庭" : "组合家庭"}</button></div>${naming ? `<section class="family-name-panel" aria-label="确认家庭名称"><p>家庭成员：${members().map(person => esc(person.name)).join("、")}</p><label>家庭名称<input id="familyNameInput" maxlength="40" value="${esc(editingFamily || defaultFamilyName())}" placeholder="例如：LL和YM一家"></label><div class="family-name-actions"><button class="btn btn-accent" id="confirmFamilyBtn" type="button">确认组合</button><button class="btn btn-outline" id="cancelFamilyBtn" type="button">取消</button></div></section>` : ""}<section class="family-group-list" aria-label="已组合的家庭">${families.length ? families.map((family, index) => `<div class="family-group"><div><strong>${esc(family)}</strong><p>${draft.filter(person => person.family === family).map(person => esc(person.name)).join("、")}</p></div><div class="family-group-actions"><button class="btn btn-outline" data-edit-family="${index}" type="button">调整成员 / 名称</button><button class="btn btn-outline" data-split-family="${index}" type="button">拆分家庭</button></div></div>`).join("") : '<p class="micro">还没有组合家庭，所有旅伴各自结算。</p>'}</section><details id="travelerManagement" ${managementOpen ? "open" : ""}><summary>管理旅伴（添加或改名）</summary><div class="traveler-list">${draft.map((person, index) => `<div class="traveler-row" data-traveler-index="${index}"><label>旅伴姓名<input name="traveler_name" maxlength="40" value="${esc(person.name)}" required></label><button class="btn btn-outline" data-remove-traveler="${index}" type="button" ${used.has(person.id) || draft.length === 1 ? 'disabled title="已有账目引用或最后一位旅伴不能移除"' : ""}>移除</button></div>`).join("")}</div><button class="btn btn-outline" id="addTravelerBtn" type="button">＋ 添加旅伴</button></details><p class="micro">点击下方保存后，家庭组合才会同步给同行者，并重新汇总旧账。已有账目引用的旅伴不能移除。</p><button class="btn btn-accent" id="saveTravelersBtn" type="submit">保存家庭组合</button><p id="travelersError" class="modal-error" role="alert"></p></form></div>`;
       modal.classList.remove("is-hidden"); modal.setAttribute("aria-hidden", "false");
       $(".modal-close", modal).addEventListener("click", closeExpenseModal);
+      const showError = message => { $("#travelersError", modal).textContent = message; };
+      $("#travelerManagement", modal).addEventListener("toggle", event => { managementOpen = event.target.open; });
+      $$("[name=family_member]", modal).forEach(input => {
+        input.disabled = naming;
+        input.addEventListener("change", () => {
+          if (input.checked) selected.add(input.value); else selected.delete(input.value);
+          $("#familySelectionCount", modal).textContent = `已选 ${selected.size} 人`;
+          $("#combineFamilyBtn", modal).disabled = selected.size < 2;
+          showError("");
+        });
+      });
+      $("#combineFamilyBtn", modal).addEventListener("click", () => {
+        if (members().some(person => !person.name.trim())) { showError("请先在“管理旅伴”中填写所选成员的姓名"); return; }
+        naming = true; draw(); $("#familyNameInput", modal).focus(); $("#familyNameInput", modal).select();
+      });
+      $("#cancelFamilyBtn", modal)?.addEventListener("click", () => { naming = false; draw(); $("#combineFamilyBtn", modal).focus(); });
+      const confirmFamily = () => {
+        const name = $("#familyNameInput", modal).value.trim();
+        if (!name) { showError("请填写家庭名称"); $("#familyNameInput", modal).focus(); return; }
+        if (draft.some(person => !selected.has(person.id) && person.family === name && person.family !== editingFamily)) { showError("此名称已被其他家庭使用，请换一个名称，或先调整那个家庭的成员"); return; }
+        draft.forEach(person => {
+          if (selected.has(person.id)) person.family = name;
+          else if (editingFamily && person.family === editingFamily) person.family = "";
+        });
+        naming = false; editingFamily = ""; selected.clear(); draw(); $("#combineFamilyBtn", modal).focus();
+      };
+      $("#confirmFamilyBtn", modal)?.addEventListener("click", confirmFamily);
+      $("#familyNameInput", modal)?.addEventListener("keydown", event => { if (event.key === "Enter") { event.preventDefault(); confirmFamily(); } });
+      $$("[data-edit-family]", modal).forEach(button => button.addEventListener("click", () => {
+        editingFamily = families[Number(button.dataset.editFamily)]; naming = false; selected.clear();
+        draft.filter(person => person.family === editingFamily).forEach(person => selected.add(person.id)); draw();
+        $("[name=family_member]", modal)?.focus();
+      }));
+      $$("[data-split-family]", modal).forEach(button => button.addEventListener("click", () => {
+        const family = families[Number(button.dataset.splitFamily)];
+        draft.filter(person => person.family === family).forEach(person => { person.family = ""; });
+        naming = false; editingFamily = ""; selected.clear(); draw();
+      }));
       $$(".traveler-row", modal).forEach(row => {
         const person = draft[Number(row.dataset.travelerIndex)];
-        $("[name=traveler_name]", row).addEventListener("input", event => { person.name = event.target.value; });
-        $("[name=traveler_family]", row).addEventListener("input", event => { person.family = event.target.value; });
+        const input = $("[name=traveler_name]", row);
+        input.disabled = naming;
+        input.addEventListener("input", event => {
+          person.name = event.target.value;
+          const label = $$("[data-member-name]", modal).find(node => node.dataset.memberName === person.id);
+          if (label) label.textContent = person.name || "未命名旅伴";
+        });
+        input.addEventListener("invalid", () => { $("#travelerManagement", modal).open = true; });
       });
-      $$("[data-remove-traveler]", modal).forEach(button => button.addEventListener("click", () => { draft.splice(Number(button.dataset.removeTraveler), 1); draw(); }));
+      $$("[data-remove-traveler]", modal).forEach(button => {
+        if (naming) button.disabled = true;
+        button.addEventListener("click", () => { selected.delete(draft[Number(button.dataset.removeTraveler)].id); draft.splice(Number(button.dataset.removeTraveler), 1); draw(); });
+      });
+      $("#addTravelerBtn", modal).disabled = naming;
       $("#addTravelerBtn", modal).addEventListener("click", () => {
-        draft.push({ id: `P-${crypto.randomUUID()}`.toUpperCase(), name: "", family: "" }); draw();
+        draft.push({ id: `P-${crypto.randomUUID()}`.toUpperCase(), name: "", family: "" }); managementOpen = true; draw();
         $$("[name=traveler_name]", modal).at(-1)?.focus();
       });
+      $("#saveTravelersBtn", modal).disabled = naming;
       $("#travelersForm", modal).addEventListener("submit", async event => {
-        event.preventDefault(); if (submitting) return;
-        if (!draft.length) { $("#travelersError", modal).textContent = "请至少保留一位旅伴"; return; }
-        submitting = true; const button = $("button[type=submit]", modal); button.disabled = true;
+        event.preventDefault(); if (submitting || naming) return;
+        if (!draft.length) { showError("请至少保留一位旅伴"); return; }
+        submitting = true;
+        const controls = $$("input, button", event.target).map(node => ({ node, disabled: node.disabled }));
+        controls.forEach(({ node }) => { node.disabled = true; });
+        const travelers = draft.map(person => ({ ...person }));
         try {
           if (!await confirmEditableSession({ closeExpense: true })) return;
-          const response = await apiFetch("/api/routebook/travelers", { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ revision, travelers: draft }) });
+          const response = await apiFetch("/api/routebook/travelers", { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ revision, travelers }) });
           const payload = await response.json();
           if (!response.ok) {
             if (recoverAuthFromResponse(response, payload, { closeExpense: true })) return;
@@ -753,7 +809,7 @@
           ledgerTravelers = payload.travelers; travelersRevision = payload.travelers_revision;
           closeExpenseModal(); renderBudget();
         } catch (error) { const node = $("#travelersError", modal); if (node) node.textContent = error.message || "保存失败，请稍后重试"; }
-        finally { submitting = false; if (document.body.contains(button)) button.disabled = false; }
+        finally { submitting = false; controls.forEach(({ node, disabled }) => { if (document.body.contains(node)) node.disabled = disabled; }); }
       });
     }
     draw();
