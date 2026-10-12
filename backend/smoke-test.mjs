@@ -112,8 +112,17 @@ try {
   assert(result.response.status === 401 && result.body.code === "INVALID_CREDENTIALS",
     "Unknown account must receive a generic credential error");
 
+  for (const options of [
+    { method: "PUT", body: JSON.stringify({ dayId: "d02", entry: { summary: "guest attempt" } }) },
+    { method: "DELETE" }
+  ]) {
+    const guest = await request(options.method === "DELETE" ? "/api/routebook/journal/d02" : "/api/routebook/journal", options);
+    assert(guest.response.status === 401, "Guests cannot edit or delete journals");
+  }
   const llInitial = await login("LL", bootstrapPassword);
   assert(llInitial.user.mustChange === true, "Fresh LL account must require password change");
+  result = await request("/api/routebook/journal", { method: "PUT", headers: { Authorization: `Bearer ${llInitial.token}` }, body: JSON.stringify({ dayId: "d02", entry: { summary: "initial-password attempt" } }) });
+  assert(result.response.status === 403 && result.body.code === "PASSWORD_CHANGE_REQUIRED", "Initial-password users cannot modify journals");
 
   result = await request("/api/routebook/expenses", {
     headers: { Authorization: `Bearer ${llInitial.token}` }
@@ -177,6 +186,20 @@ try {
   assert(result.body.journals?.LL?.d02?.summary === "LL journal" && result.body.journals?.YM?.d02?.summary === "YM journal",
     "Saving the same day for two participants must not overwrite either entry");
 
+  const journalsBeforeSpoof = JSON.stringify(result.body.journals);
+  for (const [path, options] of [
+    ["/api/routebook/journal", { method: "PUT", body: JSON.stringify({ username: "YM", dayId: "d02", entry: { summary: "cross-author edit" } }) }],
+    ["/api/routebook/journal/d02?username=YM", { method: "DELETE" }]
+  ]) {
+    const attempted = await request(path, { ...options, headers: { Authorization: `Bearer ${llToken}` } });
+    assert(attempted.response.status === 403 && attempted.body.code === "JOURNAL_OWNER_MISMATCH", "An administrator cannot explicitly modify another author's journal");
+  }
+  result = await request("/api/routebook/journal");
+  assert(JSON.stringify(result.body.journals) === journalsBeforeSpoof, "Rejected cross-author writes preserve both journals");
+  result = await request("/api/routebook/journal", { method: "PUT", headers: { Authorization: `Bearer ${ymToken}` }, body: JSON.stringify({ username: "YM", dayId: "d02", entry: { summary: "YM edited journal", updatedBy: "LL", savedAt: "fake timestamp" } }) });
+  assert(result.response.status === 200 && result.body.entry.updatedBy === "YM" && Number.isFinite(Date.parse(result.body.entry.savedAt)), "An author can edit with canonical identity and server timestamp");
+  result = await request("/api/routebook/journal");
+  assert(result.body.journals.LL.d02.summary === "LL journal", "Editing another personal journal leaves the first author's entry untouched");
   result = await request("/api/routebook/journal/d02", {
     method: "DELETE",
     headers: { Authorization: `Bearer ${llToken}` }
@@ -185,7 +208,7 @@ try {
     "A participant must be able to delete their own journal entry");
 
   result = await request("/api/routebook/journal");
-  assert(!result.body.journals?.LL?.d02 && result.body.journals?.YM?.d02?.summary === "YM journal",
+  assert(!result.body.journals?.LL?.d02 && result.body.journals?.YM?.d02?.summary === "YM edited journal",
     "Deleting LL journal must not delete YM journal for the same day");
   assert(typeof result.body.deletions?.LL?.d02 === "string",
     "Deleted journal must publish a tombstone timestamp for stale client caches");
@@ -268,6 +291,9 @@ try {
   const ymReset = await login("YM", ymTemporaryPassword);
   assert(ymReset.user.mustChange === true, "Reset user must change initial password at next login");
 
+  result = await request("/api/routebook/exchange-rates");
+  assert(result.response.status === 401, "Unauthenticated users cannot access expense rate suggestions");
+
   const expense = {
     amount: 123.45,
     type: "其他",
@@ -291,6 +317,58 @@ try {
   assert(result.response.status === 200 && result.body.expenses.some((row) => row.id === generatedExpenseId),
     "Created expense must be readable");
 
+  assert(result.body.capabilities?.foreign_currency === true, "The server advertises foreign-currency persistence");
+  const foreignExpense = {
+    ...expense, currency: "NZD", original_amount: 100, exchange_rate: 3.7672, amount: 376.72,
+    exchange_rate_source: "BOC", exchange_rate_date: "2026-10-12T14:12:15+08:00"
+  };
+  result = await request("/api/routebook/expenses", {
+    method: "POST", headers: { Authorization: `Bearer ${llToken}` }, body: JSON.stringify(foreignExpense)
+  });
+  const foreignId = result.body.expense?.id;
+  assert(result.response.status === 200 && result.body.expense?.original_amount === 100 && result.body.expense?.amount === 376.72 && result.body.expense?.currency === "NZD",
+    "Foreign amounts must be converted and preserved");
+  assert(result.body.expense.exchange_rate_date === foreignExpense.exchange_rate_date, "Bank quote timestamp must be preserved");
+  result = await request("/api/routebook/expenses", {
+    method: "PATCH", headers: { Authorization: `Bearer ${llToken}` },
+    body: JSON.stringify({ ...foreignExpense, id: foreignId, original_amount: 120.5, exchange_rate: 3.75, amount: 451.88, exchange_rate_source: "manual" })
+  });
+  assert(result.response.status === 200 && result.body.expense.original_amount === 120.5 && result.body.expense.amount === 451.88 && result.body.expense.exchange_rate_date === "",
+    "Foreign expense edits retain original units and clear manually overridden bank provenance");
+  result = await request("/api/routebook/expenses", {
+    method: "POST", headers: { Authorization: `Bearer ${llToken}` }, body: JSON.stringify({ ...foreignExpense, amount: 1 })
+  });
+  assert(result.response.status === 400, "A tampered RMB amount must be rejected");
+  result = await request("/api/routebook/expenses", { headers: { Authorization: `Bearer ${llToken}` } });
+  assert(result.body.expenses.some(row => row.id === foreignId && row.currency === "NZD" && row.original_amount === 120.5 && row.exchange_rate === 3.75 && row.amount === 451.88),
+    "Reloaded expenses retain the foreign currency and conversion inputs");
+
+  result = await request("/api/routebook/travelers", { method: "PUT", body: JSON.stringify({ revision: 0, travelers: [] }) });
+  assert(result.response.status === 401, "Guest users cannot change private family grouping");
+  result = await request("/api/routebook/expenses", { headers: { Authorization: `Bearer ${llToken}` } });
+  assert(result.body.capabilities?.family_settlement === true && result.body.travelers.length === 4, "Existing ledgers start with their original four travelers");
+  const originalExpenses = JSON.stringify(result.body.expenses);
+  const travelers = [...result.body.travelers, ...Array.from({ length: 5 }, (_, index) => ({ id: `TEST-${index}`, name: `Test companion ${index}`, family: "" }))]
+    .map((person, index) => ({ ...person, family: index < 3 ? "Test family A" : index < 5 ? "Test family B" : index < 6 ? "" : "Test family C" }));
+  const initialRevision = result.body.travelers_revision;
+  result = await request("/api/routebook/travelers", { method: "PUT", headers: { Authorization: `Bearer ${llToken}` }, body: JSON.stringify({ revision: initialRevision, travelers }) });
+  assert(result.response.status === 200 && result.body.travelers.length === 9, "Nine companions and mixed family sizes can be saved");
+  let familyRevision = result.body.travelers_revision;
+  result = await request("/api/routebook/travelers", { method: "PUT", headers: { Authorization: `Bearer ${llToken}` }, body: JSON.stringify({ revision: initialRevision, travelers }) });
+  assert(result.response.status === 409, "A stale family edit cannot overwrite another edit");
+  result = await request("/api/routebook/expenses", { headers: { Authorization: `Bearer ${llToken}` } });
+  assert(JSON.stringify(result.body.expenses) === originalExpenses && result.body.travelers.length === 9, "Family changes preserve every original expense");
+  const dynamicExpense = { ...expense, amount: 90, payer: "TEST-4", participants: travelers.map(person => person.id) };
+  result = await request("/api/routebook/expenses", { method: "POST", headers: { Authorization: `Bearer ${llToken}` }, body: JSON.stringify(dynamicExpense) });
+  const dynamicId = result.body.expense?.id;
+  assert(result.response.status === 200 && result.body.expense.participants.length === 9 && result.body.expense.payer === "TEST-4", "New travelers can pay and participate without login accounts");
+  result = await request("/api/routebook/expenses", { method: "POST", headers: { Authorization: `Bearer ${llToken}` }, body: JSON.stringify({ ...dynamicExpense, participants: ["LL", "UNKNOWN"] }) });
+  assert(result.response.status === 400, "Unknown participants are rejected rather than silently discarded");
+  result = await request("/api/routebook/travelers", { method: "PUT", headers: { Authorization: `Bearer ${llToken}` }, body: JSON.stringify({ revision: familyRevision, travelers: travelers.slice(0, -1) }) });
+  assert(result.response.status === 400, "A recorded traveler cannot be removed");
+  result = await request("/api/routebook/expenses", { headers: { Authorization: `Bearer ${llToken}` } });
+  assert(result.body.travelers_revision === familyRevision && result.body.expenses.some(row => row.id === dynamicId && row.participants.length === 9), "Rejected settings leave the private ledger unchanged");
+
   result = await request("/api/routebook/backups", {
     method: "POST",
     headers: { Authorization: `Bearer ${llToken}` },
@@ -299,6 +377,28 @@ try {
   assert(result.response.status === 200 && result.body.backup.status === "ok",
     "LL manual encrypted backup must succeed");
 
+  result = await request("/api/routebook/journal", { headers: { Authorization: `Bearer ${llToken}` } });
+  assert(result.body.limits?.max_photos === 6 && result.body.limits?.max_entry_bytes === 1048576, "The API advertises exact journal limits");
+  const smallPhoto = "data:image/png;base64,iVBORw0KGgo=";
+  const originalJournal = { summary: "photo-limit test", photos: [smallPhoto] };
+  result = await request("/api/routebook/journal", { method: "PUT", headers: { Authorization: `Bearer ${llToken}` }, body: JSON.stringify({ dayId: "d04", entry: originalJournal }) });
+  assert(result.response.status === 200, "A valid photo journal saves");
+  for (const entry of [{ photos: Array(7).fill(smallPhoto) }, { summary: "a".repeat(1048576) }, { photos: {} }, { summary: "a".repeat(2100000) }]) {
+    result = await request("/api/routebook/journal", { method: "PUT", headers: { Authorization: `Bearer ${llToken}` }, body: JSON.stringify({ dayId: "d04", entry }) });
+    assert([400, 413].includes(result.response.status), "Invalid photos or oversized requests return an actionable client error");
+    const saved = await request("/api/routebook/journal");
+    assert(saved.body.journals?.LL?.d04?.summary === originalJournal.summary && saved.body.journals.LL.d04.photos.length === 1, "Rejected journal uploads preserve the previous saved entry");
+  }
+  result = await request("/api/routebook/backups", { method: "POST", headers: { Authorization: `Bearer ${llToken}` }, body: JSON.stringify({ action: "create" }) });
+  assert(result.response.status === 200, "Photo journals remain compatible with backup creation");
+  const familyBackupId = result.body.backup.id;
+  result = await request("/api/routebook/travelers", { method: "PUT", headers: { Authorization: `Bearer ${llToken}` }, body: JSON.stringify({ revision: familyRevision, travelers: travelers.map(person => ({ ...person, family: "Test regrouped" })) }) });
+  assert(result.response.status === 200, "Existing participants can be regrouped without changing expense rows");
+  result = await request("/api/routebook/backups", { method: "POST", headers: { Authorization: `Bearer ${llToken}` }, body: JSON.stringify({ action: "restore", backupId: familyBackupId, confirm: "RESTORE", currentPassword: "LL-Test-Password-2026!" }) });
+  assert(result.response.status === 200, "An encrypted backup restores dynamic companions and grouping");
+  const restoredLogin = await login("LL", "LL-Test-Password-2026!");
+  result = await request("/api/routebook/expenses", { headers: { Authorization: `Bearer ${restoredLogin.token}` } });
+  assert(JSON.stringify(result.body.travelers) === JSON.stringify(travelers) && result.body.expenses.some(row => row.id === dynamicId && row.participants.length === 9), "Backup restoration preserves all nine companions and their expenses");
   console.log("Routebook API smoke test passed");
 } finally {
   await stopServer();

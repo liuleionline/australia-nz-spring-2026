@@ -11,7 +11,7 @@
   <link rel="mask-icon" href="brand/logo-a-southern-cross-route.svg" color="#123a32">
   <link rel="manifest" href="site.webmanifest">
   <title>澳新之春 · 完整路书预览版</title>
-  <link rel="stylesheet" href="integrated-styles.css?v=20260902-3">
+  <link rel="stylesheet" href="integrated-styles.css?v=20261012-1">
 </head>
 <body>
   <header class="hero" id="top">
@@ -82,14 +82,13 @@
     </section>
 
     <section class="section page-panel" id="budget" data-page="budget" data-page-label="旅行账本" data-auth-only hidden>
-      <div class="section-heading"><p class="eyebrow">BUDGET</p><h2>旅行账本</h2><p>交通、住宿等消费按类型着色；四位旅行者登录后可继续补记账目。</p></div>
+      <div class="section-heading"><p class="eyebrow">BUDGET</p><h2>旅行账本</h2><p>交通、住宿等消费按类型着色；旅伴登录后可继续补记账目。</p></div>
       <div id="budgetSummary" class="budget-summary"></div>
       <div id="ledgerToolbar" class="ledger-toolbar"></div>
       <div id="ledgerAnalysis" class="ledger-analysis"></div>
       <div id="ledgerSettlement" class="ledger-settlement"></div>
       <div class="ledger-table-wrap"><table class="ledger-table"><thead><tr><th>日期</th><th>类型</th><th>备注</th><th>金额</th><th>付款人</th><th>参与人</th><th class="ledger-action-head">操作</th></tr></thead><tbody id="ledgerRows"></tbody></table></div>
-      <div class="cost-table-wrap"><table class="cost-table"><thead><tr><th>日期 / 地点</th><th>晚数</th><th>合计</th><th>你家</th><th>沈家</th></tr></thead><tbody id="costRows"></tbody></table></div>
-      <p class="micro">金额按你提供的截图导入；分类、付款人与参与人可在后续记账时继续补充。住宿明细仍保留在下方。</p>
+      <p class="micro">金额按你提供的截图导入；分类、付款人与参与人可在后续记账时继续补充。</p>
     </section>
 
     <section class="section section-tint page-panel" id="prep" data-page="prep" data-page-label="准备">
@@ -103,15 +102,18 @@
         <aside><p class="micro">选择日期</p><div id="journalPicker" class="journal-picker"></div></aside>
         <div class="journal-content">
           <section class="journal-gallery" aria-labelledby="journalGalleryTitle">
-            <div class="journal-gallery-heading"><div><p class="eyebrow">FOUR VOICES</p><h3 id="journalGalleryTitle">四人的当天记录</h3></div><p>每位参与者的文字和照片按账号独立保存，并在这里分别呈现。</p></div>
+            <div class="journal-gallery-heading"><div><p class="eyebrow">FOUR VOICES</p><h3 id="journalGalleryTitle">四人的当天记录</h3></div><p>每位参与者的文字和照片按账号独立保存，并在这里分别呈现。点击照片可放大查看。</p></div>
             <div id="journalEntries" class="journal-entries"></div>
           </section>
           <div class="journal-editor">
             <h3 id="journalEditorTitle">编辑我的游记</h3>
+            <p class="micro">登录后可编辑和删除本人的游记；其他作者的游记可阅读。</p>
             <div id="journalPrompt" class="journal-prompt"></div>
             <label>今天的纪要<textarea id="journalSummary" rows="5" placeholder="今天去了哪里？最想记住的一个细节是什么？"></textarea></label>
             <div class="journal-two"><label>好吃的 / 餐厅<textarea id="journalFood" rows="4" placeholder="记录菜名、价格、是否值得预约……"></textarea></label><label>好玩的 / 感受<textarea id="journalFeeling" rows="4" placeholder="记录开心、意外、遗憾或下一次想怎么走……"></textarea></label></div>
-            <label>照片（可多选，保存后同步到本人游记）<input id="journalPhotos" type="file" accept="image/*" multiple></label>
+            <label>照片（可多选，保存后同步到本人游记）<input id="journalPhotos" type="file" accept="image/*" multiple aria-describedby="journalPhotoHelp journalUploadStatus"></label>
+            <p id="journalPhotoHelp" class="micro">最多6张，单张原图不超过10MB；自动压缩后，单日文字与照片合计不超过1MB。重新选择会替换当前照片；点击照片右上角 × 可移除，保存后生效。</p>
+            <p id="journalUploadStatus" class="journal-upload-status" role="status" aria-live="polite"></p>
             <div id="journalPhotoPreview" class="photo-preview"></div>
             <div class="journal-save"><span id="journalSaved">尚未填写</span><button class="btn btn-accent" id="saveJournalBtn">保存我的当天游记</button></div>
           </div>
@@ -130,12 +132,19 @@
   <div id="loginModal" class="modal is-hidden" aria-hidden="true"></div>
   <div id="expenseModal" class="modal is-hidden" aria-hidden="true"></div>
   <div id="accountModal" class="modal is-hidden" aria-hidden="true"></div>
-  <script src="trip-data.js?v=20260910-1"></script>
-  <script src="integrated-data.js?v=20260910-1"></script>
+  <div id="journalPrintDocument" aria-hidden="true"></div>
+  <dialog id="journalPrintDialog" class="journal-print-dialog" aria-label="游记打印选项"></dialog>
+  <dialog id="journalPhotoViewer" class="journal-photo-viewer" aria-labelledby="journalPhotoCaption">
+    <header class="journal-photo-toolbar"><p id="journalPhotoCaption" aria-live="polite"></p><button id="journalPhotoClose" class="journal-photo-control" type="button" aria-label="关闭照片查看">×</button></header>
+    <div id="journalPhotoStage" class="journal-photo-stage"><img id="journalPhotoFull" alt="游记照片"><p id="journalPhotoError" role="alert"></p></div>
+    <nav class="journal-photo-controls" aria-label="切换照片"><button id="journalPhotoPrev" class="journal-photo-control" type="button">‹ 上一张</button><button id="journalPhotoNext" class="journal-photo-control" type="button">下一张 ›</button></nav>
+  </dialog>
+  <script src="trip-data.js?v=20261012-1"></script>
+  <script src="integrated-data.js?v=20261012-1"></script>
   <script src="route-image-map.js?v=20260821-3"></script>
-  <script src="lodging-image-overrides.js?v=20260908-2"></script>
+  <script src="lodging-image-overrides.js?v=20261012-1"></script>
   <script>window.ROUTEBOOK_API_BASE = "https://g2-struc.ixx.men";</script>
-  <script src="integrated-app.js?v=20260907-1"></script>
+  <script src="integrated-app.js?v=20261012-1"></script>
   <script src="page-navigation.js?v=20260821-6"></script>
 </body>
 </html>

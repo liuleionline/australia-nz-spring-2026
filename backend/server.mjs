@@ -2,13 +2,15 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
-import cron from "node-cron";
 import { promisify } from "node:util";
 import { scrypt as scryptCallback, randomBytes, createHash, createCipheriv, createDecipheriv, timingSafeEqual } from "node:crypto";
 import { spawn } from "node:child_process";
 import fs from "node:fs/promises";
 import fsSync from "node:fs";
 import path from "node:path";
+import { normalizeExpenseCurrency, getBankRates } from "./expense-currency.mjs";
+import { validateTravelers } from "./travelers.mjs";
+import { JOURNAL_LIMITS, validateJournalEntry } from "./journal-limits.mjs";
 
 const scrypt = promisify(scryptCallback);
 const app = express();
@@ -21,7 +23,6 @@ const BACKUP_DIR = path.resolve(process.env.BACKUP_DIR || path.join(DATA_DIR, "b
 const COOKIE_NAME = "routebook_session";
 const SESSION_DAYS = Math.max(1, Number(process.env.SESSION_DAYS || 30));
 const SESSION_MS = SESSION_DAYS * 24 * 60 * 60 * 1000;
-const MAX_BACKUPS = Math.max(7, Number(process.env.MAX_BACKUPS || 45));
 const ALLOWED_USERS = ["LL", "YM", "QNL", "SZ"];
 const ADMIN_USER = "LL";
 const SCHEMA_VERSION = 3;
@@ -87,12 +88,18 @@ function toPublicUser(user) {
   };
 }
 
+function defaultTravelers() {
+  return ALLOWED_USERS.map(id => ({ id, name: `${id} / ${DISPLAY_NAMES[id]}`, family: "" }));
+}
+
 function baseState() {
   return {
     schema_version: SCHEMA_VERSION,
     users: {},
     sessions: {},
     expenses: {},
+    travelers: defaultTravelers(),
+    travelers_revision: 0,
     tasks: {},
     journal: {},
     backups: {},
@@ -148,6 +155,10 @@ function normalizeState(raw) {
   for (const key of ["users", "sessions", "expenses", "tasks", "journal", "backups"]) {
     if (!next[key] || typeof next[key] !== "object" || Array.isArray(next[key])) next[key] = {};
   }
+  const travelers = validateTravelers(next.travelers, Object.values(next.expenses));
+  if (travelers.error) throw new Error(travelers.error);
+  next.travelers = travelers.value;
+  next.travelers_revision = Number.isSafeInteger(next.travelers_revision) ? next.travelers_revision : 0;
   next.journal = normalizeJournalState(next.journal);
   if (!Array.isArray(next.audit)) next.audit = [];
   next.schema_version = SCHEMA_VERSION;
@@ -423,7 +434,8 @@ function validatePassword(value) {
   return "";
 }
 
-function validateExpense(body, { requireId = false } = {}) {
+function validateExpense(body, { requireId = false, travelers = state.travelers } = {}) {
+  const travelerIds = new Set(travelers.map(item => item.id));
   const suppliedId = String(body.id || "").trim();
   const id = suppliedId || `expense-${Date.now()}-${randomBytes(6).toString("hex")}`;
   const amount = Number(body.amount);
@@ -431,17 +443,20 @@ function validateExpense(body, { requireId = false } = {}) {
   const payer = normalizeUsername(body.payer);
   const participants = Array.from(
     new Set((Array.isArray(body.participants) ? body.participants : []).map(normalizeUsername))
-  ).filter(isAllowedUsername);
+  );
   const date = String(body.date || "").trim();
   const note = String(body.note || "").trim().slice(0, 500);
   if (requireId && !suppliedId) return { error: "账目编号无效" };
   if (id.length > 120) return { error: "账目编号无效" };
   if (!Number.isFinite(amount) || amount <= 0 || amount > 100000000) return { error: "金额无效" };
-  if (!isAllowedUsername(payer)) return { error: "付款人无效" };
+  if (!travelerIds.has(payer)) return { error: "付款人无效" };
+  if (participants.some(id => !travelerIds.has(id))) return { error: "参与人无效" };
   if (!participants.length) return { error: "请至少选择一位参与人" };
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return { error: "日期格式无效" };
+  const conversion = normalizeExpenseCurrency(body);
+  if (conversion.error) return conversion;
   return {
-    value: { id, amount: Math.round(amount * 100) / 100, type, payer, participants, date, note }
+    value: { id, ...conversion.value, type, payer, participants, date, note }
   };
 }
 
@@ -451,6 +466,8 @@ function exportBackupData() {
     generated_at: nowIso(),
     users: deepClone(state.users),
     expenses: deepClone(state.expenses),
+    travelers: deepClone(state.travelers),
+    travelers_revision: state.travelers_revision,
     tasks: deepClone(state.tasks),
     journal: deepClone(state.journal),
     audit: deepClone(state.audit)
@@ -562,23 +579,6 @@ async function uploadBackup(filePath, fileName) {
   return "vps-local";
 }
 
-async function pruneBackupFiles() {
-  const rows = Object.values(state.backups)
-    .filter((item) => item && item.file_name)
-    .sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at));
-  const expired = rows.slice(MAX_BACKUPS);
-  for (const row of expired) {
-    try {
-      await fs.unlink(path.join(BACKUP_DIR, safeBackupFileName(row.file_name)));
-    } catch {
-      // Already absent; metadata is still removed below.
-    }
-    await queueWrite(async (targetState) => {
-      delete targetState.backups[row.id];
-    });
-  }
-}
-
 async function createBackup(source = "manual", actor = "system") {
   const createdAt = nowIso();
   const id = createdAt.replace(/[-:.TZ]/g, "").slice(0, 14) + "-" + randomBytes(4).toString("hex");
@@ -612,7 +612,6 @@ async function createBackup(source = "manual", actor = "system") {
     targetState.backups[id] = row;
     appendAudit(targetState, "backup.create", actor, { id, source, destination, status });
   });
-  await pruneBackupFiles();
   return row;
 }
 
@@ -635,10 +634,14 @@ async function restoreBackup(backupId, actor) {
   const source = JSON.parse(await fs.readFile(path.join(BACKUP_DIR, fileName), "utf8"));
   const payload = decryptBackup(source);
   validateBackupPayload(payload);
+  const travelers = validateTravelers(payload.travelers ?? defaultTravelers(), Object.values(payload.expenses));
+  if (travelers.error) throw new Error(travelers.error);
   await createBackup("pre-restore", actor);
   await queueWrite(async (targetState) => {
     targetState.users = deepClone(payload.users);
     targetState.expenses = deepClone(payload.expenses);
+    targetState.travelers = travelers.value;
+    targetState.travelers_revision += 1;
     targetState.tasks = deepClone(payload.tasks);
     targetState.journal = normalizeJournalState(payload.journal);
     targetState.audit = Array.isArray(payload.audit) ? deepClone(payload.audit) : [];
@@ -815,7 +818,30 @@ app.get("/api/routebook/expenses", requireFullAuth, (_req, res) => {
     (a, b) => String(a.date || "").localeCompare(String(b.date || "")) ||
       String(a.created_at || "").localeCompare(String(b.created_at || ""))
   );
-  res.json({ expenses });
+  res.json({ expenses, travelers: state.travelers, travelers_revision: state.travelers_revision, capabilities: { foreign_currency: true, family_settlement: true } });
+});
+
+app.get("/api/routebook/exchange-rates", requireFullAuth, async (_req, res) => {
+  try {
+    res.json(await getBankRates());
+  } catch {
+    res.status(503).json({ error: "暂时无法获取银行牌价，请手动填写汇率", code: "EXCHANGE_RATE_UNAVAILABLE" });
+  }
+});
+
+app.put("/api/routebook/travelers", requireFullAuth, async (req, res, next) => {
+  try {
+    const result = await queueWrite(async (targetState) => {
+      if (req.body?.revision !== targetState.travelers_revision) return { status: 409, error: "旅伴分组已被其他人修改，请关闭后重新打开再编辑" };
+      const parsed = validateTravelers(req.body?.travelers, Object.values(targetState.expenses));
+      if (parsed.error) return { status: 400, error: parsed.error };
+      targetState.travelers = parsed.value;
+      targetState.travelers_revision += 1;
+      appendAudit(targetState, "travelers.update", req.auth.user.username);
+      return { travelers: targetState.travelers, travelers_revision: targetState.travelers_revision };
+    });
+    return res.status(result.status || 200).json(result);
+  } catch (error) { return next(error); }
 });
 
 async function upsertExpense(req, res, next) {
@@ -825,6 +851,8 @@ async function upsertExpense(req, res, next) {
     const value = parsed.value;
     const actor = req.auth.user.username;
     const row = await queueWrite(async (targetState) => {
+      const checked = validateExpense(req.body || {}, { requireId: req.method === "PATCH", travelers: targetState.travelers });
+      if (checked.error) return { error: checked.error };
       const existing = targetState.expenses[value.id];
       const createdAt = existing?.created_at || nowIso();
       const nextRow = {
@@ -842,6 +870,7 @@ async function upsertExpense(req, res, next) {
       });
       return nextRow;
     });
+    if (row.error) return res.status(400).json({ error: row.error, code: "EXPENSE_INVALID" });
     return res.json({ expense: row });
   } catch (error) {
     return next(error);
@@ -919,7 +948,7 @@ app.get("/api/routebook/journal", (_req, res) => {
       if (row?.entry && typeof row.entry === "object") journals[username][dayId] = row.entry;
     }
   }
-  res.json({ journals, deletions });
+  res.json({ journals, deletions, limits: JOURNAL_LIMITS });
 });
 
 app.put("/api/routebook/journal", requireFullAuth, async (req, res, next) => {
@@ -929,12 +958,12 @@ app.put("/api/routebook/journal", requireFullAuth, async (req, res, next) => {
     if (!dayId || dayId.length > 120 || !entry || typeof entry !== "object" || Array.isArray(entry)) {
       return res.status(400).json({ error: "游记内容无效", code: "JOURNAL_INVALID" });
     }
-    if (Buffer.byteLength(JSON.stringify(entry), "utf8") > 1024 * 1024) {
-      return res.status(413).json({ error: "单日游记内容过大", code: "JOURNAL_TOO_LARGE" });
-    }
     const actor = req.auth.user.username;
+    if (req.body?.username != null && normalizeUsername(req.body.username) !== actor) return res.status(403).json({ error: "只能修改本人的游记", code: "JOURNAL_OWNER_MISMATCH" });
+    const safeEntry = { ...deepClone(entry), updatedBy: actor, savedAt: nowIso() };
+    const invalid = validateJournalEntry(safeEntry);
+    if (invalid) return res.status(invalid.status).json(invalid);
     const row = await queueWrite(async (targetState) => {
-      const safeEntry = { ...deepClone(entry), updatedBy: actor };
       const nextRow = {
         day_id: dayId,
         entry: safeEntry,
@@ -962,6 +991,8 @@ app.delete("/api/routebook/journal/:dayId", requireFullAuth, async (req, res, ne
       return res.status(400).json({ error: "游记日期无效", code: "JOURNAL_INVALID" });
     }
     const actor = req.auth.user.username;
+    const requestedOwner = req.body?.username ?? req.query?.username;
+    if (requestedOwner != null && normalizeUsername(requestedOwner) !== actor) return res.status(403).json({ error: "只能删除本人的游记", code: "JOURNAL_OWNER_MISMATCH" });
     const row = await queueWrite(async (targetState) => {
       const existing = targetState.journal[actor]?.[dayId];
       if (!existing || existing.deleted) return null;
@@ -996,7 +1027,7 @@ app.get("/api/routebook/backups", requireAdmin, (_req, res) => {
       status,
       warning
     }));
-  res.json({ backups });
+  res.json({ backups, policy: { automatic_enabled: false, retention: "keep_all" } });
 });
 
 app.post("/api/routebook/backups", requireAdmin, async (req, res, next) => {
@@ -1031,6 +1062,7 @@ app.post("/api/routebook/backups", requireAdmin, async (req, res, next) => {
 });
 
 app.use((error, req, res, _next) => {
+  if (error?.type === "entity.too.large") return res.status(413).json({ error: "上传内容过大，请减少照片或文字后重试", code: "REQUEST_TOO_LARGE" });
   const requestId = randomBytes(6).toString("hex");
   console.error("[" + requestId + "]", req.method, req.originalUrl, error);
   const status = error?.message === "Origin is not allowed by CORS" ? 403 : 500;
@@ -1048,18 +1080,7 @@ await queueWrite(async (targetState) => {
   }
 });
 
-cron.schedule(
-  "0 1 * * *",
-  async () => {
-    try {
-      await createBackup("scheduled", "system");
-      console.log("Scheduled routebook backup completed", nowIso());
-    } catch (error) {
-      console.error("Scheduled routebook backup failed", error);
-    }
-  },
-  { timezone: "Asia/Shanghai" }
-);
+// Automatic backup scheduling is disabled; existing backup files are retained.
 
 const server = app.listen(PORT, "127.0.0.1", () => {
   console.log("Routebook API listening on 127.0.0.1:" + PORT);

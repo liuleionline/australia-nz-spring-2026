@@ -168,7 +168,8 @@
         {time:"14:30", title:"返回Queenstown并停车", notes:"不回房久休；直接前往Brecon Street，给购票核验和排队留缓冲。", query:"Skyline Queenstown"},
         {time:"15:30", title:"Skyline Gondola上山", notes:"4位成人日期票已确认；手机保存四张独立二维码。", query:"Skyline Queenstown"},
         {time:"16:00–18:30", title:"5次Luge滑板车", notes:"先完成安全教学；每次约15分钟，但要给缆车与排队留时间，滑板车优先于等夜景。", query:"Skyline Queenstown Luge"},
-        {time:"18:30后", title:"观景、晚餐后下山", notes:"是否等夜景看体力和当天营业时间；不要因拍夜景耽误Luge。", query:"Skyline Queenstown"}
+        {time:"18:30后", title:"观景后下山", notes:"是否等夜景看体力和当天营业时间；不要因拍夜景耽误Luge。下山后再去Queenstown镇上吃晚餐。", query:"Skyline Queenstown"},
+        {time:"下山后", title:"Queenstown镇上晚餐", notes:"Botswana Butchery位于镇上，需按实际预约时间前往；不应安排在下山之前。", query:"Botswana Butchery Queenstown"}
       ],
       highlights:[
         {name:"Bennett's Bluff", tag:"湖岸大片", notes:"Wakatipu湖弯与雪山的层次最强。", photoTip:"用长焦把弯道、湖湾和山体压在一起。", query:"Bennett's Bluff Lookout", image:commons("Glenorchy at the Head of Lake Wakatipu.jpg")},

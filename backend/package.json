@@ -9,14 +9,13 @@
   },
   "scripts": {
     "start": "node server.mjs",
-    "check": "node --check server.mjs && node --check smoke-test.mjs",
-    "test": "node smoke-test.mjs"
+    "check": "node --check server.mjs && node --check smoke-test.mjs && node --check backup-policy.test.mjs",
+    "test": "node --test expense-currency.test.mjs settlement.test.mjs journal-limits.test.mjs backup-policy.test.mjs && node smoke-test.mjs"
   },
   "dependencies": {
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "express": "^4.21.2",
-    "helmet": "^8.0.0",
-    "node-cron": "^3.0.3"
+    "helmet": "^8.0.0"
   }
 }

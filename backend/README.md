@@ -28,10 +28,16 @@ Remove the bootstrap value after all expected accounts exist.
 
 ```bash
 npm install
-npm run smoke
+npm test
 ```
 
 The smoke test uses isolated temporary storage and test-only credentials. It does not read production data.
+
+## Backup policy
+
+Daily automatic backups are disabled. Existing backup files and metadata are kept without count-based pruning, including when a new manual or pre-restore backup is created. `MAX_BACKUPS` no longer controls retention.
+
+Administrator LL can still create encrypted backups manually and restore existing backups. A restore first creates a protective snapshot, and the existing encryption and upload configuration remains in use. The backups API reports the active policy so the frontend does not claim this change is live against an older server.
 
 ## Deployment outline
 
